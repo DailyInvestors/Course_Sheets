@@ -1,7 +1,5 @@
 Google Permissions by { Daily Investors }
-P.S: Started to clean it up, but good enough or Now. I appreciate any donations to help me Secure and Test the World
 
-https:/soloist.ai/dailyinvestors
 
 accessapproval.requests.approve		
 accessapproval.requests.dismiss		
