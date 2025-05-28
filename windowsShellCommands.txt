@@ -1,0 +1,700 @@
+Windows Shell Command-Lines by { Daily Investors }
+Notes: You can automate the completion of files and Directories. Always Back-Up
+Set these two values to control the character you wish.
+ {HKEY_LOCAL_mACHINE\SOFTWARE\Microsofr\Command Processor\CompletionChar or
+  HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor\PathCompletionChar}
+The type of Value for a registry entry { REG_WORD}
+
+//Command Line Reference A-Z
+    AAAAAAAAAAAAA
+1. active
+2. add
+3. add volume
+4. adprep
+5. append
+6. arp
+7. assign
+8. assoc
+9. at
+10. atmadm
+11. attach-vdisk
+12. attrib
+13. attribues
+    attribues disk
+    attribues volume
+14. auditpol
+    auditpol backup
+    auditpol clear
+    auditpol list
+    auditpol remove
+    auditpol resourceacl
+    auditpol restore
+    auditpol set
+15. autochk
+16. autocanv
+16. autofmt
+
+
+    BBBBBBBBBBBBBBB
+1. bcdboot
+2. bcedit
+3. bdehdcfg
+   bdehdcfg driveinfo
+   bdehdcfg newdriveletter
+   bdehdcfg quiet
+   bdehdcfg restart
+   bdehdcfg size
+   bdehdcfg target
+4. begin backup
+5. bitsadmin
+   bitsadmin file
+   bitsadmin addfileset
+   bitsadmin addfilewithranges
+   bitsadmin cache
+   bitsadmin and deleteurl
+   bitsadmin cache and delete
+   bitsadmin cache and getexpirationtime
+   bitsadmin cache and help
+   bitsadmin cache and info
+   bitsadmin cache and list
+   bitsadmin cache and setlimit
+   bitsadmin cache and setexpirationtime
+   bitsadmin cache and clear
+   bitsadmin cancel
+   bitsadmin complete
+   bitsadmin create
+   bitsadmin examples
+   bitsadmin getaclflags
+   bitsadmin getbytestotal
+   bitsadmin getbytestransferred
+   bitsadmin getclientcertificate
+   bitsadmin getcompletiontime
+   bitsadmin getcustomheaders
+   bitsadmin getdescription
+   bitsadmin geterror
+   bitsadmin geterrorcount
+   bitsadmin getfilestotal
+   bitsadmin getfilestransferred
+   bitsadmin gethelpertokenflags
+   bitadmin gethelpertokensid
+   bitsadmin gethttpmethod
+   bitsadmin getmaxdownloadtime
+   bitsadmin getminretrydelay
+   bitsadmin getmodificationtime
+   bitsadmin getnoprogresstimeout 
+   bitsadmin getnotifycmdline
+   bitsadmin getnotifyflags
+   bitsadmin getnotifyinterface
+   bitsadmin getowner
+   bitsadmin getpeercachingflags
+   bitsadmin getpriority
+   bitsadmin getproxybypasslist
+   bitsadmin getproxylist
+   bitsadmin getproxyusage
+   bitsadmin getreplydata
+   bitsadmin getreplyfilename
+   bitsadmin get replyprogress
+   bitsadmn getsecurityflag
+   bitsadmin getstate
+   bitsadmin gettemporayname
+   bitsadmin gettype
+   bitsadmin getvalidationstate
+   bitsadmin help
+   bitsadmin info
+   bitsadmin list
+   bitsadmin listfiles
+   bitsadmin makecustomheaderswriteonly
+   bitsadmin monitor
+   bitsadmin nowrap
+   bitsadmin peercaching
+   bitsadmin peercaching and getconfigurations
+   bitsadmin peercaching and help
+   bitsadmin peercaching and setconfigirations
+   bitsadmin peers
+   bitsadmin peers and clear
+   bitsadmin peers and discover
+   bitsadmin peers and help
+   bitsadmin peers and list
+   bitsadmin rawreturn
+   bitsadmin removeclientcertifcate
+   bitsadmin removecredentials
+   bitsadmin replacemoteprefix
+   bitsadmin reset
+   bitsadmin resume
+   bitsadmin setaclflag
+   bitsadmin setclientcertificatebyid
+   bitsadmin setcredentials
+   bitsadmin setcustomheaders
+   bitsadmin setdescription
+   bitsadmin setdisplayname
+   bitsadmin sethelpertoken
+   bitsadmin sethelpertokenflags
+   bitsadmin sethttpmethod
+   bitsadmin setmaxdownloadtime
+   bitsadmin setminretrydelay
+   bitsadmin setnoprogresstimeout
+   bitsadmin setnotifycmdline
+   bitsadmin setnotifyflags
+   bitsadmin setpeercachingflags
+   bitsadmin setpriority
+   bitsadmin setproxysettings
+   bitsadmin setreplyfilename
+   bitsadmin setsecurityflags
+   bitsadmin setvalidationstate
+   bitsadmin takeownership
+   bitsadmin transfer
+   bitsadmin util
+   bitsadmin util and enableanalyticchannel
+   bitsadmin util and getieproxy
+  bitsadmin util and help
+  bitsadmin util and repairservice
+  bitsadmin util and setieproxy
+  bitsadmin util and setieproxy
+  bitsadmin util and version
+  bitsadmin wrap
+  boot
+  bootcfg addsw
+  bootcfg copy
+  bootcfg dbg1394
+  bootcfg debug
+  bootcfg default
+  bootcfg default
+  bootcfg delete
+  bootcfg ems
+  bootcfg query
+  bootcfg rmsw
+  bootcfg raw
+  bootcfg rmsw
+  bootcfg timeout
+  break
+
+
+    CCCCCCCCCCCCCCCCC
+cacls
+call
+cd
+certreq
+certutil
+change
+change logon
+change port
+change user
+chcp
+chdir
+chglogon
+chgport
+chgusr
+chkdsk
+chkntfs
+choice
+cipher
+clean
+cleanmgr
+clip
+cls
+cmd
+cmdkey
+cmstp
+color
+comp
+compact
+compact vdisk
+convert
+convert basic
+convert dynamic
+convert gpt
+convert mbr
+copy
+create
+create partition efi
+create partition extended
+create partition logical
+create partition logical
+create partition msr
+create partition primary
+create volume mirror
+create volume raid
+create volume simple
+create volume stripe
+cscript
+
+
+
+
+
+
+    DDDDDDDDDDDDDDDDDDDDDDDDD
+date
+dcdiag
+dcgpofix
+dcpromo
+defrag
+del
+delete
+delete disk
+delete partition
+delete shadows
+delete volume
+detach vdisk
+detail
+detail partition
+detail vdisk
+detail volume
+dfsdiag
+dfdiag testdcs
+dfsdiag testdfsconfig
+dfsdiag testreferral
+dfsdiag testreferral
+dfsdiag testsites
+dfsrmig
+diants
+dir
+diskcomp
+diskcopy
+diskpart
+diskperf
+diskraid
+diskshadow
+dispdiag
+dnscmd
+doskey
+driverquery
+dtrace
+
+
+
+     EEEEEEEEEEEEEEEEEE
+echo
+edit
+endlocal
+end restore
+erase
+eventcreate
+Evntcmd
+exec
+exit
+expand
+expand vdisk
+expose
+extend
+extract
+
+
+
+
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+fc
+filesystems
+find
+findstr
+finger
+flattemp
+fondue
+for
+forfiles
+format
+freedisk
+fsutil
+fsutil 8dot3name
+fsutil behavior
+fsutil devdrv
+fsutil dirty
+fsutil file
+fsutil fsinfo
+fsutil hardlink
+fsutil objected
+fsutil quota
+fsutil repair
+fsutil reparsepoint
+fsutil resource
+fsutil sparce
+fsutil tiering
+fsutil transaction
+fsutil usn
+fsutil volume
+fsutil wim
+ftp
+ftp append
+ftp ascii
+ftp bell
+ftp binary
+ftp bye
+ftp cd
+ftp debug
+ftp delete
+ftp dir
+ftp disconnect
+ftp get
+ftp glob
+ftp hash
+ftp Icd
+ftp literal
+ftp ls
+ftp mget
+ftp mkdir
+ftp mls
+ftp mput
+ftp open
+ftp prompt
+ftp put
+ftp pwd
+ftp quit
+ftp prompt
+ftp put
+ftp pd
+ftp recv
+ftp remotehelp
+ftp rmdir
+ftp send
+ftp status
+ftp trace
+ftp type
+ftp user
+ftp verbose
+ftp mdelete
+ftp mdir
+ftype
+fveupdate
+
+
+
+
+GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+getmac
+gettype
+goto
+gpfixup
+gpresult
+gpt
+qpupdate
+gpt
+gpupdate
+graftabl
+help
+helpctr
+hostname
+
+
+
+IIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+icacls
+if
+import (shadowdisk)
+import (diskpRT)
+inactive
+ipconfig
+ipxroute
+irftp
+
+
+
+
+
+JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
+jetpack
+
+
+
+
+KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+klist
+ksetup
+ksetup addenctypeattr
+ksetup addhosttorealmmap
+ksetup addkdc
+ksetup addkpassword
+ksetup addrealflags
+ksetup changepassword
+ksetup delkpasswd
+ksetup delkdc
+ksetup delrealmflags
+ksetup domain
+ksetup dumpstate
+ksetup getenctypeattr
+ksetup listrealmflagfs
+ksetup mapuser
+ksetup removerealm
+ksetup server
+ksetup setcomputerpassword
+ksetup setenctypeattr
+ksetup setrealm
+ksetup setrealmflags
+ktmutil
+ktpass
+
+
+
+
+
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+label
+list
+list providers
+list shadow
+list writers
+load metadata
+lodctr
+logman
+logman create
+logman create alert
+logman create api
+logman create cfg
+logman create counter
+logman create trace
+logman delete
+logman import and logman export
+logman query
+logman start and logman stop
+logman update
+logman update alert
+logman update api
+logman update cfg
+logman update counter
+logman update trace
+logoff
+lpq
+lpr
+
+
+
+MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+macfikle
+makecab
+manage bde
+manage bde status
+manage bde on
+manage bde off {{ pause, resume, lock, unlock, autounlock, protectors, tpm, setidentifier, forcerecovery, changepassword, changepin, changekey, keypackage, upgrade, wipefreespace}
+mapadmin
+md
+merge vdisk
+mkdir
+mklink
+mmc
+mode
+more
+mount
+mountvol
+move
+mqbkupsvc
+msdt
+msiexec
+msinfo32
+mstsc
+mqsvc
+mqtq
+
+
+
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+nbtstat
+netcfg
+netdom
+net print
+netsh
+netstat
+nfsadmin
+nfsshare
+nfsstat
+nlbmgr
+nltest
+nslookup {{ exit Command, finger Commmand, help, ;s, lserver, root, server, set, set all, set class, set d2, set debug, set domain, set port, set querytype, set recurse, set retry, set root, set search, set srchlist, set timeout, set type, set vc, view}}
+
+
+	OOOOOOOOOOOOOOOOOOOOOOOOOOOO
+offline
+offline disk
+offline
+offline volume
+online
+online disk
+online volume
+openfiles
+
+
+
+PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
+pagefile
+path
+pathping
+pause
+pbadmin
+pentnt
+perfmon
+ping
+pktmon
+pnpunattend
+pnputil
+popd
+powershell
+powershell ise
+print
+prncnfg
+prndrvr
+prnjobs
+prnmgr
+prnport
+prnqctl
+prompt
+pubprn
+pushd
+pushprinterconnections
+pwlauncher
+pwsh
+
+
+QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+qappsrc
+qprocess
+query
+query process
+query session
+query termserver
+query user
+quser
+qwinsta
+
+
+
+
+	RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR	
+rd
+rdpsign
+recover
+recover disk group
+refsutil
+reg { add, compare, copy, delete, export, import, load, query, restore, save, unload}
+regini
+regsrv32
+relog
+rem
+remove
+ren
+rename
+repadmin
+repair
+reset session
+retain
+revert
+rexec
+risetup
+rmdir
+robocopy
+route ws2008
+rpcinfo
+rpcping
+rsh
+rundlll32
+rundll32 printui
+rwinsta
+
+
+
+
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+san
+sc config
+sc create
+sc delere
+sc query
+schtasks
+scwcmd {analyze, conffiguer, register, rollbacl, transform, view}
+secedit { analyze, configure, export, generatorrollbacl, import, validate}
+select {disk, partition, vdisk, volume}
+servercipoptin
+servermanagercmd
+serverweroptin
+set environment variables
+set shadow cop { set context, set id }
+setlocal
+set metadata
+set option
+set verbose
+setx
+sfc
+shadow
+shift
+showmount
+shrink
+shutdown
+simulatre restore
+sort
+start
+subcommand set device
+subcommand set {drivergroup, drivergroupfilter, driverpackage, image, imagegroup, server,  transportserver}
+subcommand start {namespace, sever, transportserver}
+           stop same as above
+subst
+sxstrace
+syspocmgr
+systeminfo
+
+
+
+TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+takeown
+tapicfg
+taskkill tasklist
+scmsetup
+telnet { close, display, open, quit, send, set, status, unset}
+tftp
+time
+timeout
+title
+tlntadmin
+tpmtool
+tpmvscmgr
+tracerpt
+tracert
+tree
+tscon
+tsdiscon
+tsecimp
+tskill
+tsprof
+type
+typeperf
+tsutil
+
+
+UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU
+unexposed
+uniqueid
+unloadctr
+ver
+verifier
+verify
+vol
+vssadmin { deley shadows, list shadows, list writers, resize shadows}
+
+	wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+waitfor
+wbadmin { delete catalog, delete systemstatebackup, disable backup, enable backup, get disks, get items, get status, get versions, restore catalog, start backup,
+          start sysrecovery, start systemstatebackup, start systemstaterecovery, stop job}
+wdsutil
+wecutil
+wevutil
+where
+whoami
+winnt
+winnt32
+winrs
+winstat mem
+winsat mfmedia
+wmic
+writer
+wscript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
