@@ -1,0 +1,99 @@
+Basic Command-Line for POC { Team Daily }
+
+1. ping example.com
+
+2. nslookup
+
+3. tracepath example.com
+
+4.host target.com
+
+5. host -t MX example.com
+
+6. dig example.com
+ 
+7. dig example.com AXFR { Zone Transfer }
+
+8. dig -x IP_ADDY { Reverse Look-up }
+
+9. whois example.com
+
+10. curl -I example.com { Get Headers }
+
+11. curl -A "Custom User-Agent" example.com { Spoof Agent }
+
+12. wget example.com -O index.html { Download Page }
+
+13. nc -v example.com 80 { Verbose Connection } 
+
+14. nc -zv example.com 1-1000 { Zero-I/O port scan of ports 1 to 1000 }
+
+15. ncat -nv example.com 443 { Ncat version }
+
+16. ss -tuln { List Listening Ports with Info }
+    netstat -tulnp { Other Option }
+
+17. arp -a { IP and MAC mapping }
+
+18. ip a { Network Interfaces }
+
+19. ip r { Routing Table }
+
+20. nmap -sn 555.555.5.5/24 { Host Discovery }
+
+21. nmap -p 1-65535 example.com { Full TCP }
+
+22. nmap --script http-enum example.com { Enumerates Directories }
+
+23. fierce -dns example.com { Brute-Forcing }
+
+24. theharvester -d example.cpm -l 100 -b google { Gathers emails, subs, hosts, names, banners}
+
+25. sulist3r -d example.com { Sub Enumeration }
+
+26. assetfinder --subs-only example.com
+
+27.gau example.com { Get All URls }
+
+28. waybackurls example.com { Client History ]
+
+29. ffuf -w wordlist.txt -u 'http://example.com/FUZZ'
+
+30. dirb http://example.com wordlist.txt
+
+31. gobuster dir -u http://example.com -w wordlist.txt
+
+32. amass Enum -d example.com { mapping }
+
+33. shodan search apache
+    shodan host IP_ADDRESS
+
+34. censys search 'services.http.response.headers.server: APACHE' censys ipv4 555.555.5.5 { Similar to Shodan }
+
+35 nmap --script vuln example.com
+   nmap --script http-vuln example.com -p 80,443
+
+36. nikto -h http://example.com
+    nikto -h example.com -p 80,443 -ssl
+
+37.w3af_console http://example.com { audit, report html, output.html }
+
+38. sqlmap -u "http://example.com/page.php?id=1"
+    sqlmap -u "http://example.com/page.php" --data="username=test&password=test"
+
+39. xsstrike -u "http://example.com/search.php?q=test"
+
+40. commix -u "http://example.com/vuln.php?param=id" --os-cmd="ls -L" { Automated }
+
+41. arachni --scope-url =http://example.com --audit-forms --audit-links
+
+42. nuclei -u http://example.com
+    nuclei -t cves/2021/CVE-2021-40438.yaml -u http://example.com
+
+43. trivy image alpine:latest trivy fs /path/for/project
+
+44. grype alpine:latest 
+    grype /path/for/project
+
+45. zap-cli quick-scan --url http://example.com
+
