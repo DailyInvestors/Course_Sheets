@@ -1,0 +1,48 @@
+Dig by { Daily Investors } 
+
+1. Reverse: -x
+2. Verbose: -v
+3. Set Type: -t
+4. Class: -c
+5. Port: -p
+5. Read: -f
+6. Trace: +trace
+7. DNS: dig@1.1.1.1
+8. Host: -h
+9. Query: -q
+10. UDP: -u
+11. Keep: -k
+12. All: -a
+13. MX: -m
+14. Server: -n
+15. Trace all: +traceall
+16. Limit Depth: +limit
+17. File: -f
+18. CNAME: CNAME
+19. Text Records: TXT
+20. IP6: AAAA
+21. All Records: ANY
+22. Start of Authority: SOA
+23. Concise Output: +short
+24. Display Answere Section: +noall +answer
+25. Set Timeouts: dig -t A example.com +timeout=3 +tries=2
+26. Ignore: +notcp
+27. DNSSEC: +dnssec
+28. Flags: +adflag
+29. Scripts: To run scripts with dig the +short option is useful
+
+//Tools to aid and assist
+1. Ping
+2. Traceroute
+3. netstat { Example: ss -tuln | grep 53 }
+4. nmap
+5. curl
+6. wget
+7. proxychains
+8. tor
+9. Custom DNS Providers
+10. Ssh
+11. Screen/Tmux
+12. Autossh
+14. Sql Map
+15. Custom Scripts
