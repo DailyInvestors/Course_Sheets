@@ -21,6 +21,10 @@ Refferences:
 "https://www.google.com"
 "https://www.bugcrowd.com
 "https://github.com"
-"https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html" and more by Owasp
-"Seclist Tools"
-"Beef"
+"https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html" 
+"https://github.com/danielmiessler/SecLists"
+"https://github.com/beefproject/beef"
+"https://www.intigriti.com/"
+"https://www.google.com/search?q=https://portswigger.net/web-security/academy"
+"https://github.com/DailyInvestors:
+"https://soloist.ai/dailyinvestors"
