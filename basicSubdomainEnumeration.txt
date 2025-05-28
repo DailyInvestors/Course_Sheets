@@ -1,0 +1,275 @@
+import socket
+import threading
+import subprocess
+import logging
+import requests
+import ssl
+import http.client
+from urllib.parse import urlparse
+import random
+import re
+import json
+from datetime import datetime
+import time
+from tqdm import tqdm
+import websockets
+import asyncio
+
+# --- CONFIGURATION ---
+user_agents = [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "Mozilla/5.0 (Linux; Android 10)",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)",
+    "Mozilla/5.0 (iPhone; CPU iPhone OS 13_5_1)",
+    "Mozilla/5.0 (X11; Linux x86_64)",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64)",
+    "Mozilla/5.0 (iPad; CPU OS 13_5 like Mac OS X)",
+    "Mozilla/5.0 (Linux; U; Android 9; en-US)",
+    "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+    "curl/7.64.1"
+]
+
+proxies = [
+    {"http": f"http://192.0.2.{i}:8080"} for i in range(1, 11)
+]
+
+subdomains = [
+    "www", "mail", "ftp", "dev", "test", "admin", "accounts", "administrator", "Products",
+    "catalog", "memebers", "verfied", "secure", "account", ".com", ".org", ".net", "API",
+    "WWW", "m", "blog", "Blog", "shop", "Shop", "Store", "ecommerce", "news", "forum", "support",
+    "docs", "Docs", "api", "webmail", "Ports", "Websockets", "admin/pannel", "panel", "dashboard",
+    "internal", "intranet", "files", "download", "images", "media", "static", "cdn", "partners"
+]
+
+target_domains = [
+    "example1.com", "example2.net", "example3.org", "example4.io", "example5.dev",
+    "example6.co", "example7.info", "example8.ai", "example9.tech", "example10.biz"
+]
+
+results = []
+lock = threading.Lock()
+json_log = []
+
+logging.basicConfig(filename='scan.log', level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# --- FUNCTIONS ---
+def human_delay():
+    time.sleep(random.uniform(0.5, 3.0))
+
+def is_valid_domain(domain):
+    if not domain or len(domain) > 253:
+        return False
+    labels = domain.split(".")
+    for label in labels:
+        if not label or len(label) > 63 or not re.match(r'^[a-zA-Z0-9-]+$', label):
+            return False
+    return True
+
+def check_subdomain(domain, subdomain):
+    try:
+        full_domain = f"{subdomain}.{domain}".strip(".")
+        if not is_valid_domain(full_domain):
+            logging.warning(f"[INVALID DOMAIN] Skipping malformed domain: {full_domain}")
+            return
+
+        human_delay()
+        ip = socket.gethostbyname(full_domain)
+        with lock:
+            results.append((full_domain, ip))
+            logging.info(f"Resolved: {full_domain} -> {ip}")
+            analyze_http(full_domain, ip)
+            asyncio.run(check_websocket(full_domain))
+    except socket.gaierror as e:
+        logging.warning(f"[DNS FAIL] {subdomain}.{domain} -> {e}")
+    except UnicodeError as e:
+        logging.warning(f"[ENCODING FAIL] {full_domain} -> {e}")
+
+async def check_websocket(domain):
+    try:
+        uri = f"ws://{domain}"
+        async with websockets.connect(uri) as websocket:
+            await websocket.send("ping")
+            response = await websocket.recv()
+            logging.info(f"[WEBSOCKET] {domain} response: {response}")
+    except Exception as e:
+        logging.debug(f"[WEBSOCKET] {domain} error: {e}")
+
+def get_valid_proxy():
+    for proxy in proxies:
+        try:
+            test = requests.get("http://example.com", proxies=proxy, timeout=3)
+            if test.status_code == 200:
+                return proxy
+        except Exception as e:
+            logging.debug(f"Proxy failed: {proxy} -> {e}")
+            continue
+    return None
+
+def capture_session_info(response):
+    session_info = {
+        "cookies": dict(response.cookies),
+        "headers": {},
+        "refferer": response.request.headers.get("Referer", "None"),
+        "session_tokens": []
+    }
+    try:
+        session_info["headers"] = dict(response.headers)
+    except Exception as e:
+        logging.warning(f"Failed to convert headers to dict: {e}")
+
+    for key in response.cookies:
+        if "session" in key.lower():
+            session_info["session_tokens"].append({key: response.cookies[key]})
+
+    token_search = re.findall(r'(?:Bearer|token|sessionid)[=:\s]+([\w\-\.]+)', response.text, re.IGNORECASE)
+    session_info["session_tokens"].extend(token_search)
+
+    return session_info
+
+def analyze_http(domain, ip):
+    try:
+        headers = {"User-Agent": random.choice(user_agents)}
+        proxy = get_valid_proxy()
+        url = f"http://{domain}"
+        human_delay()
+
+        if proxy:
+            resp = requests.get(url, headers=headers, proxies=proxy, timeout=5, allow_redirects=True)
+        else:
+            logging.warning(f"No valid proxy available. Skipping proxy for {domain}")
+            resp = requests.get(url, headers=headers, timeout=5, allow_redirects=True)
+
+        tech_stack = identify_technologies(resp.headers, resp.text)
+        session_data = capture_session_info(resp)
+
+        entry = {
+            "domain": domain,
+            "ip": ip,
+            "status_code": resp.status_code,
+            "cookies": session_data["cookies"],
+            "session_tokens": session_data["session_tokens"],
+            "headers": session_data["headers"],
+            "referer": session_data["refferer"],
+            "technologies": tech_stack,
+            "redirect_chain": [r.url for r in resp.history] + [resp.url],
+            "timestamp": datetime.now().isoformat()
+        }
+
+        if "wp-content" in resp.text or "wp-json" in resp.text:
+            logging.info(f"[WORDPRESS] Detected on {domain}")
+            entry["platform"] = "WordPress"
+
+        if "cloudflare" in resp.headers.get("Server", "").lower():
+            logging.info(f"[CLOUDFLARE] Protection Detected on {domain}")
+            entry["protection"] = "Cloudflare"
+
+        if "strict-transport-security" in resp.headers:
+            logging.info(f"[HSTS] Policy enabled on {domain}")
+            entry["hsts"] = True
+
+        if "php warning" in resp.text.lower() or "php error" in resp.text.lower():
+            logging.warning(f"[PHP ERROR] Detected in response from {domain}")
+            entry["php_errors"] = True
+
+        json_log.append(entry)
+
+        logging.info(f"[HTTP] {domain} Status: {resp.status_code}")
+        logging.info(f"Cookies: {resp.cookies}")
+        logging.info(f"Headers: {resp.headers}")
+        logging.info(f"Redirect Chain: {entry['redirect_chain']}")
+        logging.info(f"Session Tokens: {entry['session_tokens']}")
+        logging.info(f"Tech stack: {tech_stack}")
+
+        run_sqlmap(url + "/vuln?id=1")
+        analyze_ssl(domain)
+        parse_curl_command(f"curl -A '{headers['User-Agent']}' {url}/vuln?id=1")
+
+    except Exception as e:
+        logging.warning(f"[HTTP] {domain} error: {e}")
+
+def identify_technologies(headers, body):
+    stack = []
+    header_str = str(headers).lower()
+    body = body.lower()
+
+    if "php" in header_str or ".php" in body:
+        stack.append("PHP")
+    if "x-powered-by" in headers:
+        powered_by = headers.get("x-powered-by").lower()
+        if "express" in powered_by:
+            stack.append("Node.js")
+        if "asp.net" in powered_by:
+            stack.append("ASP.NET")
+        if "php" in powered_by:
+            stack.append("PHP")
+        if "java" in powered_by:
+            stack.append("Java")
+    if "server" in headers:
+        server = headers.get("server").lower()
+        if "apache" in server:
+            stack.append("Apache")
+        if "nginx" in server:
+            stack.append("Nginx")
+    if "mysql" in body or "sql syntax" in body:
+        stack.append("MySQL")
+    if "postgresql" in body:
+        stack.append("PostgreSQL")
+    if "mongo" in body:
+        stack.append("MongoDB")
+    return list(set(stack))
+
+def run_sqlmap(url):
+    try:
+        cmd = ["sqlmap", "-u", url, "--batch", "--dump"]
+        subprocess.run(cmd, capture_output=True)
+        logging.info(f"[SQLMAP] Scanned {url}")
+    except Exception as e:
+        logging.error(f"[SQLMAP] Error: {e}")
+
+def analyze_ssl(domain):
+    try:
+        context = ssl.create_default_context()
+        with socket.create_connection((domain, 443)) as sock:
+            with context.wrap_socket(sock, server_hostname=domain) as ssock:
+                cert = ssock.getpeercert()
+                logging.info(f"[CERT] {domain}: {cert}")
+    except Exception as e:
+        logging.warning(f"[CERT] {domain} error: {e}")
+
+def parse_curl_command(curl_command):
+    url = re.search(r"curl .*? (https?://[^\"']+)", curl_command)
+    if url:
+        headers = {}
+        user_agent = re.search(r"-A '([^']+)'", curl_command)
+        if user_agent:
+            headers['User-Agent'] = user_agent.group(1)
+        try:
+            resp = requests.get(url.group(1), headers=headers)
+            logging.info(f"[CURL-TRAINING] {url.group(1)} -> {resp.status_code}")
+            return resp.text
+        except Exception as e:
+            logging.warning(f"[CURL-TRAINING] Failed: {e}")
+
+# --- MAIN LOGIC ---
+def run_enumeration(target_domain):
+    logging.info(f"Starting enumeration for: {target_domain}")
+    threads = []
+    for sub in subdomains:
+        t = threading.Thread(target=check_subdomain, args=(target_domain, sub))
+        t.start()
+        threads.append(t)
+
+    for t in tqdm(threads, desc=f"Enumerating {target_domain}", unit="thread"):
+        t.join()
+
+    logging.info(f"Completed subdomain enumeration for {target_domain}")
+
+def run_all_targets():
+    for target in tqdm(target_domains, desc="Master Progress", unit="domain"):
+        run_enumeration(target)
+
+    with open("scan_results.json", "w") as f:
+        json.dump(json_log, f, indent=2)
+
+if __name__ == "__main__":
+    run_all_targets()
