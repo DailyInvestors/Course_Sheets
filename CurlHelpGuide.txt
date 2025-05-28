@@ -1,0 +1,88 @@
+Curl Commands by { Daily Investors }
+
+1. curl "Transfers Data"
+2. curl -o filename.ext http://....com/file.txt "Download a File and Save"
+3. curl --limit-rate 100k http://...com/file.txt "Limit Download Speed"
+4. curl -L "Follow Redirects"
+5. curl -d "bame=value" http://...com/resource
+6. curl -H "Content-Type: application/json" -d '{"key":"value"}' http://....com/resource  "Send JSON with a Post Request"
+7. curl -i http://....com
+8. curl -H "Custom-Header: Value" http://....com "Custom Header"
+9. curl -u username:password http://...com
+10. curl -X PUT http://....com "Different Requests {GET, POSt, PUT}
+11. curl -O http://....com/file1.txt -O http://.....com/file2.txt "Download Multiple Files"
+12. curl -C - -O http://.....com/largefile.zip "Resume Crashed Downloads"
+13. curl -T localfile.txt ftp://ftp.example.com/upload "Transfer with FTP"
+14. curl -x http://proxy-server:port http://....com
+15. curl --data-urlencode "key=value" "Send encoded Data"
+16. curl -D headers.txt http://....com "Save Response to File"
+17. curl http://example.com/file.txt | grep "search-string" "Download and Run through a Pipe"
+18. curl <url> -o <filegoingout> "Change file name"
+19. curl http://....com/pic[1-24].jpg "Download through Sequential Numbers"
+20. curl ftp://username:password@example.com
+21. curl -X POST -d "username=test&password=<script>&submit=Login" http://....com/login.php "Test for malicious file"
+22. curl -c cookies.txt <URL> "Extract Cookies"
+23. curl -v <URL> "Verbose"
+24. curl -I "View Headers"
+25. curl --certinfo <URL> "Certificates"
+26. curl --cacert server.crt <URL> 2>&1 | grep "Server certificate:" -A 10 "Save Certificate"
+27. curl -c cookies.txt --max-redirs 0 <url_that_redirects> "Extracting Cookies without Redirects"
+28. curl -v --max-redirs 0 <url_that_redirects> "Extract Tokens without Redirects"
+29. curl -I --max-redirs 0 <url_that_redirects> "Extract Headers without Redirects"
+30. curl --certinfo --max-redirs 0 <url_that_redirects> "Extract Certs without Redirect"
+
+
+//Curl and APIS
+1. POST
+   curl -X POST -H "Content-Type: application/json" -d '{"username": "newuser", "email": "newuser@example.com", "password": "securepassword"}' <API_ENDPOINT_URL>
+   -X POST specifies the HTTP method
+   -H "Content-Type: application.json "Sets the Content-Type Header"
+   -d '{"username":.....} "Provides the data to be sent inside the request"
+2. PUT
+   curl -X PUT -H "Content-Type: application/json" -d '{"email": "updateuser@example.com", "status": "active"}' <API_Endpoint>
+3. Delete
+   curl -X DELETE
+
+//Testing Multiple Endpoints
+1. Example
+   curl -X POST -H "Content-Type: application/json" -d '{"username": "testuser", "email", "test@example.com"}' http://api_endpoint.com/users
+
+//List Users
+1. curl http://your_api.com/users
+
+//Specific User
+1. curl http://your-api.com/users/123
+
+//Update User
+1. curl -X PUT -H "Content-Type: application/json" -d '{"email": "updated@example.com"}' http://your-api.com/users/123
+
+//Delete User
+1. curl -X DELETE http://your-api.com/users/123
+
+//Create a Product
+1. curl -X POST -H ""Content-Type: application/json" -d '{"name": "New Product", "price": 25.00}' http://your-api.com/products
+
+//List Products
+1.  curl http://your-api.com/products
+
+
+//Notes
+ Write shell scripts that iterate through your list of endpoints and methods
+ 
+
+
+
+//Curl and Wget
+1. Get Cookies
+   curl -c my_cookies.txt https://example.com/login
+   "Inspect log, via web interface to get authenticated cookies"
+2. Get Tokens
+   curl -v https://example.com/protected_page
+   "Manually Copy the token"
+3. Download Data with Wget
+   wget --load-cookies=my_cookies.txt --header="Authorization: Bearer eyJhbGciOiJIUzI1NilsInR5cC16IkpXVCJ.....your_copied_token...." https://example.com/data_to_download
+
+
+1. wget --load-cookies=cookies.txt --max-redirect=0 <url_of_data_to_download> "Download without Redirects"
+   To include a token in this header=
+   wget --header="Authorization: Bearer <your_token>" --max-redirect=0 <url_of_data_to_download> "Download without Redirects"
