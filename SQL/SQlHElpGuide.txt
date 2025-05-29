@@ -14,7 +14,7 @@ SELECT CONCAT(name, aggregate) AS "NAME Jacobs"
 FROM student WHERE age = 14 OR age = 16;
 
 3.	LOWER() /LCASE()	Returns the argument in lowercase	
-SELECT LOWER('GEEKSFORGEEKS') AS "LowerName1",
+SELECT LOWER('ExampeName') AS "LowerName1",
 
 LOWER('Geeks For Geeks') AS "LowerName2" ;
 
