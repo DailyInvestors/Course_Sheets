@@ -1,0 +1,307 @@
+Interfaces: IDL Interfaces describe  the objects oriented systems. In these systems, "Objects" are entities that have a identity which encapsulates the state and behavior.
+A "Interface" is a definition that declares part of the state and behavior for a object implementing that interface. It is the specification of a set of Interface memebers.
+
+interface Identifier {
+  /* interface_memebers... */
+};
+
+
+1. Interfaces cam be defined to inherit from another interface. If the interface is followed by a U+003(:) and a Identifier, then that Identifier identifies the inherited interface.
+
+interface Identifier : Identifier_of_inherited_interface {
+  /* interface_members... */
+};
+
+
+2.  The order that these memebers appear, play a significant role in property enumertion in the javaScript Binding.
+  
+  2.1: Let the result be << >>
+  2.2: Let interface be I
+  2.3: While interface is not null:
+    2.3.1: Append interface to result
+    2.3.2: Set the interface that / inherits from. If nor, set as "null".
+  2.4: Return Result.
+
+interface Identifier {
+  
+  const type constant_identifier = Administrator;
+
+  attribute type Identifier;
+
+  return_type identifier(/* arguments... */);
+};
+
+
+3. Extended Attributes that are applicable to interfaces:
+CrossOriginIsolated
+Exposed
+Global
+LegacyFactoryFunction
+LegacyNoInterfaceObject
+LegacyOverrideBuiltIns
+LegacyWindowAlias
+SecureContext
+
+
+4. Attributes that are applicable to partial interfaces:
+CrossOriginIsolated
+Exposed
+LegacyOverrideBuiltIn
+SecureContext
+
+
+5. Interfaces must be annoted with an { Exposed } extended attribute.
+
+5.1: Identifier = Identifier of Interface 
+
+5.2: If interface has a { LegacyNameSpace } extended attribute:
+  5.2.1: Let Namespace ve the identity of legacynamespace extended attribute.
+  5.2.2: Return the concatenation of << namespace, Identifier >> with the separator U+002(.)
+  5.3: Return Identifiers {
+  CallbackOrInterfaceOrMixin:
+    callback = CallbackRestOrInterface
+    
+  interface = InterfaceOrMixin
+  InterfaceOrMixin:
+    InterfaceRest
+    MixinReset
+ 
+ Partial =
+     partial PartialDefinition
+
+  PartialDefinition:
+    interface PartialInterfaceOrPartialMixin
+    PartialDictionary
+    MixinRest
+
+  PartialInterfaceOrPartialMixin:
+    PartialInterfaceRest
+    MixinRest
+
+  PartialInterfaceRest:
+    identifier = { PartialInterfaceMemberals } ;
+
+  InterfaceMemebers:
+    PartialInterfaceMember
+    Constructor 
+
+  PartialInterfaceMembers:
+    ExtensAttributeList
+    PartialInterfaceMember
+    PartialInterfaceMembers
+
+  PartialInterfaceMemeber:
+    Const
+    Operation 
+    Stringifier 
+    StaticMember
+    Iterable
+    AsyncIterable
+    ReadOnlyMemeber
+    ReadWriteAttribute
+    ReadWriteMaplike
+    ReadWriteSetlike
+    InheritAttribute
+
+  Inheritance:
+    : Identifier 
+    €
+
+
+6. A Manual Referential of a IDL Fragment that demonstrates of two mutally Referential Interfaces:
+
+// Forward declaration for ChatRoom.
+// This is crucial for circular references in IDL.
+// It tells the IDL compiler that 'ChatRoom' is an interface that will be defined later.
+interface ChatRoom;
+
+// =============================================================
+// Interface 1: ChatUser
+// Represents a participant in a chat system.
+// =============================================================
+interface ChatUser {
+  // Attributes of the ChatUser
+  readonly attribute DOMString      userId;
+  attribute DOMString             username;
+
+  // Method to send a message.
+  // The ChatUser needs to know which ChatRoom to send the message to.
+  void sendMessage(ChatRoom targetRoom, DOMString messageContent);
+
+  // Method to receive a message.
+  // The ChatUser needs to be able to be "told" about a message from a room.
+  void receiveMessage(ChatRoom sourceRoom, DOMString senderUsername, DOMString messageContent);
+
+  // The ChatUser needs to know which ChatRoom instances they are currently participating in.
+  // This attribute creates a reference back to ChatRoom.
+  // A sequence is used to allow a user to be in multiple rooms.
+  sequence<ChatRoom> currentRooms;
+};
+
+
+// =============================================================
+// Interface 2: ChatRoom
+// Represents a room where users can chat.
+// =============================================================
+interface ChatRoom {
+  // Attributes of the ChatRoom
+  readonly attribute DOMString      roomId;
+  attribute DOMString             roomName;
+
+  // Method for a user to join this room.
+  // The ChatRoom needs a reference to the ChatUser joining it.
+  void joinRoom(ChatUser user);
+
+  // Method for a user to leave this room.
+  void leaveRoom(ChatUser user);
+
+  // Method to distribute a message to all users in the room.
+  // This method would typically be called by a ChatUser or a central service.
+  void broadcastMessage(DOMString senderUsername, DOMString messageContent);
+
+  // The ChatRoom needs to keep track of the ChatUser instances currently in it.
+  // This attribute creates a reference back to ChatUser.
+  sequence<ChatUser> participants;
+
+  // Optional: A method to get all participants for display
+  sequence<DOMString> getParticipantUsernames();
+};
+
+
+
+7. A example of a IDL Fragment that definea a simplified version of a DOM interface and a callback option:
+
+// -------------------------------------------------------------
+// Part 1: Simplified DOM-like Interface
+// -------------------------------------------------------------
+
+// Forward declaration for EventTarget and Event, as Element will use them.
+// In WebIDL, these might be defined implicitly or in other files.
+interface EventTarget;
+interface Event;
+
+// Define an interface for a very basic DOM-like element
+interface Element {
+  // Attributes (properties) of the element
+  readonly attribute DOMString tagName;     // e.g., "DIV", "SPAN", "BUTTON"
+  attribute DOMString id;                   // Unique ID of the element
+  attribute DOMString textContent;          // The text inside the element
+
+  // Method to get a child element by its ID
+  Element? getChildById(DOMString childId); // Returns Element or null if not found
+
+  // Method to append a new child element
+  void appendChild(Element newChild);
+
+  // Method to remove a child element
+  void removeChild(Element oldChild);
+
+  // Method to set an attribute (like 'class', 'src', etc.)
+  void setAttribute(DOMString name, DOMString value);
+
+  // Method to get an attribute's value
+  DOMString? getAttribute(DOMString name); // Returns attribute value or null if not present
+
+  // Event handling (integrates with the callback interface)
+  // These methods would be part of the EventTarget interface in a real DOM.
+  void addEventListener(DOMString type, EventListener listener);
+  void removeEventListener(DOMString type, EventListener listener);
+};
+
+
+// A very simplified Event object that would be passed to listeners
+dictionary Event {
+  DOMString type;       // Type of event, e.g., "click", "load"
+  EventTarget? target;  // The element that dispatched the event
+  boolean bubbles;      // Whether the event bubbles up the DOM tree
+  boolean cancelable;   // Whether the default action can be prevented
+};
+
+// A base interface for anything that can be an event target
+// (Element would typically inherit from this in a real DOM)
+interface EventTarget {
+  void addEventListener(DOMString type, EventListener listener);
+  void removeEventListener(DOMString type, EventListener listener);
+  boolean dispatchEvent(Event event);
+};
+
+
+// -------------------------------------------------------------
+// Part 2: Callback Interface
+// -------------------------------------------------------------
+
+// Define a callback interface for handling events.
+// This is analogous to a JavaScript function that serves as an event handler.
+callback interface EventListener {
+  // The single method that will be called when an event occurs.
+  // It takes an 'Event' object as a parameter.
+  void handleEvent(Event event);
+};
+
+
+
+
+8. Throwing a TypeEeror Exception:
+
+// CustomExceptions.idl - Define custom exception types
+
+// A dictionary to hold details about a validation error,
+// which is similar to what a TypeError might contain:
+// - what argument caused the error
+// - what type was expected
+// - what type was received
+dictionary InvalidArgumentDetails {
+  DOMString argumentName;
+  DOMString expectedType;
+  DOMString receivedType;
+  DOMString? message; // Optional additional details
+};
+
+// Define a custom exception specifically for type-related argument errors.
+// This is not a "TypeError" in the literal programming language sense,
+// but it serves the same purpose of indicating an invalid argument type.
+exception InvalidArgumentTypeException {
+  // Contains details about which argument was wrong and why.
+  InvalidArgumentDetails details;
+};
+
+
+// ValidationService.idl - Interface demonstrating potential exception throwing a TypeError Exception:
+
+var node = getNode();
+
+var newNode = {
+  nodeName: "span",
+  parentNode: null,
+  appendChild: function(newchild) {
+    // ...
+  },
+  addEventListner: function(type, listner) {
+    // ...
+  }
+};
+node.appendChild(newNode);
+
+
+
+9. Interface Mixins 
+A Interface Mixin is a definition that declares the state and behavior that can be included by one or more interfaces, and exposed by Objects that implement interfaces that include the interface mixin.
+
+interface mixin identifier {
+  /* mixin_memebers... */
+};
+
+
+9.1:
+interface mixin SomeMixin {
+  /* mixin_members... */
+};
+
+9.1.2: Partial
+partial interface mixin SomeMixin {
+  /* mixin_members... */
+};
+
+
+Will Continue Later:
+ 
