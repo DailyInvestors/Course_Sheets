@@ -21,6 +21,11 @@ Refferences:
 "https://www.google.com"
 "https://www.bugcrowd.com
 "https://github.com"
+"w3"
+"goo.gle
+"Google Developers"
+" A Billion Blogs"
+" College Book"
 "https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html" 
 "https://github.com/danielmiessler/SecLists"
 "https://github.com/beefproject/beef"
