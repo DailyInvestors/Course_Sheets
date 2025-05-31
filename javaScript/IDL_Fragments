@@ -1,0 +1,385 @@
+Description: A IDL Fragment is a sequence of definitions that match the Definition Grammer Symbol. These fragments are unordered.
+
+
+Types: Interfaces, Partial Interface Definitions, Interface Mixins, Partial Mixin Definitions, Callback Functions, Namespaces, Partial Namespace Definitions, Dictionaries, Typedefs, Statements.
+
+#Each Definition can be proceeded by a list of extended attributes. Such as Calling from a Parent Node/Class.
+
+1. Extended Attribute 
+interface identifier {
+  /* interface_members... */
+};
+
+
+2. Example of a Pseudo-IDL Fragement:
+
+// User.idl - Defines the data structure for a User
+
+// Enum for different user roles
+enum UserRole {
+  GUEST = 0;
+  STANDARD_USER = 1;
+  ADMIN = 2;
+  SUPER_ADMIN = 3;
+}
+
+// Struct/Message for a User
+struct User {
+  string id;
+  string username;
+  string email;
+  UserRole role;
+  timestamp created_at;
+  timestamp updated_at;
+}
+
+// Request and Response messages for various operations
+message CreateUserRequest {
+  string username;
+  string email;
+  UserRole initial_role; // Role to assign upon creation
+}
+
+message CreateUserResponse {
+  User user;
+}
+
+message GetUserRequest {
+  string user_id;
+}
+
+message GetUserResponse {
+  User user;
+}
+
+message UpdateUserRequest {
+  string user_id;
+  optional string username;
+  optional string email;
+  optional UserRole role; // To update user's role
+}
+
+message UpdateUserResponse {
+  User user;
+}
+
+message DeleteUserRequest {
+  string user_id;
+}
+
+message DeleteUserResponse {
+  bool success;
+}
+
+// UserService.idl - Defines the service interface
+
+service UserService {
+
+  // Method to create a new user
+  // Authorization Note: Typically requires 'ADMIN' or 'SUPER_ADMIN' role.
+  // A 'STANDARD_USER' might only be able to create their OWN account (if registration is allowed).
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+
+  // Method to retrieve user details
+  // Authorization Note:
+  // - 'STANDARD_USER' can get their own details.
+  // - 'ADMIN' or 'SUPER_ADMIN' can get details of any user.
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+
+  // Method to update user details
+  // Authorization Note:
+  // - 'STANDARD_USER' can update their own details (e.g., email, username, but not role).
+  // - 'ADMIN' or 'SUPER_ADMIN' can update details of any user, including roles.
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+
+  // Method to delete a user
+  // Authorization Note: Strictly 'ADMIN' or 'SUPER_ADMIN' role required.
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+
+  // Example of a more privileged operation
+  // Authorization Note: Only 'SUPER_ADMIN' can execute this.
+  rpc AssignRole(AssignRoleRequest) returns (AssignRoleResponse);
+
+  // Request and Response for AssignRole
+  message AssignRoleRequest {
+    string user_id;
+    UserRole new_role;
+  }
+
+  message AssignRoleResponse {
+    User user; // The user with the newly assigned role
+  }
+}
+
+
+
+3. Identifiers & Names:
+  3.1: A Interface defines the Object or the Service. In this the Message_Service is the Identifier.
+
+interface MessageService {
+  void sendMessage(DOMString recipient, DOMString messageBody);
+  DOMString getMessage(DOMString messageId);
+  sequence<DOMString> getAllMessagesForUser(DOMString userId);
+};
+
+
+  3.2: Partial Interface:
+This allows you to extend off a class.
+
+partial interface MessageService {
+  void deleteMessage(DOMString messageId);
+};
+
+
+  3.3: Namespace:
+Namespace is used to organize and prevent conflicts.
+
+namespace MessagingSystem {
+  interface MessageQueue {
+    long enqueue(DOMString message);
+    DOMString dequeue();
+  };
+
+  dictionary MessageOptions {
+    boolean acknowledge;
+    long timeoutMillis;
+  };
+};
+
+
+  3.4: Partial Namespace:
+This is a example of extending the Namespace.
+
+partial namespace MessagingSystem {
+  interface NotificationService {
+    void sendNotification(DOMString user, DOMString notificationBody);
+  };
+};
+
+
+  3.5: Dictionary:
+Defines a set of named Memebers.
+
+dictionary SendMessageOptions {
+  boolean encryptMessage;
+  long priority; // e.g., 0 for normal, 10 for urgent
+  DOMString attachmentId;
+};
+
+
+  3.6: Partial Dictionary:
+
+partial dictionary SendMessageOptions {
+  DOMString scheduledTime; // For delayed sending
+};
+
+
+  3.7 : Enumertion:
+A Enum defines a name set if custom values.
+
+enum MessageStatus {
+  "PENDING",
+  "SENT",
+  "DELIVERED",
+  "FAILED",
+  "READ"
+};
+
+
+  3.8: Callback:
+Defines the type of function or element, that can be passed as a argument.
+
+callback MessageHandler = void (DOMString messageContent, DOMString senderId);
+
+  3.9: Callback Interface:
+Defines a set of functions that a Object implements, and can be called by another Mechanism.
+
+callback interface NotificationListener {
+  void onNewMessage(DOMString messageId, DOMString sender);
+  void onStatusUpdate(DOMString messageId, MessageStatus status);
+};
+
+3.10: attribute_identifier
+Defining a Interface for a User Profile.
+
+interface UserProfile {
+  // An attribute for the user's ID (read-only)
+  readonly attribute DOMString userId;
+
+  // An attribute for the user's display name (read-write)
+  attribute DOMString displayName;
+
+  // An attribute for the user's email (read-write)
+  attribute DOMString email;
+
+  // An attribute for whether the user is active
+  attribute boolean isActive;
+};
+
+
+3.11: typedef_identifier
+Creates a alias.
+
+// Define an alias for a string representing a UUID
+typedef DOMString UUID;
+
+// Define an alias for an unsigned long, for quantities
+typedef unsigned long Quantity;
+
+// Define an alias for a sequence of bytes (e.g., for binary data)
+typedef sequence<octet> BinaryData;
+
+// Now use these typedefs in an interface or dictionary
+interface Product {
+  readonly attribute UUID productId;
+  attribute DOMString name;
+  attribute Quantity availableStock;
+  attribute BinaryData productImage;
+};
+
+
+3.12: dictionary_member_identifier
+Definea the Structure. This is defining a dictionary.
+
+dictionary UserPreferences {
+  // Member for preferred language
+  DOMString preferredLanguage;
+
+  // Member for dark mode setting (optional)
+  boolean? enableDarkMode; // '?' indicates optional member
+
+  // Member for notification settings, which could be another dictionary
+  // (This would be a nested definition, requiring another dictionary definition)
+  NotificationSettings notificationSettings;
+};
+
+dictionary NotificationSettings {
+  boolean emailNotifications;
+  boolean pushNotifications;
+  sequence<DOMString> subscribedTopics;
+};
+
+3.13: Constants:
+
+const type constant_identifier = Administrator;
+
+3.14: Operations:
+The Identifier token that appears after the return, but before the opening parenthesis determines the identity of this operation.
+
+interface interface_identifier {
+  return_type operation_identifier(/* arguments... */);
+};
+
+
+4. U+005F(_) is used to escape a Identifier from looking like a reserved word. 
+
+
+5. ArgumentNameKeyword:
+In a operation declaration, a Identifier of a argument is specified immediately after its "type". Then it is given either by a Identifier token, or by one of these argument keywords.
+
+interface interface_identifier {
+  return_type operation_identifier(argument_type, argument_identifier /* , ... */);
+};
+
+
+5.1: Argument name Keywords:
+async
+attribute
+callback
+const
+constructor
+deleter
+dictionary 
+enum
+getter
+includes
+inherit
+interface 
+iterable
+maplike
+mixin
+Namespace 
+partial
+readonly
+required 
+setlike
+setter
+static
+stringifier
+typedef
+unrestricted 
+
+Note: If the Identifier token is used, then the Identifier of the operation argument is the value of that token with any U+005(_) removed.
+
+
+6. Identifiers in Definitions && Interface Memebers:
+
+// -------------------------------------------------------------
+// Part 1: Top-level Definitions & their Identifiers
+// -------------------------------------------------------------
+
+// 1. Enum Definition: "BookGenre" is the identifier for this enumeration.
+enum BookGenre {
+  "FICTION",
+  "NON_FICTION",
+  "SCIENCE",
+  "HISTORY",
+  "FANTASY",
+  "MYSTERY"
+};
+
+// 2. Dictionary Definition: "BookDetails" is the identifier for this dictionary.
+dictionary BookDetails {
+  // Members within the dictionary also have identifiers (see Part 2)
+  DOMString title;
+  DOMString author;
+  BookGenre genre; // Using the 'BookGenre' enum defined above
+  unsigned long publicationYear;
+};
+
+// 3. Interface Definition: "LibraryCatalog" is the identifier for this interface.
+interface LibraryCatalog {
+
+  // -------------------------------------------------------------
+  // Part 2: Interface Members and their Identifiers
+  // -------------------------------------------------------------
+
+  // 3a. Attribute Member: "bookCount" is the identifier for this attribute.
+  readonly attribute unsigned long bookCount;
+
+  // 3b. Operation/Method Member: "addBook" is the identifier for this method.
+  // It takes 'details' (an identifier for the input parameter) of type BookDetails.
+  void addBook(BookDetails details);
+
+  // 3c. Operation/Method Member: "findBooksByAuthor" is the identifier for this method.
+  // It takes 'authorName' (an identifier for the input parameter) of type DOMString.
+  // It returns a sequence of 'BookDetails' objects.
+  sequence<BookDetails> findBooksByAuthor(DOMString authorName);
+
+  // 3d. Operation/Method Member: "getBookDetails" is the identifier.
+  // It takes 'bookId' (an identifier for the input parameter) of type DOMString.
+  // It returns a 'BookDetails' object.
+  BookDetails getBookDetails(DOMString bookId);
+
+  // 3e. Operation/Method Member: "removeBook" is the identifier.
+  // It takes 'bookId' (an identifier for the input parameter) of type DOMString.
+  // It returns a boolean indicating success.
+  boolean removeBook(DOMString bookId);
+
+  // 3f. Operation/Method Member: "updateBookGenre" is the identifier.
+  // It takes 'bookId' and 'newGenre' as parameter identifiers.
+  void updateBookGenre(DOMString bookId, BookGenre newGenre);
+};
+
+
+// 4. Another Interface Definition: "UserAccount" is the identifier for this interface.
+interface UserAccount {
+  // 4a. Attribute Member: "username" is the identifier for this attribute.
+  readonly attribute DOMString username;
+
+  // 4b. Operation/Method Member: "borrowBook" is the identifier.
+  void borrowBook(DOMString bookId);
+
+  // 4c. Operation/Method Member: "returnBook" is the identifier.
+  void returnBook(DOMString bookId);
+};
