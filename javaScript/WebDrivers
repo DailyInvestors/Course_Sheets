@@ -91,7 +91,45 @@ Method = POST
 URI = /session/{session id}/webauthn/authenticator/{authenticatorId}/credential
 
 1. Key Values and Pairs:
-credentialId = 
+credentialId = Base64url Encoding = string
+
+isResidentCredential = If True,the client-side discoverable credential is created. If False, only server-side is created = boolean
+#Note: If testing or Developing, test through the client-side. On another device, check the page to see if it went through. If it does go through, your Sanitizer has a mechanism somewhere malfunctioning.
+
+rpld = Relying Party ID credential = string
+
+privateKey = This package contains a single private key encoded with Base64url per [RFC5958]
+
+userHandle 😳 This is associated to the credential encoding. Property may not be defined = string
+
+signCount = This is the initial value for a "signature counter" associated with the "public key source"
+
+largeBlob = This large per-credential blob is associated to with the "public key credentials" = Base64 = string
+
+
+Remote End-Steps
+1. If not a Object, return Error
+2. Let credentialId be the result of the decoding Base64 Encoding parama on the credentialId property.
+3. If Failure, return a WebDriver Error.
+4. Ensure isResidentCredential is the parameters for the ResidentCredential Property.
+5. If thos ResidentCredential is not definedz return WebDriver error
+6. Ensure rpld is inside the rold property.
+7. Let privateKey be the result of the Base64 Encoding on the parameters privateKey property.
+8. If privateKey fails, return WebDriver Error.
+9. Toss more Errors if nothing works 
+10. Let this Authenticator be the Virtual Authenticator matches by the authenticatorId.
+11. More error handling
+Note: Error handling in any language for developing, testing, is essential. However with the battle of languages, Python, Java, Php, Html we have to predict how to Block certain functions and processes from interacting sith your source codes. With tools that use delauth, they purposely cause errors to get inside once you reconnect.
+12. Now let the largeBlob be "null".
+13. Now let .this credential be a new Client-Side discoverable Public Key Credential Source if isResidentCredential is true or otherwise:
+  1. Type = public-key
+  2. id = credentialId
+  3. rpld = rpld 
+  4. userHandle = userHandle
+14. Now to associate a signature counter to this credential with a starting value = to the param "signCount" or 0 if null.
+15. If this largeBlob is not null. Set the large per-credential blob that is associated with the credential to the largeBlob.
+
+Note: Yes, at first this may get confusing. Dont panic. Take a deep Breath, and a short walk. Start with the basics, before attempting advanced. At times, i even catch myself frezzing up, not from attacks or anything else, because with JavaScript anything is Possible.
 
 
 
