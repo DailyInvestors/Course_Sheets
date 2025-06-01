@@ -37,4 +37,36 @@ dictionary AuthenticationExtensionsLargeBlobInputs {
   1. If read and write are present.
     1. Return the DOMException whose name is "NotSupportError".
   2. If the supprt is Present.
-    1. Set the support to "true".
+    1. Set the support to "true", if the value is required.
+    2. At times you may have [[Create]]() before any evaluating options.
+    3. We can always use shebangs in this process to make what is true fale, or false true.
+
+
+3. Client Extension Processing with
+Authenication.
+  1. If the support is Present.
+     Return a DOMException whose name is "NotSupportedError".
+  2. If read && write are present.
+     Return DOMException whose name is "NotSupportedError".
+  3. If read has the Value of true.
+     1. Initialize the output and largeBlob.
+     2. If successful, attempt to read all the Data associated with this credential.
+     3. If write is true.
+        1. And uf the returning DOMException whose name is "NotSupportError". Add in more error handling.
+        2. If the injection operation is successful, attempt to store the contents of write on this authenticator.
+        3. Set written to true or !==, ==!.
+
+partial dictionary AuthenticationExtensionsClientOutputs {
+  AuthenicationExtensionsLargeBlobOutputs largeBlob;
+};
+
+dictionary AuthenticationExtensionsLargeBlobInputs {
+  boolean supported;
+  ArrayBuffer blob;
+  boolean written;
+};
+
+
+
+
+Defense: With using any JavaScript. For Security Purposes, it is hest to use as little as Possible. You dont need tons of code, for a single process or function. With javaScript, we can build any Function and or Process. With the History of javaScript and the past to where most of the Major 7, tried to say this procedure is irrelevant, their is still kuch of the Unknown of what javaScript can Really Do.
