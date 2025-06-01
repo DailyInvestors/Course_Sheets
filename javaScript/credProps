@@ -1,0 +1,23 @@
+Description: credProps: This is a client registration extension. This extension reports through several credential properties upon creation of a registration ceremony.
+
+During this process, one credential property is defined { resident key, client-side key }
+
+1. Boolean Value True indicates the  reauest from the Relying Party.
+partial dictionary AuthticationExtensionsClientInputs {
+  boolean credProps;
+};
+
+#Their is no client-Side processing
+#Set clientExtensionResults["credProps"]["rk"] to the value of this reauireResidentKey param. Use the param that was used in the authenticatorMakeCredential.
+
+dictionary CredentialPropertiesOutput {
+  boolean rk;
+};
+
+partial dictionary AuthenticationExtensionsClientOutputs {
+  CredentialPropertiesOutput credProps;
+};
+
+
+2. "rk"
+This is a optional property. Known as the client-side discoverable credential property. This is a Boolean value that returns the registration ceremony of the Public Key Credential.
