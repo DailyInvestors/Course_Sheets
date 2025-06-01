@@ -1,0 +1,40 @@
+Large Blob Extension
+
+Description: Both client registration and authentication extension allow a Relying Oarty to store opaque data associated with credentials. Most authenticators can only store small Bytes of Data, relying on Third Party ways to hold and Store. While some, Store all the Clients Data in your Storage.
+
+#Example:
+Do to storage issues, instead of storing in a secure place, the function will choose to create a certificate instead of following the proper process.
+
+
+With this certificate system, the certificate needs to be signed over the Public 🗝️. This does not add a ability to write "Blobs" in yhe actual reg. Releying Parties should use the "registration extension" when creating.
+
+
+#On a Security aspect for Defense. Chrome offers experiments that offer to Turn the Blob Settings off in seveal dif ways, including Linux.
+
+1. largeBlob: Registration & Authentication 
+
+partial dictionary AuthenticationExtensionsInputs {
+  AuthenticationExtensionsLargeBlobInputs largeBlob;
+};
+
+enum LargeBlobSupport {
+  "required",
+  "preferred",
+};
+
+dictionary AuthenticationExtensionsLargeBlobInputs {
+    DOMString support;
+    boolean read;
+    BufferSource write;
+};
+
+
+# Enumertions for this specification exist in the Document nation, and as the Registry.
+# The Boolean indicates that the Relying Party would fetch the previously-written blob associated with the asserted credentials.
+
+
+2. Client Extension Processing 
+  1. If read and write are present.
+    1. Return the DOMException whose name is "NotSupportError".
+  2. If the supprt is Present.
+    1. Set the support to "true".
