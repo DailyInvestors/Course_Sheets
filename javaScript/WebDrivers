@@ -16,3 +16,54 @@ Description: Indicates whether the endpoint node supprts the User Verification M
 webauthn: extension: largeBlob = boolean
 Description: Indicates whether this endpoint node supprts the largeBlob extension.
 
+
+1. Virtual Authenticators
+The WebDriver create and interacts with the Virtual Authenticator software. This software implements the Authenticator Model. This is stored in a Virtual Authenticator Database. 
+
+
+Properties:  
+  1. authenticatorId: this authenticator identifies the Virtual Authenticator.
+  2. protocol: This protocol of the Virtual Authenticator speaks: "ctap1/u2f", "ctap2", "ctap2_1". This is known as [Fido-ctap]
+  3. transport: This simulates either the AuthenticatorTransport, or this cross-platform attachment.
+  4. hasResidentKey: If this is set to True, this will support client-side credentials.
+  5. hasUserVerification: If this is set to True, this authencator suports user verification.
+  6. isUserConsenting: This determines the result of ALL user consent authorization gestures. If set to True, this use consent will always be Granted ==! if False this will not be set to !== False.
+  7. isUserVerified: This determines the result of User Verification performed on this Virtual Authenticator.
+  8. String Arrays are Supported.
+
+
+2. Add Virtual Authenticator 
+
+Description: This WebDriver extension command creates a Software Authenticator. 
+
+Method = POST
+URI = /session/{session id}/webauthn/authenticator 
+
+
+  2.1:This Authenticator Configuration is a "JSON Object" oassed to the remote end steps as a parameter. This contains these key pairs:
+
+protocol = string = "ctap1/u2f"* "ctap2", "ctap2_1" = No Default 
+
+transport = string = AuthenticatorTransport values = No Defaults 
+
+hasResidentKey = boolean = True, False = False Default = !==
+
+hasUserVerification = boolean = True, False = False Default 
+
+isUserConsenting = boolean = True, False = True Default 
+
+isUserVerifies = boolean = True, False = False Default 
+
+extensions = String Array = Containg Array if Identifiers = Default Empty Array
+
+uvm = UvmEntries = Up to 3 User_Verification_Method entries 🤔 = Empty Arrays
+
+
+
+Remote End Steps:
+  1. If this param is not JSON, return a Webdrive Error with this WebDriver error cose "invalid argument".
+  2. Let authenticator = New Virtual Authentication 
+  3. If their is No Matching Key, return error
+  4. If is not a valid value, return error
+  5. Set an property key to value authenticatior.
+
