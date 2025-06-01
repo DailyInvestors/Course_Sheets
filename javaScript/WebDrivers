@@ -1,0 +1,18 @@
+Description: This process indicates whether the endpoint node supports all the Virtual Authenticator's commands .
+
+Key: webauthn: virtualAuthenticators
+
+Validating: If the value of a boolean returns a WebDriver Error with a WebDriver error cose invalid argument. Let the serialized be set to this value.
+
+If the value is "true", and the endpont node does not support any Virtual Authenticator commands, the process is unsuccessful 💸 
+
+
+1. Authenticator Extension Capabilities:
+
+webauthn: extension: uvm = boolean
+Description: Indicates whether the endpoint node supprts the User Verification Method.
+
+
+webauthn: extension: largeBlob = boolean
+Description: Indicates whether this endpoint node supprts the largeBlob extension.
+
