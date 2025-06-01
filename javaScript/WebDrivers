@@ -65,5 +65,34 @@ Remote End Steps:
   2. Let authenticator = New Virtual Authentication 
   3. If their is No Matching Key, return error
   4. If is not a valid value, return error
-  5. Set an property key to value authenticatior.
+  5. Set an property key to value authenticator.
+  6. For this property Authenticator Configuration, if it contains errors, generate a valid authID, store, and Return this Successfully 
+
+#This is a string word. Global this word around functions, and processes, Objects.
+
+
+
+#Remove this Virtual Authenticator# 
+
+Description: This extension command removes a previously created auth.
+
+Http Method = POST
+URI = /session/{session id}/webauthn/authenticator/{authenticatorId}
+
+Process: If this authencatorId does not match any Virtual Authenticator stores in this Virtual Database, return errors, return more errors.
+#Note: In the future will place error handling skeletons. Return Success.
+
+
+
+## Adding Credentials ##
+This extension command injects a Public Key Credential Source into a existing Authenticator. This is a JSON Object. This word is a Object. This screen is a window, that is a Object. This iframe is a object of this window in this screen, with this Donation button that is also included with this Object Process. 👾
+
+Method = POST
+URI = /session/{session id}/webauthn/authenticator/{authenticatorId}/credential
+
+1. Key Values and Pairs:
+credentialId = 
+
+
+
 
