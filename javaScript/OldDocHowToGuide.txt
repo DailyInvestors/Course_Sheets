@@ -1,0 +1,730 @@
+ ~ Basic Tags~
+   * <html>:  The root element.
+
+   * <head>: Contains meta-information (not displayed).
+
+   * <title>: Sets the page title (in the browser tab).
+
+   * <body>: Contains the visible content.
+
+   * <h1> to <h6>: Headings (different sizes).
+
+   * <p>: Paragraphs.
+
+   * <a>: Links (e.g., <a href="https://www.example.com">Visit Example</a>).
+
+   * <img>: Images (e.g., <img src="image.jpg" alt="Description">).
+
+   * <div>:  A generic container.
+
+   * <span>:  An inline container.
+
+ * Example:
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Webpage</title>
+</head>
+<body>
+  <h1>Welcome!</h1>
+  <p>This is a paragraph.</p>
+  <img src="myimage.jpg" alt="My Image">
+</body>
+</html>
+
+Part 2: CSS - Styling Your Webpage
+
+ * What is CSS? Cascading Style Sheets styles the HTML elements (colors, fonts, layout).
+
+ ~ Ways to add CSS~
+
+   * Inline: <p style="color:blue;">This is blue.</p> (Least recommended)
+
+   * Internal: Inside <style> tags in the <head>.
+
+   * External: A separate CSS file (best practice).
+
+ * Basic CSS Properties:
+   * color: Text color.
+   * font-size: Text size.
+   * background-color: 
+
+Background color.
+   * margin: Space around an element.
+
+   * padding: Space inside an element.
+
+   * width, height: Element dimensions.
+
+ * Selectors: How you target HTML elements with CSS:
+
+   * p: Selects all <p> elements.
+
+   * .classname: Selects elements with a specific class.
+
+   * #idname: Selects the element with a specific ID.
+
+ * Example (External CSS):
+/* style.css */
+h1 {
+  color: green;
+}
+p {
+  font-size: 16px;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My First Webpage</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Welcome!</h1>
+  <p>This is a paragraph.</p>
+</body>
+</html>
+
+Part 3: JavaScript - Making Webpages Interactive
+
+ * What is JavaScript? A programming language that adds interactivity to webpages (animations, form validation, dynamic content).
+
+ * Adding JavaScript:  Inside <script> tags (usually at the end of the <body>).
+
+ * Variables:  Store data (e.g., let name = "Alice";).
+
+ * Data Types:  Numbers, strings, booleans (true/false).
+
+ * Operators: +, -, *, /, =, == (comparison).
+
+ * Conditional Statements: if, else if, else (control the flow of code).
+
+ * Loops: for, while (repeat code).
+
+ * Functions:  Reusable blocks of code.
+
+ * DOM (Document Object Model):  JavaScript interacts with HTML elements using the DOM.  You can select elements (e.g., document.getElementById("myElement")) and change their content or styles.
+
+ * Events: Things that happen on a webpage (e.g., button click).  JavaScript can respond to events.
+ * Example:
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Page</title>
+</head>
+<body>
+  <button onclick="myFunction()">Click me</button>
+  <p id="demo"></p>
+
+  <script>
+    function myFunction() {
+      document.getElementById("demo").innerHTML = "Hello!";
+    }
+  </script>
+</body>
+</html>
+
+Part 4:  Advanced JavaScript 
+
+ * Objects:  Collections of data and functions (e.g., let person = {name: "Bob", age: 30};).
+ * Arrays: Lists of data (e.g., let colors = ["red", "green", "blue"];).
+
+ * Closures: Functions that have access to variables from their surrounding scope.
+
+ * Asynchronous JavaScript: Handling operations that take time (e.g., fetching data from a server) without blocking the rest of the code.  Promises and async/await are important here.
+
+ * ES6+ Features:  Modern JavaScript syntax and features (e.g., arrow functions, classes, modules).
+
+Part 5:  Security Testing
+
+~Key Concepts and Vulnerabilities~:
+*Keywords: 
+*innerHTML,
+ *document.write,
+ *eval,
+ *setTimeout, 
+*setInterval, 
+*value of(), 
+*to string(), *<script>alert(1)</script> “Simple Injection’,
+*submissions,
+*cookies,
+*session management,
+Check for anti-CSRF Tokens,
+iframe, position: absolute, opacity: O,
+*Look for unusual elements, frames, hooks
+*Database interactions
+* user input
+ * Cookies
+* sessions
+* JWT “ Json Web Tokens
+*localStoreage
+*sessionStoreage
+ *test
+* API calls
+* data transfer
+*JSON, XML
+  *XMLHttpRequest 
+*fetch, 
+*loops.
+   
+ * DOM Manipulation Checks (XSS):
+
+// Example: Check if innerHTML is being used with user-supplied data
+function checkInnerHTML(element, userData) {
+  if (element.innerHTML.includes(userData)) {
+    console.warn("Potential XSS vulnerability: innerHTML used with user data.");
+  }
+}
+
+~~Form Analysis (CSRF):~~
+
+// Example: Check for anti-CSRF token in a form
+function checkForCSRFToken(form) {
+  const tokenInput = form.querySelector('input[name="_csrf"]'); // Adjust name
+  if (!tokenInput) {
+    console.warn("CSRF token missing!");
+  }
+}
+
+ *~~ Cookie Inspection:~~
+
+// Example: Check for secure cookie attributes
+function checkCookie(cookieName) {
+  const cookieValue = document.cookie.split('; ').find(row => row.startsWith(cookieName + '='));
+  if (cookieValue) {
+    const cookieOptions = cookieValue.split('=')[1]; // Parse options
+    if (!cookieOptions.includes('Secure')) {
+      console.warn("Cookie is not marked as Secure.");
+    }
+    if (!cookieOptions.includes('HttpOnly')) {
+      console.warn("Cookie is not marked as HttpOnly.");
+    }
+  }
+}
+
+ *~~ Regular Expressions (for input validation):~~
+
+// Example: Validate email format (basic example – use a robust regex)
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+.    ~~~Adding Objects~~~
+1. Data Storage and Organization:
+
+        ~~~Basic Addition~~~
+// ... some code ...
+
+let myData = {
+  name: "Product X",
+  price: 29.99,
+  quantity: 10,
+  details: {  // Nested object
+    description: "A fantastic product!",
+    weight: "2 lbs"
+  }
+};
+
+// ... more code ...
+
+console.log(myData.name);        // Accessing properties
+console.log(myData.details.description); // Accessing nested properties
+
+myData.quantity++;              // Modifying a property
+myData.newProperty = "someValue"; // Adding a new property
+
+// ... rest of your code ...
+
+ **~~~Creating Multiple Similar Objects (Instances):~~~
+**Multiple Objects
+// Using a class (recommended)
+class Product {
+  constructor(name, price, quantity) {
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+  }
+
+  getTotalValue() {
+    return this.price * this.quantity;
+  }
+}
+
+let product1 = new Product("Laptop", 1200, 5);
+let product2 = new Product("Mouse", 25, 20);
+
+console.log(product1.getTotalValue()); // Output: 6000
+
+// Using a factory function (less common now, but still useful in some cases)
+function createProduct(name, price, quantity) {
+  return {
+    name: name,
+    price: price,
+    quantity: quantity,
+    getTotalValue: function() { // Method within the object
+      return this.price * this.quantity;
+    }
+  };
+}
+
+let product3 = createProduct("Keyboard", 75, 10);
+console.log(product3.getTotalValue()); // Output: 750
+
+
+3.  Modifying Existing Objects:
+
+let myObject = { a: 1, b: 2 };
+
+myObject.c = 3;       // Adding a new property
+
+myObject.a = 10;      // Modifying an existing property
+
+delete myObject.b;   // Deleting a property
+
+console.log(myObject); // Output: { a: 10, c: 3 }
+
+4.  Working with JSON Data:
+If you're getting data from an API or file in JSON format, you'll often need to work with objects:
+
+let jsonData = '{"name": "User1", "age": 25}'; // JSON string
+
+let userObject = JSON.parse(jsonData);  // Convert JSON string to a JavaScript object
+
+console.log(userObject.name); // Output: User1
+
+let newJsonData = JSON.stringify(userObject); //Convert JavaScript object to JSON string
+console.log(newJsonData); // Output: {"name":"User1","age":25}
+
+5.  Adding Methods to Existing Objects:
+let myObject = { x: 10, y: 20 };
+
+myObject.calculateDistance = function() { // Adding a method
+  return Math.sqrt(this.x**2 + this.y**2);
+};
+
+console.log(myObject.calculateDistance()); // Output: 22.3606797749979
+
+Which approach to choose?
+ * Object literals {}: For simple data grouping.
+ * Classes class MyClass { ... }:  For creating multiple objects with the same structure and behavior (instances).  This is the preferred modern way.
+
+ * Factory functions function createObject() { ... }:  An older pattern, but can still be useful in some situations.
+ * JSON methods JSON.parse(), JSON.stringify(): For working with JSON data.
+Example: Object in the middle of a function
+function processData(inputArray) {
+  // ... some code ...
+
+  let results = {}; // Object to store results
+
+  for (let item of inputArray) {
+    // ... some processing ...
+    results[item.id] = {  // Dynamically creating properties
+      value: item.value * 2,
+      status: "processed"
+    };
+    // ... more processing ...
+  }
+
+  // ... more code ...
+
+  return results;
+}
+
+let data = [{ id: 1, value: 5 }, { id: 2, value: 10 }];
+let processedData = processData(data);
+console.log(processedData); // Output: { '1': { value: 10, status: 'processed' }, '2': { value: 20, status: 'processed' } }
+
+
+// Chapter X: Class Extension and Overriding
+
+// This chapter explores how to extend classes (inheritance) and override
+// methods to customize behavior.
+
+// 1. Basic Class Extension
+
+// We start with a simple 'Animal' class.
+
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+
+  makeSound() {
+    console.log("Generic animal sound.");
+  }
+}
+
+// Now, let's create a 'Dog' class that extends 'Animal'.
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    super(name); // Call parent constructor
+    this.breed = breed;
+  }
+}
+
+// Creating objects:
+let myAnimal = new Animal("Generic Animal");
+let myDog = new Dog("Buddy", "Golden Retriever");
+
+myAnimal.makeSound(); // Output: Generic animal sound.
+myDog.makeSound();    // Output: Generic animal sound. (Inherited)
+
+console.log(myDog.name);  // Output: Buddy (Inherited)
+console.log(myDog.breed); // Output: Golden Retriever (Dog-specific)
+
+
+// 2. Overriding Parent Class Methods
+
+// Let's modify the 'Dog' class to override the 'makeSound()' method.
+
+class DogWithOverride extends Animal { // New class to demonstrate overriding
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+  }
+
+  makeSound() { // Overriding the parent method
+    console.log("Woof!");
+  }
+}
+
+let myDogOverridden = new DogWithOverride("Max", "Labrador");
+myDogOverridden.makeSound(); // Output: Woof! (Overridden)
+
+// 3. Adding New Properties and Methods
+
+// Let's add a new property ('tricks') and a method ('learnTrick()') to the 'Dog' class.
+
+class DogWithTricks extends Animal {
+  constructor(name, breed) {
+    super(name);
+    this.breed = breed;
+    this.tricks = []; // Initialize an empty array for tricks
+  }
+
+  makeSound() {
+    console.log("Woof!");
+  }
+
+  learnTrick(trick) {
+    this.tricks.push(trick);
+    console.log(this.name + " learned " + trick + "!");
+  }
+
+  showTricks() {
+    console.log(this.name + " knows these tricks: " + this.tricks.join(", "));
+  }
+}
+
+let myDogTricks = new DogWithTricks("Sparky", "Poodle");
+myDogTricks.makeSound();    // Output: Woof!
+myDogTricks.learnTrick("Fetch");
+myDogTricks.learnTrick("Roll Over");
+myDogTricks.showTricks(); // Output: Sparky knows these tricks: Fetch, Roll Over
+
+
+// 4. More Advanced Example: Inheritance Hierarchy
+
+// Let's create a more complex inheritance hierarchy with a 'Puppy' class.
+
+class Puppy extends DogWithTricks {
+  constructor(name, breed, isCute) {
+    super(name, breed);
+    this.isCute = isCute;
+  }
+
+  makeSound() {
+    console.log("Yip!");
+  }
+
+  play() {
+    console.log(this.name + " is playing!");
+  }
+}
+
+let myPuppy = new Puppy("Lucky", "Golden Retriever", true);
+myPuppy.makeSound(); // Output: Yip! (Overridden again)
+myPuppy.play();      // Output: Lucky is playing!
+myPuppy.learnTrick("Sit");
+myPuppy.showTricks();// Output: Lucky knows these tricks: Sit
+
+// Chapter Summary:
+// - The 'extends' keyword is used for inheritance.
+// - 'super()' calls the parent constructor.
+// - Methods can be overridden to provide specialized behavior.
+// - New properties and methods can be added to child classes.
+// - Inheritance hierarchies can be created for more complex relationships.
+
+
+This comprehensive example covers basic extension, method overriding, adding new properties and methods, and a more advanced inheritance hierarchy. It's designed to be easily incorporated into your book, with clear explanations and comments.  Remember to adjust the names and examples to best suit your book's theme and target audience.
+
+ ~Vanilla javaScript Lexer~~
+Lexer Help Reference Guide
+What is a Lexer?
+
+A lexer's job is to read the source code character by character and group those characters into meaningful units called tokens. Think of it like breaking a sentence into words.
+
+Token Types:
+We'll define some common token types for JavaScript:
+
+ * Identifier: Variable names, function names (e.g., myVariable, console).
+
+ * Number: Numeric literals (e.g., 123, 3.14).
+
+ * String: String literals (e.g., "hello", 'world').
+
+ * Punctuation: Operators, delimiters, and special characters (e.g., +, -, =, (, {, ;).
+
+ * Keyword: Reserved words (e.g., function, if, else, var, let, const).
+
+ * Comment: Single-line (//) or multi-line (/* */) comments.
+
+ * Whitespace: Spaces, tabs, and newlines.
+
+ * Newline: Line break character.
+
+JavaScript Lexer Implementation
+function lex(code) {
+  const tokens = [];
+  let current = 0;
+
+  const keywords = ['function', 'if', 'else', 'var', 'let', 'const', 'return', 'true', 'false', 'null', 'undefined'];
+
+  function isAlpha(char) {
+    return /[a-zA-Z_$]/.test(char);
+  }
+
+  function isNumeric(char) {
+    return /[0-9]/.test(char);
+  }
+
+  function isWhitespace(char) {
+    return /\s/.test(char);
+  }
+
+  while (current < code.length) {
+    let char = code[current];
+
+    if (isWhitespace(char)) {
+      if(char === '\n'){
+        tokens.push({type: 'newline', value: char});
+      } else {
+        tokens.push({type: 'whitespace', value: char});
+      }
+      current++;
+      continue;
+    }
+
+    if (char === '"' || char === "'") {
+      const stringQuote = char;
+      let stringValue = '';
+      current++; // Skip the opening quote
+
+      while (current < code.length && code[current] !== stringQuote) {
+        stringValue += code[current];
+        current++;
+      }
+
+      if (current >= code.length) {
+        throw new Error('Unterminated string literal');
+      }
+
+      tokens.push({ type: 'string', value: stringQuote + stringValue + stringQuote });
+      current++; // Skip the closing quote
+      continue;
+    }
+
+    if (isNumeric(char)) {
+      let numberValue = '';
+      while (current < code.length && isNumeric(code[current])) {
+        numberValue += code[current];
+        current++;
+      }
+      tokens.push({ type: 'number', value: numberValue });
+      continue;
+    }
+
+    if (isAlpha(char)) {
+      let identifierValue = '';
+      while (current < code.length && (isAlpha(code[current]) || isNumeric(code[current]))) {
+        identifierValue += code[current];
+        current++;
+      }
+
+      if (keywords.includes(identifierValue)) {
+        tokens.push({ type: 'keyword', value: identifierValue });
+      } else {
+        tokens.push({ type: 'identifier', value: identifierValue });
+      }
+      continue;
+    }
+
+    if (char === '/' && code[current + 1] === '/') {
+      let commentValue = '';
+      while (current < code.length && code[current] !== '\n') {
+        commentValue += code[current];
+        current++;
+      }
+      tokens.push({ type: 'comment', value: commentValue });
+      continue;
+    }
+
+    if (char === '/' && code[current + 1] === '*') {
+        let commentValue = '';
+        while (current < code.length && (code[current] !== '*' || code[current + 1] !== '/')) {
+            commentValue += code[current];
+            current++;
+        }
+        if(current + 1 >= code.length){
+            throw new Error("Unterminated comment block");
+        }
+        commentValue += code[current] + code[current + 1];
+        current += 2;
+        tokens.push({type: 'comment', value: commentValue});
+        continue;
+
+    }
+
+    tokens.push({ type: 'punctuation', value: char });
+    current++;
+  }
+
+  return tokens;
+}
+
+// Example usage:
+const code = `
+function myFunction(a, b) {
+  // This is a comment
+  /* this is a
+  multi line comment */
+  let sum = a + b;
+  return sum;
+}
+`;
+
+const tokens = lex(code);
+console.log(tokens);
+
+Teaching Points:
+ * Character-by-Character Processing: The lexer iterates through the code one character at a time.
+
+ * Token Recognition: It uses helper functions (isAlpha, isNumeric, isWhitespace) to determine the type of each character.
+
+ * State Management: It maintains a current index to track the position in the code.
+
+ * Token Accumulation: It builds up token values by accumulating characters.
+
+ * Keyword Recognition: It checks for reserved keywords.
+
+ * String Handling: It handles string literals with both single and double quotes.
+
+ * Comment Handling: It recognizes and extracts both single-line and multi-line comments.
+
+ * Error Handling: added error handling for unterminated strings and comments.
+
+ * Newline Handling: new
+lines are now a token.
+
+ * Whitespace Handling: Whitespace is now a token.
+Lexer Help Reference:
+
+ * Input: Raw source code (string).
+
+ * Output: An array of tokens.
+
+ * Token Structure: Each token is an object with a type and a value.
+
+ * Regular Expressions: 
+
+Regular expressions are used to match character patterns.
+
+ * State: The lexer maintains
+ internal state (e.g., the current position) to keep track of its progress.
+
+ * Error Handling: A robust lexer should handle syntax errors gracefully.
+
+ * Keywords: A list of reserved words in the language.
+This lexer provides a foundational understanding of how code is broken down into tokens. You can expand upon this to handle more complex JavaScript syntax.
+
+~~~Prettier javaScript~~~
+
+Core Concepts:
+ * Parsing: We'll need to break down the JavaScript code into a structure our formatter can understand (a simplified Abstract Syntax Tree, or AST).
+
+ * Traversal: We'll walk through this structure, applying formatting rules.
+
+ * Generation: We'll rebuild the code string with the applied formatting.
+
+Simplified Example (Focusing on Indentation):
+
+function basicPrettier(code) {
+  let indentLevel = 0;
+  const indentSize = 2; // Spaces per indent
+  const lines = code.split('\n');
+  const formattedLines = [];
+
+  for (const line of lines) {
+    let trimmedLine = line.trim();
+    if (trimmedLine.endsWith('{')) {
+      formattedLines.push(' '.repeat(indentLevel * indentSize) + trimmedLine);
+      indentLevel++;
+    } else if (trimmedLine.startsWith('}')) {
+      indentLevel--;
+      formattedLines.push(' '.repeat(indentLevel * indentSize) + trimmedLine);
+    } else {
+      formattedLines.push(' '.repeat(indentLevel * indentSize) + trimmedLine);
+    }
+  }
+
+  return formattedLines.join('\n');
+}
+
+// Example usage:
+const messyCode = `
+function myFunc() {
+if (true) {
+console.log("hello");
+}
+}
+`;
+
+const formattedCode = basicPrettier(messyCode);
+console.log(formattedCode);
+
+Explanation:
+
+ * basicPrettier(code):
+   * Takes the JavaScript code as a string.
+
+   * indentLevel: Tracks the current indentation level.
+
+   * indentSize: number of spaces for each indent.
+
+   * lines: splits the code into an array of lines.
+
+   * formattedLines: an array to store the formatted lines.
+
+ * Looping Through Lines:
+   * We iterate through each line of the input code.
+
+   * trimmedLine: removes leading and trailing spaces from the line.
+
+   * Indentation Logic:
+     * If a line ends with { (indicating a block start), we add the appropriate indentation and increment indentLevel.
+
+     * If a line starts with } (indicating a block end), we decrement indentLevel and add the indentation.
+
+     * Otherwise, we add the current indentation
+.
+   * formattedLines.push(): add each formatted line to the array.
+
+ * Joining Lines:
+   * formattedLines.join('\n'): joins the formatted lines back into a single string with newline characters.
+
+Enhancements (Further Steps):
+
+ * More Robust Parsing:
+   * Use a proper JavaScript parser (like acorn or esprima) to generate an AST.
