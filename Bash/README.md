@@ -1,0 +1,1 @@
+This section is destinated to BASH, the Linux Scripting Language. This will eventually hold, tesching leasons, How To Guides and a Variety of Skeletons to help automate any essential security or development process. This is for educational purposes only. If in usez ensure you have Full Permission to run these skeletons.
