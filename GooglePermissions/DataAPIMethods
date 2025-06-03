@@ -1,0 +1,13 @@
+1. runReport
+2. batchRunReports
+3. runPivotReport
+4. batchRunPivotReports
+5. getMetadata
+6. checkCompatibility 
+7. runRealtimeReport
+8. properties.audienceExports
+9. properties.recurringAudienceLists
+10. runFunnelReport
+
+Reference: 
+developers.google.com
