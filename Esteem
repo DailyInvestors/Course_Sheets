@@ -1,0 +1,19 @@
+Description: Instructions for the Full Install of the one of the most powerful tools ever. Step by Step instructions. Took me a few months to get it, No AI taught ne this one lol.
+
+
+1.git clone https://github.com/Esteemaudit-Metasploit 
+
+2.cd ~/.msf4/modules
+mkdir exploits
+cd exploits
+mkdir windows
+cd windows
+mkdir rdp
+
+3.cp ~/Esteemaudit-Metasploit/esteemaudit.rb ./ 
+
+4.cp /home/kali/Esteemaudit-Metasploit/esteemaudit.rb ./
+
+5.cp ~/Esteemaudit-Metasploit/esteemaudit.rb ./rdp/
+
+6. use exploit/windows/rdp/esteemaudit
