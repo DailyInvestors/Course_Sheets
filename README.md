@@ -34,3 +34,11 @@ Refferences:
 "https://github.com/DailyInvestors:
 "https://soloist.ai/dailyinvestors"
 "https://github.com/redhatofficial"
+Gemini 
+ChatGPT
+GitHub
+DeepSeek
+Perplexity
+Merlin
+Bard
+And unlike alot of developers, my skills with These AIs, are on a entirely different level. Not by APIs, but by Prompts. Why people try to learn these, I have had them mastered since Day 1. They way I talk, text, write, and think. They listen,lol frfr.
