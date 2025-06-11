@@ -1,0 +1,93 @@
+Description: ExploitDB in Python 
+
+
+Installation:
+Python
+Must Have Python 
+pip3 install pyExploitDb
+
+
+
+
+
+
+
+
+
+# Import the PyExploitDb class
+from pyExploitDb import PyExploitDb
+
+# Create an instance of the class
+pEdb = PyExploitDb()
+
+# (Optional) Enable debug output to see what's happening
+pEdb.debug = True
+
+# Open the local Exploit-DB files (this will download them if they don't exist
+# or update them if they are outdated. This can take some time on first run.)
+print("Opening Exploit-DB files and updating if necessary...")
+pEdb.openFile()
+print("Exploit-DB files loaded.")
+
+# --- Now you can perform searches ---
+
+# Example 1: Search for an exploit by CVE ID
+cve_id = "CVE-2023-2825" # Example CVE (replace with one you're interested in)
+print(f"\nSearching for exploits related to CVE: {cve_id}")
+results_cve = pEdb.searchCve(cve_id)
+if results_cve:
+    for result in results_cve:
+        print(f"  - Exploit-DB ID: {result.get('edbid')}")
+        print(f"    File: {result.get('exploit')}")
+        print(f"    Date: {result.get('date')}")
+        print(f"    Author: {result.get('author')}")
+        print(f"    Platform: {result.get('platform')}")
+        print(f"    Type: {result.get('type')}")
+else:
+    print(f"  No exploits found for CVE: {cve_id}")
+
+# Example 2: Search for a CVE ID by Exploit-DB ID
+edb_id = "51743" # Example EDB ID (replace with one you're interested in)
+print(f"\nSearching for CVEs related to Exploit-DB ID: {edb_id}")
+results_edb = pEdb.searchEdbid(edb_id)
+if results_edb:
+    for result in results_edb:
+        print(f"  - CVE: {result.get('cve')}")
+        print(f"    Title: {result.get('description')}")
+else:
+    print(f"  No CVEs found for Exploit-DB ID: {edb_id}")
+
+# Example 3: Search for exploits by keyword
+keyword = "webmin"
+print(f"\nSearching for exploits with keyword: '{keyword}'")
+results_keyword = pEdb.searchAll(keyword)
+if results_keyword:
+    for result in results_keyword:
+        print(f"  - Exploit-DB ID: {result.get('edbid')}, CVE: {result.get('cve', 'N/A')}, Description: {result.get('description', 'N/A')}")
+else:
+    print(f"  No exploits found for keyword: '{keyword}'")
+
+# Example 4: Get details of a specific exploit file (requires the exploit-database to be cloned)
+# The `openFile()` method by default clones the full Exploit-DB repo into a local path.
+# You can then construct the path to the exploit file and read it.
+# This part assumes you have the full Exploit-DB cloned locally.
+# The `exploit` key in the search result gives you the path relative to the exploit-database clone.
+
+# For example, if you found EDBID 45447 (from the GitHub README example)
+# exploit_path_relative = "./exploit-database/exploits/php/webapps/45447.txt"
+# This path is relative to the `pyExploitDb` data directory where it clones exploit-database.
+# You'd need to know where pyExploitDb stores its data to access the raw file.
+# pEdb.exploitdb_path will give you the root of the cloned Exploit-DB repository.
+# You would then join it with the `exploit` value from a search result.
+
+# Example:
+# results_cve_specific = pEdb.searchCve("CVE-2018-14592")
+# if results_cve_specific:
+#    first_exploit = results_cve_specific[0]
+#    full_exploit_path = os.path.join(pEdb.exploitdb_path, first_exploit.get('exploit'))
+#    print(f"\nAttempting to read exploit file: {full_exploit_path}")
+#    try:
+#        with open(full_exploit_path, 'r') as f:
+#            print(f.read()[:500] + "...") # Print first 500 chars
+#    except FileNotFoundError:
+#        print("Exploit file not found locally. Ensure exploit-database is fully cloned.")
