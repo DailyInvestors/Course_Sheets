@@ -1,0 +1,137 @@
+Going through one of ly kany notepads. Python Cheats
+
+
+
+* = multiple
+/ = divide
+len() = returns & argues
+.append 
+  {} = key value
+Hello World = print
+for my_var in my_lists: for loop
+live file save any .py
+Run: python file.py
+str ("true").title()
+str(True).lower() == "True'
+bool (str("true,").title())
+  while
+
+,DS_STORE
+
+#Byte-Compiled/Optimized/dllfiles
+_pycache/
+*_pycache_/
+*.py[cod]
+*$py.class
+#C Extensions 
+* .so
+# Distribution/packaging 
+.Python
+build/
+develop-eggs/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+store/python-wheels
+*.egg-info
+.installed.cfg
+*.egg
+MANIFEST
+#pyInstaller
+*.manifist
+*.spec
+
+#Installer Logs
+pip-log.txt
+pip-delete-this-dictionary.tct
+
+htmlcov/
+.tox/
+.nox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py.cover
+.hypurhesis
+.pytext_cache
+cover/
+
+#Translation
+*.mo
+*.por
+
+#Djangi
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+#Flask
+instance/
+.websssers-cache
+
+#Scrapy
+.scrapy
+
+#Sphinx
+docs/_build/
+
+#Pybuilder
+.pybuilder
+
+#Jupyter
+.jpynb_checkpoints
+
+#Ipython
+ipython_config.py
+
+#Celery
+celerybeat-schedule
+celery eat.pid
+
+#SageMath
+*.Sage.py
+
+#Enviroment
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+#Spyder
+.spyderproject
+.spyproject
+
+#Rope
+.ropeproject
+
+#mkdocs
+/site
+
+#mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+#Pyre
+.pyre/
+
+#pytype
+.pytype/
+
+#Cython
+cython_debug/
+
+
+As Always, we appreciate any and all donations. Thank You, for you support on Our Research Mission.
