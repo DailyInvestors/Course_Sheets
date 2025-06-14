@@ -751,7 +751,7 @@ gcc -static -o exit exit c
 Now disassemble gdb exit
 
 
-56. system(), exit(), the_function(), exit_group(),
+56. system(), exit(), the_function(), exit_group(), return_input()
 
 Section .text
   
