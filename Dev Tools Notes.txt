@@ -739,7 +739,20 @@ document.nody.appendChild(d);
 int number;
   "Code Here"
 number++;
-  
+
+
+55. main()
+{
+  exit(0);
+}
+
+gcc -static -o exit exit c
+
+Now disassemble gdb exit
+
+
+56. system(), exit(), the_function(), exit_group(),
+
 
 
 
