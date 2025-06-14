@@ -1,0 +1,116 @@
+
+Description: Various Methods
+
+
+ ✓ printf 
+ ✓ fprintf - Formatted output to a file stream.
+ ✓ sprintf - Formatted output to a string.
+ ✓ snprintf - Formatted output to a string with size limit (safer).
+ ✓ scanf - Formatted input from stdin.
+ ✓ fscanf - Formatted input from a file stream.
+ ✓ sscanf - Formatted input from a string.
+ ✓ getchar - Read a single character from stdin.
+ ✓ putchar - Write a single character to stdout.
+ ✓ fgets - Read a line from a file stream (safer than gets).
+ ✓ fputs - Write a string to a file stream.
+ ✓ fopen - Open a file.
+ ✓ fclose - Close a file.
+ ✓ fread - Read data from a file.
+ ✓ fwrite - Write data to a file.
+ ✓ fseek - Reposition file pointer.
+ ✓ ftell - Get current file pointer position.
+ ✓ rewind - Set file pointer to beginning.
+ ✓ perror - Print system error message.
+ ✓ feof - Check end-of-file indicator.
+ ✓ ferror - Check error indicator.
+ ✓ clearerr - Clear error and EOF indicators.
+ ✓ fflush - Flush a file stream.
+
+
+ ° malloc - Allocate memory.
+ ° calloc - Allocate and clear memory.
+ ° realloc - Resize allocated memory.
+ ° free - Deallocate memory.
+ ° memcpy - Copy memory area.
+ ° memmove - Copy memory area (handles overlapping).
+ ° memset - Fill memory with a constant byte.
+ ° memcmp - Compare memory areas.
+ ° memchr - Search memory for a character.
+III. String Manipulation (string.h, stdlib.h)
+ ° strcpy - Copy string (unsafe).
+ ° strncpy - Copy string with size limit (safer).
+ ° strcat - Concatenate strings (unsafe).
+ ° strncat - Concatenate strings with size limit (safer).
+ ° strcmp - Compare strings.
+ ° strncmp - Compare strings with size limit.
+ ° strlen - Get string length.
+ ° strchr - Find first occurrence of character in string.
+ ° strrchr - Find last occurrence of character in string.
+ ° strstr - Find first occurrence of substring.
+ ° strtok - Tokenize string (not reentrant, problematic).
+ ° strtok_r - Reentrant string tokenizer.
+ ° strerror - Get error message string.
+ ° atoi - Convert string to integer.
+ ° atol - Convert string to long integer.
+ ° atoll - Convert string to long long integer.
+ ° atof - Convert string to double.
+ ° strtol - Convert string to long integer with error checking.
+ ° strtoul - Convert string to unsigned long integer with error checking.
+ ° strtod - Convert string to double with error checking.
+IV. Process Control (unistd.h, stdlib.h, sys/wait.h)
+ ° fork - Create a new process.
+ ° execve - Execute a program.
+ ° execl, execv, execle, execvp, execvpe - Variants of exec.
+ ° wait - Wait for any child process to terminate.
+ ° waitpid - Wait for a specific child process to terminate.
+ ° exit - Terminate the current process normally.
+ ° _exit - Terminate the current process immediately.
+ ° getenv - Get environment variable.
+ ° setenv - Set environment variable.
+ ° unsetenv - Unset environment variable.
+ ° system - Execute a shell command.
+ ° getpid - Get process ID.
+ ° getppid - Get parent process ID.
+ ° sleep - Suspend execution for a specified number of seconds.
+ ° usleep - Suspend execution for a specified number of microseconds (deprecated, use nanosleep).
+V. File System Operations (unistd.h, sys/stat.h, fcntl.h)
+ ° open - Open a file descriptor.
+ ° close - Close a file descriptor.
+ ° read - Read from a file descriptor.
+ ° write - Write to a file descriptor.
+ ° lseek - Reposition file descriptor offset.
+ ° stat - Get file status.
+ ° fstat - Get file status from file descriptor.
+ ° lstat - Get file status from symbolic link.
+ ° mkdir - Create a directory.
+ ° rmdir - Remove a directory.
+ ° unlink - Delete a name and possibly the file it refers to.
+ ° rename - Change the name or location of a file.
+ ° chmod - Change file permissions.
+ ° chown - Change file owner and group.
+
+
+ ∆ time - Get current time as time_t.
+ ∆ ctime - Convert time_t to string.
+ ∆ gmtime - Convert time_t to UTC tm structure.
+ ∆ localtime - Convert time_t to local tm structure.
+ ∆ mktime - Convert tm structure to time_t.
+ ∆ strftime - Format time into a string.
+ ∆ difftime - Compute difference between two time_t values.
+VII. Utility & Miscellaneous (stdlib.h, unistd.h, limits.h, etc.)
+ ∆ abs, labs, llabs - Absolute value of integer types.
+ ∆ rand - Generate a pseudo-random integer.
+ ∆ srand - Seed the pseudo-random number generator.
+ ∆ qsort - Quicksort array.
+ ∆ bsearch - Binary search array.
+ ∆ getopt - Parse command-line options.
+ ∆ gethostname - Get the name of the current host.
+ ∆ sysconf - Get system configuration information.
+ ∆ exit - Terminate process (already listed, but important enough to reinforce).
+VIII. Concurrency (pthread.h - often linked separately, but core to libc functionality on many systems)
+ ∆ pthread_create - Create a new thread.
+ ∆ pthread_join - Wait for a thread to terminate.
+ ∆ pthread_mutex_init
+ ∆ pthread_mutex_lock,  
+∆ pthread_mutex_unlock - Basic mutex operations for thread synchronization.
+
