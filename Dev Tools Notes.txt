@@ -767,6 +767,22 @@ nasm -f elf exit_shellcode.asm
 
 objdump -d exit_shellcode
 
+57. Elf Binaries 
+Section .text
+ 
+  global _start
+_start:
+  mov ebx,0
+  mov eax,1
+  int 0x80
+
+Now to use the Nasm Assembler 
+nasm -f elf exit_shellcode.asm
+id -o exit_shellcode exit shellcode.o
+
+Now to Run
+objdump -d exit_shellcode
+
 
 
 
