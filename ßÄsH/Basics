@@ -1,0 +1,119 @@
+
+A Basic Guide to Bash: 
+
+
+Shells
+
+ 
+How to change your default shell:
+  Check current shell: echo $SHELL
+ 
+View available shells: cat /etc/shells
+ 
+ Change shell: chsh -s /path/to/new/shell (e.g., chsh -s /usr/bin/zsh). You'll need to log out and log back in for the change to take effect.
+
+2. Aliases: BASIC
+Where Aliases Live:
+  ~/.bashrc: For interactive Bash shells (most common place for personal aliases).
+ 
+ ~/.bash_profile or ~/.profile: Often sourced by login shells. 
+
+~/.bashrc is usually sourced from ~/.bash_profile for consistency.
+
+  System-wide: /etc/bash.bashrc or files in /etc/profile.d/ (for aliases available to all users).
+Key Considerations for Aliases:
+
+Different Types of Aliases & Examples:
+
+  Basic Shortcuts (Saving Keystrokes):
+    alias ll='ls -lh' (long format, human-readable sizes)
+   
+ alias la='ls -A' (list all files, excluding . and ..)
+   
+ alias lsa='ls -lhA' (combination)
+   
+ alias cls='clear' (common from Windows/DOS)
+   
+ alias ..='cd ..'
+   
+ alias ...='cd ../..'
+   
+ alias c='clear'
+   
+ alias h='history'
+   
+ alias dfh='df -h' (disk free, human-readable)
+ 
+ Safeguard Aliases: BASIC
+   
+ alias rm='rm -i' (interactive remove, prompts before deleting)
+   
+ alias mv='mv -i' (interactive move)
+   
+ alias cp='cp -i' (interactive copy)
+   
+ alias mkdir='mkdir -p' (create parent directories if they don't exist)
+   
+ alias chmod='chmod -c' (verbose output on changes)
+ 
+ Command Combinations/Pipelines:
+    
+alias grepip='grep -i -r' (case-insensitive, recursive grep)
+   
+ alias psg='ps aux | grep -v grep | grep -i' (find processes, exclude the grep process itself)
+   
+ alias untar='tar -xvzf' (extract a gzipped tar archive)
+   
+ alias myip='curl ifconfig.me' (quickly get your external IP address)
+   
+ alias weather='curl wttr.in' (quick weather report)
+   
+ alias duhc='du -sh * | sort -rh' (disk usage human-readable, sort by size)
+ 
+ Application-Specific Aliases (e.g., Git, Docker):
+   
+ Git:
+     * alias gs='git status -sb' (short branch status)
+     * alias ga='git add .'
+     * alias gc='git commit -m'
+     * alias gp='git push'
+     * alias gl='git log --oneline --graph --decorate' (prettier log)
+     * alias gcl='git clone'
+   
+ Docker:
+     * alias dco='docker compose' (if using docker compose plugin)
+     * alias dcup='docker compose up -d'
+     * alias dlogs='docker compose logs -f'
+     * alias dps='docker ps'
+     * alias drmi='docker rmi $(docker images -q)' (remove all images - use with extreme caution!)
+ 
+ Aliases with Arguments (a bit more advanced, often better as functions):
+   
+   ✓ Example (Better as a function, but showing the concept):
+     
+✓ alias mcd='mkdir $1 && cd $1'  {This is brittle, use a function instead() {
+
+     Function (recommended for arguments):
+     mcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+     
+✓.    This mcd function will create a directory and then change into it, handling spaces in names correctly.
+Managing Aliases:
+ 
+ Viewing All Aliases: Just type alias
+ 
+ Viewing a Specific Alias: alias ll
+ 
+ Removing an Alias: unalias ll (temporary until you reload your shell config)
+
+Adding Aliases to your ~/.bashrc:
+ 1
+ Open ~/.bashrc with your favorite text editor: nano ~/.bashrc or vim ~/.bashrc
+ 2. Add your alias lines (e.g., alias my_alias='my_command').
+ 3. Save the file.
+ 4. Apply changes without restarting: source ~/.bashrc
+
+
+By using Alias in the correct formation, you can achieve a workflow that you never knew was Possible. While every Language has their strengths and weaknesses, BASH is BASH.
