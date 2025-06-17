@@ -1,0 +1,3 @@
+Description: A Variety of Bash Tips and Tricks. The References from Personal Memory, AIs, Blogs. This folder will initially have more, and will all be added into a Page. If you wish to pitch in, Feel Free. If you make $ off of it, lol we appreciate any and All Donations. If you wish for your Business Name to Appear Here, Contact Us Through GitHub. If you wish to Sponsor us for any other Ethical Acts, such as Shows, Development, Testing, Patching, Repairng, Not Attacking please Contact us Through GitHub. Thank You
+Daily
+No this is not apart of any Bug Program. You hack me, your wasting your Time. JS
