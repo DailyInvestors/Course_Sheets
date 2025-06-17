@@ -1,0 +1,334 @@
+
+API Testing with Bash and React
+
+1. API Testing 
+
+Prerequisites:
+  curl (usually pre-installed on Linux/macOS)
+  jq (install via your package manager: sudo apt-get install jq on 
+
+Debian/Ubuntu, brew install jq on 
+
+macOS, sudo yum install jq on CentOS/RHEL)
+
+Basic GET Request & Status Code Check {
+
+#!/bin/bash
+
+# --- Configuration ---
+API_URL="https://jsonplaceholder.typicode.com/todos/1"
+EXPECTED_STATUS_CODE=200
+
+# --- Make GET Request and get HTTP status code ---
+echo "Testing GET: $API_URL"
+HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$API_URL")
+
+echo "HTTP Status Code: $HTTP_STATUS"
+
+# --- Validate Status Code ---
+if [ "$HTTP_STATUS" -eq "$EXPECTED_STATUS_CODE" ]; then
+    echo "GET Test: SUCCESS (Status Code $HTTP_STATUS)"
+    exit 0
+else
+    echo "GET Test: FAILED (Expected $EXPECTED_STATUS_CODE, Got $HTTP_STATUS)"
+    exit 1
+fi
+
+}
+
+
+2. GET Request with JSON Parsing {
+
+#!/bin/bash
+
+# --- Configuration ---
+API_URL="https://jsonplaceholder.typicode.com/todos/1"
+EXPECTED_USER_ID=1
+EXPECTED_TITLE="delectus aut autem"
+
+# --- Make GET Request and capture JSON response ---
+echo "Testing GET and JSON parsing for: $API_URL"
+RESPONSE=$(curl -s "$API_URL")
+
+# --- Parse JSON using jq ---
+USER_ID=$(echo "$RESPONSE" | jq '.userId')
+TITLE=$(echo "$RESPONSE" | jq -r '.title') # -r for raw string output
+
+echo "Response User ID: $USER_ID"
+echo "Response Title: $TITLE"
+
+# --- Validate JSON fields ---
+if [ "$USER_ID" -eq "$EXPECTED_USER_ID" ] && [ "$TITLE" == "$EXPECTED_TITLE" ]; then
+    echo "GET Test with JSON Parse: SUCCESS"
+    exit 0
+else
+    echo "GET Test with JSON Parse: FAILED"
+    if [ "$USER_ID" -ne "$EXPECTED_USER_ID" ]; then
+        echo "  User ID mismatch: Expected $EXPECTED_USER_ID, Got $USER_ID"
+    fi
+    if [ "$TITLE" != "$EXPECTED_TITLE" ]; then
+        echo "  Title mismatch: Expected '$EXPECTED_TITLE', Got '$TITLE'"
+    fi
+    exit 1
+fi
+
+}
+
+
+3.POST Request with JSON Payload {
+
+#!/bin/bash
+
+# --- Configuration ---
+API_URL="https://jsonplaceholder.typicode.com/posts"
+PAYLOAD='{"title": "foo", "body": "bar", "userId": 1}'
+EXPECTED_ID_MIN=100 # jsonplaceholder typically returns IDs > 100 for new posts
+
+# --- Make POST Request ---
+echo "Testing POST to: $API_URL"
+echo "Payload: $PAYLOAD"
+
+RESPONSE=$(curl -s -X POST \
+                -H "Content-Type: application/json" \
+                -d "$PAYLOAD" \
+                "$API_URL")
+
+HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+                    -H "Content-Type: application/json" \
+                    -d "$PAYLOAD" \
+                    "$API_URL")
+
+echo "HTTP Status Code: $HTTP_STATUS"
+echo "Response: $RESPONSE"
+
+# --- Validate Response and ID ---
+NEW_ID=$(echo "$RESPONSE" | jq '.id')
+if [ "$HTTP_STATUS" -eq 201 ] && [ "$NEW_ID" -gt "$EXPECTED_ID_MIN" ]; then
+    echo "POST Test: SUCCESS (New ID: $NEW_ID)"
+    exit 0
+else
+    echo "POST Test: FAILED"
+    if [ "$HTTP_STATUS" -ne 201 ]; then
+        echo "  Expected status 201, got $HTTP_STATUS"
+    fi
+    if [ "$NEW_ID" -le "$EXPECTED_ID_MIN" ]; then
+        echo "  ID ($NEW_ID) not greater than $EXPECTED_ID_MIN"
+    fi
+    exit 1
+fi
+
+}
+
+
+2. Bash and React: 
+ Note: Bash is a server-side/CLI tool. React is client-side.
+
+  Development Workflow:
+   ¹ Running npm or yarn commands: Bash scripts can automate npm install, npm start, npm build, npm test.
+   ² Environment setup: Setting up .env files, configuring local development servers.
+   ³ Deployment: Building React apps, deploying static assets to a server, or pushing to a CDN.
+   ⁴ Testing utilities: Running end-to-end tests (e.g., Cypress, Playwright) that involve spinning up a React app and then interacting with it.
+   ⁵ Pre-commit hooks: Using tools like Husky to run linters or tests before a commit.
+
+Example: A Bash Script to Build and Serve a React App (for testing/local development)
+Let's say you have a React app in a directory my-react-app {
+
+
+#!/bin/bash
+
+# --- Configuration ---
+REACT_APP_DIR="./my-react-app"
+BUILD_OUTPUT_DIR="$REACT_APP_DIR/build"
+PORT=3000
+SERVER_PROCESS_ID="" # To store the PID of the server
+
+# --- Functions ---
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"
+}
+
+cleanup() {
+    log "Performing cleanup..."
+    if [ -n "$SERVER_PROCESS_ID" ]; then
+        log "Killing server process $SERVER_PROCESS_ID"
+        kill "$SERVER_PROCESS_ID" 2>/dev/null
+    fi
+    log "Cleanup complete."
+    exit 0
+}
+
+# --- Main Script ---
+
+trap cleanup SIGINT SIGTERM # Trap Ctrl+C and other termination signals
+
+log "Starting React App Build & Serve Script..."
+
+# 1. Navigate to React App directory
+if [ ! -d "$REACT_APP_DIR" ]; then
+    log "Error: React app directory '$REACT_APP_DIR' not found."
+    exit 1
+fi
+cd "$REACT_APP_DIR" || { log "Error: Could not change directory to $REACT_APP_DIR"; exit 1; }
+
+# 2. Install dependencies (if needed)
+if [ ! -d "node_modules" ]; then
+    log "Node modules not found. Installing dependencies..."
+    npm install || { log "Error: npm install failed."; exit 1; }
+    log "Dependencies installed."
+fi
+
+# 3. Build the React app
+log "Building React application..."
+npm run build || { log "Error: React build failed."; exit 1; }
+log "React application built successfully to $BUILD_OUTPUT_DIR."
+
+# 4. Serve the built application (using http-server for example)
+# Install http-server globally if you don't have it: npm install -g http-server
+if ! command -v http-server &> /dev/null; then
+    log "http-server not found. Please install it: npm install -g http-server"
+    cleanup
+fi
+
+log "Starting static server on port $PORT for '$BUILD_OUTPUT_DIR'..."
+# Run http-server in the background, redirecting output to a log file
+http-server "$BUILD_OUTPUT_DIR" -p "$PORT" > ../server.log 2>&1 &
+SERVER_PROCESS_ID=$! # Get the PID of the background process
+log "Server started with PID: $SERVER_PROCESS_ID. Logs in ../server.log"
+log "React app should be accessible at http://localhost:$PORT"
+
+# 5. Keep the script running (optional, for continuous serving)
+log "Press Ctrl+C to stop the server and exit."
+wait $SERVER_PROCESS_ID # Wait for the server process to finish (or be killed)
+
+log "Script finished."
+
+✓How to use this script:
+ 1. Create a directory (e.g., my-project).
+ 2. Inside my-project, create a React app: npx create-react-app my-react-app.
+ 3. Save the Bash script above as serve_react_app.sh in the my-project directory (next to my-react-app).
+ 4. Make it executable: chmod +x serve_react_app.sh.
+ 5. Run it: ./serve_react_app.sh.
+ 6. Open http://localhost:3000 in your browser.
+ 7. Press Ctrl+C to stop the server.
+
+
+3. Logging Procedures:
+We already have a simple log function. Lets upgrade:
+
+#!/bin/bash
+
+# --- Configuration for Logging ---
+LOG_FILE="./script_output.log"
+LOG_LEVEL_DEBUG=1
+LOG_LEVEL_INFO=2
+LOG_LEVEL_WARN=3
+LOG_LEVEL_ERROR=4
+
+CURRENT_LOG_LEVEL=$LOG_LEVEL_INFO # Set desired log level (e.g., INFO, DEBUG)
+
+# --- Logging Function ---
+log_message() {
+    local level="$1"
+    local message="$2"
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+    case "$level" in
+        "DEBUG") level_num=$LOG_LEVEL_DEBUG ;;
+        "INFO") level_num=$LOG_LEVEL_INFO ;;
+        "WARN") level_num=$LOG_LEVEL_WARN ;;
+        "ERROR") level_num=$LOG_LEVEL_ERROR ;;
+        *) level_num=$LOG_LEVEL_INFO ;; # Default to INFO
+    esac
+
+    if [ "$level_num" -ge "$CURRENT_LOG_LEVEL" ]; then
+        echo "[$timestamp] [$level] $message" | tee -a "$LOG_FILE"
+    fi
+}
+
+# Convenience functions
+log_debug() { log_message "DEBUG" "$1"; }
+log_info() { log_message "INFO" "$1"; }
+log_warn() { log_message "WARN" "$1"; }
+log_error() { log_message "ERROR" "$1"; }
+
+# --- Example Usage in a Script ---
+
+log_info "Script started: API Health Check"
+log_debug "Log file set to: $LOG_FILE"
+
+API_ENDPOINT="https://api.example.com/health" # Replace with a real API
+EXPECTED_RESPONSE_KEY="status"
+EXPECTED_RESPONSE_VALUE="healthy"
+
+log_info "Making API call to $API_ENDPOINT"
+HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$API_ENDPOINT")
+RESPONSE_BODY=$(curl -s "$API_ENDPOINT") # Get the full body for parsing
+
+log_debug "HTTP Status: $HTTP_STATUS"
+log_debug "Response Body: $RESPONSE_BODY"
+
+if [ "$HTTP_STATUS" -eq 200 ]; then
+    log_info "API returned HTTP 200 OK."
+    # Try to parse JSON and validate key/value
+    if command -v jq &> /dev/null; then
+        ACTUAL_VALUE=$(echo "$RESPONSE_BODY" | jq -r ".$EXPECTED_RESPONSE_KEY" 2>/dev/null)
+        if [ $? -eq 0 ] && [ "$ACTUAL_VALUE" == "$EXPECTED_RESPONSE_VALUE" ]; then
+            log_info "API Health Check: SUCCESS - '$EXPECTED_RESPONSE_KEY' is '$ACTUAL_VALUE'."
+            exit 0
+        else
+            log_error "API Health Check: FAILED - JSON parsing or value mismatch."
+            log_error "  Expected '$EXPECTED_RESPONSE_KEY'='$EXPECTED_RESPONSE_VALUE', Got '$ACTUAL_VALUE'."
+            exit 1
+        fi
+    else
+        log_warn "jq not found. Cannot parse JSON for detailed validation. Assuming success based on HTTP 200."
+        exit 0
+    fi
+else
+    log_error "API Health Check: FAILED - HTTP Status $HTTP_STATUS"
+    exit 1
+fi
+
+✓Explanation of Logging Techniques:
+ ¹ log_message Function:
+    Takes level (e.g., "INFO", "DEBUG") and message as arguments.
+   Adds a timestamp for context.
+   
+² tee -a "$LOG_FILE": This is key!
+      tee: Sends standard input to both standard output (your terminal) and one or more files.
+   
+  ³ -a: Appends to the log file instead of overwriting it.
+   
+⁴ Log Levels: Allows you to control the verbosity of your script output. By changing CURRENT_LOG_LEVEL, you can suppress debug messages in production or enable them for troubleshooting.
+   
+⁵ Convenience Functions: log_debug, log_info, etc., make logging cleaner in the main script.
+ 
+⁶ Redirecting All Output:
+   
+   # Run your script and redirect all stdout and stderr to a log file
+./your_script.sh > all_output.log 2>&1
+
+# Or append:
+./your_script.sh >> all_output.log 2>&1
+
+   * >: Redirects standard output.
+   * 2>: Redirects standard error.
+   * &1: Redirects standard error to the same location as standard output.
+ * set -x for Debugging:
+   As mentioned before, set -x at the beginning of a script (or running bash -x script.sh) will print every command and its arguments after substitutions and expansions. This is invaluable for debugging complex scripts, especially those involving loops or conditionals. You can combine it with logging:
+ 
+
+  #!/bin/bash
+set -x # Enable verbose tracing
+
+LOG_FILE="debug_trace.log"
+exec > >(tee -a "$LOG_FILE") 2>&1 # Redirect all stdout and stderr to tee
+
+echo "This will be logged and printed."
+ls -l /tmp
+curl example.com
+
+   * exec > >(tee -a "$LOG_FILE") 2>&1: This is a more advanced redirection technique that sets up tee to capture all subsequent output for the duration of the script.
+
+By combining these techniques, you can accomplish quicker, faster tests, repairs, buils, automates enhancing your Teams Workflow at a entirely Different Level.
