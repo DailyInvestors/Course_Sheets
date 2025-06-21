@@ -1,0 +1,13 @@
+#!/bin/bash
+# my_script.sh
+
+set -x # Enable xtrace
+
+my_function() {
+    echo "Inside my_function"
+    ls -l /tmp
+}
+
+echo "Starting script"
+my_function
+echo "Script finished"
