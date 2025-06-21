@@ -51,3 +51,16 @@ This script provides a fast, way to instantly check a variety of endpoints on yo
 Requirements:
 Must Have a Linux Terminal 
 🎵 Most Systems automatically have BASH installed with or without your knowing. This is including Mobile Devices.
+
+
+
+👁️system_info.sh👁️
+Description: A Bash Code to help determine and understand your System.
+
+Instructions:
+1. Copy 
+2. touch system_info.sh
+3. Your choice of editor, open and paste, save.
+4. Chmod 600
+5. ./system_info.sh
+This will work on almost every linux System. I tested it out on my phone. Works perfectly.
