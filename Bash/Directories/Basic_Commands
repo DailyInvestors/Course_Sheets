@@ -1,0 +1,22 @@
+pwd
+# /home/user
+
+pushd /var/log
+# /var/log ~
+
+pushd /etc/apache2
+# /etc/apache2 /var/log ~
+
+dirs
+# /etc/apache2 /var/log ~
+
+dirs -v
+#  0  /etc/apache2
+#  1  /var/log
+#  2  ~
+
+popd # Jumps back to /var/log
+# /var/log ~
+
+popd # Jumps back to /home/user (~)
+# ~
