@@ -1,0 +1,1 @@
+       This will be updated per each Goal and Task. Eash CTF, will have Rules that none of you Have heard Before. And will be created with wafs, honeybees, HSTS, and Robot that will unharmfully come after you. These courses will be to help develop fundamentals for the way, im about to Make Security.
