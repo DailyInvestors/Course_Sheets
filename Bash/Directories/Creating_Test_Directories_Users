@@ -16,8 +16,8 @@ echo "ADMIN_EMAIL=admin@example.com" >> /var/www/html/app/config.ini
 echo "Some other random file content." > /var/www/html/app/other_file.txt
 
 # Create some dummy log entries
-sudo bash -c "echo 'Jun 23 08:00:00 victim sshd[1234]: Failed password for invalid user baduser from 192.168.1.50 port 54321 ssh2' >> /var/log/auth.log"
-sudo bash -c "echo 'Jun 23 08:05:00 victim sshd[5678]: Accepted password for testuser from 192.168.1.5 port 12345 ssh2' >> /var/log/auth.log"
+sudo bash -c "echo 'Jun 23 08:00:00 victim sshd[1234]: Failed password for invalid user baduser from 555.555.5.55 port 54321 ssh2' >> /var/log/auth.log"
+sudo bash -c "echo 'Jun 23 08:05:00 victim sshd[5678]: Accepted password for testuser from 555.555.5.5 port 12345 ssh2' >> /var/log/auth.log"
 sudo bash -c "echo 'Jun 23 08:10:00 victim systemd[1]: session opened for user attacker_user' >> /var/log/auth.log"
 
 # Create a dummy .bash_history for a test user
@@ -34,3 +34,5 @@ sudo touch /usr/local/bin/dummy_suid
 sudo chmod 4755 /usr/local/bin/dummy_suid
 
 # IMPORTANT: REMEMBER YOUR VICTIM'S IP AND SSH CREDENTIALS!
+
+Editited to Change Fake IP, don't want a innocent bystander hit.
