@@ -1,0 +1,6 @@
+echo $SHELL
+
+echo ${!N*}
+
+echo $Daily
+echo ${Daily:=Daily Investors}
