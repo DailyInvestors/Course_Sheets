@@ -1,0 +1,203 @@
+ Globbing is primarily for matching filenames, while regular expressions are for pattern matching within text.
+
+Globbing (Pathname Expansion)
+
+Globbing uses specific wildcard characters to match file and directory names:
+ * * (Asterisk): Matches any sequence of zero or more characters.
+  
+ * ls *.txt - Lists all files ending with .txt.
+ 
+  * rm log_* - Deletes all files starting with log_.
+ 
+  * cp /etc/*/conf.d - Copies conf.d from any direct subdirectory of /etc.
+
+ * ? (Question Mark): Matches any single character.
+   * ls file?.txt - Matches file1.txt, fileA.txt, but not file10.txt.
+
+ * [...] (Bracket Expression): Matches any single character within the brackets.
+ 
+  * ls [abc].txt - Matches a.txt, b.txt, c.txt.
+ 
+  * ls [0-9].log - Matches 0.log, 1.log, ..., 9.log.
+
+   * ls [!aeiou].doc - Matches any single character not in aeiou. (The ! or ^ at the beginning negates the set).
+
+ * {} (Brace Expansion): This is not globbing in the traditional sense, as it doesn't involve matching existing files, but rather generating a list of strings. It's often used in conjunction with globs or for creating lists.
+ 
+  * cp file.{txt,doc,pdf} my_dir/ - Copies file.txt, file.doc, and file.pdf to my_dir/.
+ 
+  * echo {a..z} - Expands to a b c ... z.
+ 
+  * mkdir {dir1,dir2}/{subdirA,subdirB} - Creates four subdirectories: dir1/subdirA, dir1/subdirB, dir2/subdirA, dir2/subdirB.
+
+ * ~/ (Tilde Expansion): Expands to the user's home directory.
+
+   * cd ~/Documents
+
+ * ! (Negation - with extglob): When the extglob shell option is enabled (shopt -s extglob), Bash provides extended pattern matching operators, including:
+
+   * !(pattern-list): Matches anything except one of the given patterns.
+  
+   * rm !(important.txt) - Deletes all files except important.txt.
+  
+ * ?(pattern-list): Matches zero or one occurrence of the given patterns.
+ 
+  * +(pattern-list): Matches one or more occurrences of the given patterns.
+ 
+  * *(pattern-list): Matches zero or more occurrences of the given patterns.
+  
+ * @(pattern-list): Matches exactly one of the given patterns.
+Important Globbing Behaviors:
+
+ * Hidden Files (Dotfiles): By default, globbing patterns do not match filenames that begin with a . (dot), unless the . is explicitly specified in the pattern (e.g., .*, .config/*). This prevents commands like rm * from accidentally deleting important configuration files.
+
+ * Slash (/): The slash character must always be matched explicitly. Wildcards (*, ?) will not match a /. This prevents patterns from crossing directory boundaries unintentionally.
+
+ * No Match Behavior: If a globbing pattern does not match any existing files, Bash's default behavior is to leave the pattern unchanged and pass it as a literal string to the command. This can lead to unexpected errors if a command expects valid file paths. This behavior is addressed by nullglob.
+nullglob
+The nullglob shell option changes the default behavior when a glob pattern matches no files.
+
+ * Default Behavior (when nullglob is OFF):
+   If a glob pattern (e.g., *.bak) does not match any files, the literal pattern *.bak is passed as an argument to the command.
+   # Assuming no .bak files exist
+ls *.bak
+# Output: ls: cannot access '*.bak': No such file or directory
+
+for f in *.bak; do echo "Found: $f"; done
+# Output: Found: *.bak  (The loop executes once with the literal pattern)
+
+ * With nullglob (when nullglob is ON):
+   If a glob pattern matches no files, it expands to a null string (nothing). This effectively removes the non-matching pattern from the argument list.
+   shopt -s nullglob # Enable nullglob
+
+# Assuming no .bak files exist
+ls *.bak
+# (No output, as ls receives no argument. It might just print its help if called without arguments.)
+# More explicitly:
+echo "Files: "$(ls *.bak) # Will just print "Files: "
+
+for f in *.bak; do echo "Found: $f"; done
+# (No output. The loop does not execute at all, which is often the desired behavior for loops.)
+
+shopt -u nullglob # Disable nullglob (to restore default behavior)
+
+How to enable/disable nullglob:
+ * To enable: shopt -s nullglob
+ * To disable: shopt -u nullglob
+ * To check status: shopt nullglob or shopt -p nullglob
+nullglob is very useful in scripts where you want to process files only if they exist, preventing loops from running on literal patterns.
+dotglob
+
+The dotglob shell option controls whether globbing patterns match filenames that begin with a . (dot).
+ * Default Behavior (when dotglob is OFF):
+   Globbing patterns like *, ?.txt, [a-z]* will not match files or directories that start with a ., except for the special directories . (current directory) and .. (parent directory), which are always excluded from glob matches anyway unless explicitly requested (e.g., .*).
+   # Assuming files: file.txt, .hidden_file.txt, .config/
+ls *
+# Output: file.txt
+
+ls *.txt
+# Output: file.txt
+
+ * With dotglob (when dotglob is ON):
+   Globbing patterns will now include files and directories that begin with a ., except for . and .. themselves.
+   shopt -s dotglob # Enable dotglob
+
+# Assuming files: file.txt, .hidden_file.txt, .config/
+ls *
+# Output: .config file.txt .hidden_file.txt (order may vary)
+
+ls *.txt
+# Output: .hidden_file.txt file.txt (order may vary)
+
+shopt -u dotglob # Disable dotglob
+
+How to enable/disable dotglob:
+ * To enable: shopt -s dotglob
+ * To disable: shopt -u dotglob
+ * To check status: shopt dotglob or shopt -p dotglob
+dotglob is useful when you want to process all files in a directory, including hidden ones, without explicitly using .*. However, use it with caution, especially with commands like rm * when dotglob is enabled, as it will also remove hidden files!
+
+
+👾nocaseglob👾
+
+The nocaseglob shell option makes globbing patterns match filenames in a case-insensitive fashion.
+ * 👁️Default Behavior👁️ (when nocaseglob is OFF):
+   Globbing is case-sensitive. file.txt will not match File.txt with a pattern like file.*.
+   # Assuming files: MyFile.txt, myfile.txt
+ls myfile.txt
+# Output: myfile.txt
+
+ls MyFile.txt
+# Output: MyFile.txt
+
+ls *.txt
+# Output: MyFile.txt myfile.txt
+
+ls my*.txt
+# Output: myfile.txt
+
+ * With nocaseglob (when nocaseglob is ON):
+   The case of letters in filenames is ignored during pattern matching.
+   shopt -s nocaseglob # Enable nocaseglob
+
+# Assuming files: MyFile.txt, myfile.txt
+ls myfile.txt
+# Output: MyFile.txt myfile.txt (both if they exist)
+
+ls MyFile.txt
+# Output: MyFile.txt myfile.txt (both if they exist)
+
+ls my*.txt
+# Output: MyFile.txt myfile.txt
+
+shopt -u nocaseglob # Disable nocaseglob
+
+How to enable/disable nocaseglob:
+ * To enable: shopt -s nocaseglob
+ * To disable: shopt -u nocaseglob
+ * To check status: shopt nocaseglob or shopt -p nocaseglob
+nocaseglob is helpful for users who work across different file systems (like Windows, which is typically case-insensitive) or simply prefer not to worry about case when matching files.
+Managing Shell Options with shopt
+All of these behaviors (nullglob, dotglob, nocaseglob, and many others) are controlled using the Bash built-in command shopt.
+
+ * shopt: Displays all shell options with their current status (on/off).
+
+ * shopt -s option_name: Sets (enables) a shell option.
+
+ * shopt -u option_name: Unsets (disables) a shell option.
+
+ * shopt -p option_name: Prints the shopt command to reproduce the current setting of a specific option. This is useful for saving and restoring settings.
+
+Example of using shopt for a script:
+It's common practice in scripts to temporarily enable or disable shell options for a specific block of code and then restore them to their original state.
+#!/bin/bash
+
+# Save current glob settings
+ORIGINAL_NULLGLOB=$(shopt -p nullglob)
+ORIGINAL_DOTGLOB=$(shopt -p dotglob)
+
+# Enable nullglob and dotglob for this block
+shopt -s nullglob dotglob
+
+echo "--- Inside the block with nullglob and dotglob ON ---"
+ls * # Will include dotfiles and remove patterns if no match
+for f in *.tmp; do
+    echo "Processing temporary file: $f"
+done
+
+# Perform other operations...
+
+echo "--- Restoring original settings ---"
+# Restore original settings
+eval "$ORIGINAL_NULLGLOB"
+eval "$ORIGINAL_DOTGLOB"
+
+echo "--- After restoring original settings ---"
+ls * # Will revert to default globbing behavior
+for f in *.tmp; do
+    echo "Processing temporary file: $f"
+done
+
+By understanding and judiciously using globbing and its associated shopt options, you can write more powerful, flexible, and robust Bash scripts.
+
+ Team Gemini 💫 lol
