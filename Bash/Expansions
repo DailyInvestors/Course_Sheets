@@ -4,3 +4,24 @@ echo ${!N*}
 
 echo $Daily
 echo ${Daily:=Daily Investors}
+
+
+Arithmetic Expansions 
+
+VAR++ and VAR-- "Post-increment/de"
+++VAR and --VAR "Pre-inc/Pre-de*
+-and+
+!and~ "logical & bitwise negotiation"
+** "exponentiation"
+*,/ and % "multiplication"
++ and -
+<< and >> "bitwise shifts"
+== and != "equal and inequal"
+&
+^  "bitwise exclusive OR"
+| "OR"
+&&
+|| "logical or"
+expr ? expr : exper "conditional evaluation"
+, "separator"
+=< *=, /=, %=, +=, -=, <<=, =>>, &=, ^=, |= "assignment"
