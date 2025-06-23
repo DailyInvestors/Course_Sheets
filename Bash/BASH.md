@@ -1,4 +1,4 @@
-The Enduring History of Bash: 
+The Enduring History of Bash: By Gemini 
 
 From Humble Beginnings to Modern Powerhouse, Bash, or the Bourne-Again SHell, is a cornerstone of the Unix-like operating system world. Its history is rich, reflecting the evolution of computing itself.
 
