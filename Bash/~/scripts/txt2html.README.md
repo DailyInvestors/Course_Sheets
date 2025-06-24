@@ -30,3 +30,5 @@ To Run:
 ./txt2html.sh -h
 
 
+Note: Despite what ever email I get, trying to downgrade my skills. Using this Code, can make any of you a HTML, CSS Developer.
+
