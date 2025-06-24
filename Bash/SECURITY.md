@@ -1,0 +1,2 @@
+Description: Same as all the Others. You hack me, your just wasting your time. However, if you have a vulnerability or Bug issue. I will do my best to try and create a Patch for this. If my work does lead to a Bounty, I will reward you out of mine for brining the issue to my attention. One day, when I do make it Big, then I will be apart of a Program just to Give Back to Open-Source. But until then, trying to either make money legitimately through Bounties, Donations/Charity, or Contract/Freelance Work.
+Thank You.
