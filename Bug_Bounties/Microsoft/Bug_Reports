@@ -1,0 +1,144 @@
+Microsoft Product - General Bug/Issue Report (Non-Security)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. For Windows and Microsoft Store Apps: Use the Feedback Hub
+ * Tool: Microsoft Feedback Hub (built into Windows)
+ * Where to find it: Search for "Feedback Hub" in the Windows Start Menu.
+How to Report in Feedback Hub:
+ * Category: When you start a new feedback item, the Feedback Hub will guide you to select a category and subcategory (e.g., Apps > Edge, Desktop Environment > Start Menu). Choose the most appropriate one.
+ * Title:
+   * Concise and descriptive.
+   * Example: [Bug] Edge's "Add Tab to Favorites" context menu option is missing in Immersive Reader
+ * Description:
+   * What is the problem? Explain clearly what's wrong.
+     * Example: "When I am viewing a webpage in Microsoft Edge's Immersive Reader mode, right-clicking on a tab does not show the option to 'Add Tab to Favorites' (or 'Add Tab to Collections'). This option is present and works correctly when not in Immersive Reader."
+   * Expected behavior: Describe how it should work.
+     * Example: "I expect the 'Add Tab to Favorites' option to be available in the tab context menu regardless of whether I am in Immersive Reader mode or not, as it is a core browser function."
+ * Steps to Reproduce:
+   * Provide numbered, clear steps.
+     * Example:
+       * Open Microsoft Edge.
+       * Navigate to an article that supports Immersive Reader (e.g., a blog post).
+       * Click the Immersive Reader icon in the address bar to enter Immersive Reader mode.
+       * Right-click on the tab for that page.
+       * Observe that "Add Tab to Favorites" and "Add Tab to Collections" are missing from the context menu.
+ * Screenshots/Video: (Highly recommended in Feedback Hub)
+   * The Feedback Hub allows you to easily attach screenshots and record your screen to demonstrate the issue.
+ * Attachments/Diagnostics: The Feedback Hub often asks if you want to include diagnostic data, which is very helpful for Microsoft.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2. For Specific Microsoft Products (e.g., Microsoft Edge, Office Desktop Apps):
+ * Many products have an in-app "Send Feedback" or "Help" menu option.
+ * Microsoft Edge:
+   * Click the three dots (...) menu in the top-right corner.
+   * Go to Help and feedback > Send feedback. This opens a dedicated feedback form.
+   * Include: Product version, OS, clear description, steps, and screenshots.
+ * Microsoft Office (Word, Excel, PowerPoint, etc.):
+   * Go to File > Feedback (or Help > Feedback).
+   * Choose "I have a suggestion" or "I don't like something."
+   * Include: Office version, OS, clear description, steps, and screenshots.
+Microsoft Product - Security Vulnerability Report (via MSRC)
+For security vulnerabilities in any Microsoft product or service. This is the primary and official channel for reporting such issues.
+Reporting Platform: Microsoft Security Response Center (MSRC) Portal.
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to Report via MSRC:
+ * Navigate to the MSRC Portal: https://msrc.microsoft.com/
+ * Click "Report a security vulnerability" or similar. You'll need a Microsoft Account to log in.
+ * Choose the appropriate Product/Service: The form will ask you to identify the affected product (e.g., Windows, Microsoft Edge, Azure, Xbox, Office, .NET, etc.).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What to Include in Your MSRC 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Report:
+ * Title:
+   * [Vulnerability Type] in [Affected Product/Component] - [Brief Impact]
+   * Example: [RCE] Remote Code Execution in Microsoft Exchange Server due to deserialization flaw
+ * Affected Product(s) and Version(s):
+   * Be as specific as possible.
+   * Example: Microsoft Exchange Server 2019 Cumulative Update 12, Build 15.2.1118.9
+ * Vulnerability Description:
+   * Summary: Concise statement of the vulnerability and its direct impact.
+     * Example: "A remote code execution (RCE) vulnerability exists in Microsoft Exchange Server that allows an unauthenticated attacker to execute arbitrary code with system privileges on the server by sending specially crafted network requests."
+   * Detailed Explanation: Technical details, root cause (e.g., improper input validation, insecure deserialization, memory corruption, race condition).
+     * Example: "The vulnerability stems from an insecure deserialization flaw within the Autodiscover service. Specifically, the service uses BinaryFormatter (or similar vulnerable deserializer) without sufficient type checking, allowing an attacker to inject arbitrary .NET objects into the deserialization stream. This can lead to gadget chain execution, ultimately resulting in RCE."
+   * Security Impact: What can an attacker achieve? Data theft, system control, denial of service?
+     * Example: "Successful exploitation grants an unauthenticated attacker the ability to execute arbitrary code with SYSTEM privileges on the vulnerable Exchange Server, leading to full compromise of the server and potential access to internal network resources and mailboxes."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Steps to Reproduce:
+   * Precise, numbered, and repeatable steps. Include network requests, code snippets, or configurations.
+     * Example:
+       * Prerequisites:
+         * Vulnerable Exchange Server (specified version).
+         * Network access to the Autodiscover endpoint (port 443).
+         * A tool like ysoserial.net to generate gadget payloads.
+       * Reproduction Steps:
+         * Generate a serialized payload using ysoserial.net targeting ObjectDataProvider or a similar gadget, with a command to execute (e.g., calc.exe or a reverse shell).
+         * Construct a SOAP request to the Autodiscover.svc endpoint, embedding the serialized payload in the request body.
+         * Send the crafted HTTP POST request to https://[ExchangeServerFQDN]/autodiscover/autodiscover.svc.
+         * Observe calc.exe launching on the Exchange Server, or the successful establishment of a reverse shell.
+ * Proof of Concept (PoC):
+   * Attach any code, files, or network traffic captures (e.g., Burp Suite capture, Wireshark trace) needed to demonstrate the vulnerability.
+   * Video/Screenshots: Highly recommended.
+ * Affected Component/Endpoint: Be specific (e.g., Autodiscover.svc, RPC/HTTP, SMB).
+ * Mitigations Bypassed (if applicable): (e.g., ASLR, DEP, ASCS, CFG, Credential Guard, Defender).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * Suggested Fix (Optional): Propose a high-level solution.
+   * Example: "Replace BinaryFormatter deserialization with a more secure, limited deserializer, or implement strict allow-listing of types that can be deserialized to prevent arbitrary object instantiation."
+ 
+* Environment Details: OS version, patches installed, specific configurations.
+Microsoft Open-Source Project - Bug/Vulnerability Report (via GitHub)
+Many Microsoft projects are open source and hosted on GitHub (e.g., VS Code, TypeScript, .NET Runtime, Windows Terminal).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Where to Report:
+ * GitHub Issues: Go to the specific GitHub repository for the project (e.g., microsoft/vscode, dotnet/runtime). Look for the "Issues" tab.
+ * GitHub Security Tab (for vulnerabilities): For some projects, if they have set up a SECURITY.md file or use GitHub's private vulnerability reporting feature, you might find a "Security" tab on the repository page. This allows private submission before public disclosure.
+How to Report (General Bug on GitHub):
+ * Issue Title:
+   * [Bug] Short, descriptive title
+   * Example: [Bug] VS Code terminal font rendering blurry on high-DPI screens with specific zoom levels
+ * Description:
+   * What is the problem?
+   * Expected behavior.
+ * Steps to Reproduce: Clear, numbered steps.
+ * Screenshots/Video: Essential.
+ * Environment: OS, exact software version (e.g., VS Code 1.89.1), relevant hardware.
+How to Report (Security Vulnerability on GitHub):
+ * Check SECURITY.md: Look for a SECURITY.md file in the root of the repository. This file will usually contain specific instructions for reporting vulnerabilities (e.g., a dedicated email, a link to a HackerOne program, or instructions to use GitHub's private vulnerability reporting).
+ * Use GitHub's Private Vulnerability Reporting (if available): If the "Security" tab exists, use it. This allows you to privately disclose the vulnerability to the maintainers before it becomes a public issue.
+ * If no specific process, use MSRC: For critical security issues, if a project doesn't have a clear GitHub security reporting mechanism, you might revert to reporting it via the MSRC Portal and mention the GitHub project there.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What to Include (for GitHub Security Report):
+ * Follow the general structure for a security vulnerability report as outlined for MSRC, but tailor it to the GitHub issue/security form.
+ * Include: Title, detailed description, precise reproduction steps, PoC (code, payloads), impact, environment details.
+Microsoft Bug and Vulnerability Reporting URLs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Here are the key URLs for filing reports with Microsoft:
+1. For General Bugs/Feedback on Windows and Microsoft Store Apps:
+ * Microsoft Feedback Hub (Windows App):
+   * This is an application built into Windows. Search for "Feedback Hub" in your Start Menu.
+2. For General Bugs/Feedback on Specific Microsoft Products (e.g., Edge, Office):
+ * Microsoft Edge Feedback:
+   * In Edge: Click ... (Menu) > Help and feedback > Send feedback.
+ * Microsoft Office Feedback:
+   * In Office apps: Go to File > Feedback (or Help > Feedback).
+ * Microsoft Community Forums:
+   * https://answers.microsoft.com/
+   * Often used for general troubleshooting and reporting non-critical issues that may get picked up by support staff.
+3. For Security Vulnerabilities in Any Microsoft Product or Service:
+ * Microsoft Security Response Center (MSRC) Portal:
+   * Main Page: https://msrc.microsoft.com/
+   * Report a Security Vulnerability (Sign-in Required): Follow the links on the MSRC main page. You'll need a Microsoft Account.
+   * MSRC Bug Bounty Program Rules: https://www.microsoft.com/en-us/msrc/bounty
+     * This page lists all the different Microsoft bug bounty programs, their scopes, rules, and reward ranges. Read this carefully before submitting.
+4. For Microsoft Open-Source Projects on GitHub:
+ * GitHub Repository Issues:
+   * Navigate to the specific project's GitHub page (e.g., github.com/microsoft/vscode, github.com/microsoft/WindowsTerminal). Then click on the "Issues" tab.
+ * GitHub Repository Security Tab (if available):
+   * On the GitHub repository page, look for a "Security" tab. This might lead to a private vulnerability reporting form or instructions.
+ * SECURITY.md File:
+   * Always check the root of the GitHub repository for a SECURITY.md file. This file contains project-specific security reporting guidelines.
+Key Considerations for Microsoft Reports:
+ * Specificity: Microsoft's ecosystem is vast. Be as specific as possible about the product, version, and component.
+ * Reproducibility: Clear, consistent reproduction steps are paramount, especially for security vulnerabilities.
+ * Responsible Disclosure: For security vulnerabilities, strictly adhere to Microsoft's responsible disclosure policy. Do not publicly disclose the vulnerability until it is fixed and you have received explicit permission from MSRC.
+ * MSRC is for Security: Remember that MSRC is only for security vulnerabilities. General bugs or feature requests should go through the Feedback Hub or product-specific feedback channels.
