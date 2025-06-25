@@ -1,0 +1,133 @@
+
+For general bugs:
+
+Issue Title:
+[Bug] Brief, descriptive title of the issue
+
+Example: [Bug] Code highlighting incorrect for .toml files in dark mode
+
+Repository: github/docs (or the specific repository if it's a feature of a particular GitHub project)
+
+Component/Feature: Code Highlighting, UI, Editor, etc.
+Environment:
+ * Operating System: Windows 11, macOS Sonoma 14.5, Ubuntu 22.04, etc.
+ * Browser (if web-related): Chrome 126.0.6478.126, Firefox 127.0.1, Safari 17.5, etc.
+ * GitHub Product: github.com (web), GitHub Desktop, GitHub CLI, etc.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Description:
+ * What is the bug? Explain clearly what is happening that shouldn't, or what isn't happening that should.
+   * Example: "When viewing .toml files in a repository on github.com with the dark theme enabled, the syntax highlighting for key-value pairs is incorrect. Keys are highlighted as strings, and values are not distinctly colored as they are in the light theme or for other file types."
+ * Expected behavior: Describe what you expected to happen.
+   * Example: "I expect the syntax highlighting for .toml files in dark mode to correctly differentiate between keys and values, similar to how it appears in the light theme or how .json files are highlighted."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2. Steps to Reproduce:
+Provide clear, numbered steps that allow anyone to reproduce the bug.
+Example:
+ * Prerequisites:
+   * A GitHub account.
+   * Dark theme enabled in GitHub settings (Settings -> Appearance -> Theme -> Dark default).
+ * Reproduction Steps:
+   * Navigate to a repository containing a .toml file (e.g., https://github.com/example/repo/blob/main/config.toml).
+   * Ensure the dark theme is active.
+   * Observe the syntax highlighting within the file viewer.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Screenshots/Video (Highly Recommended):
+Include screenshots or a short video demonstrating the bug. This makes it much easier for developers to understand the issue.
+Example:
+ * Screenshot 1: Bug in Dark Mode (Attach image showing incorrect highlighting)
+ * Screenshot 2: Correct behavior in Light Mode (for comparison) (Attach image showing correct highlighting)
+ * (Optional) Short GIF/Video: (Attach a GIF or video demonstrating navigation and the highlighting issue)
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4. Additional Context:
+ * Any other relevant information that might help diagnose the bug.
+ * Example: "This issue was first observed after the recent UI update. It seems specific to .toml files; other configuration file types like .json or .yml appear to be highlighted correctly in dark mode."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GitHub Security Vulnerability Report Example:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Report Title (on HackerOne):
+
+[Vulnerability Type] in [Affected Product/Feature] - [Brief Impact]
+
+Example: [XSS] Stored XSS via Markdown rendering in Issue Comments
+
+Vulnerable Asset: (e.g., github.com, gist.github.com, api.github.com, copilot.github.com, npm.github.com, etc. - consult the HackerOne program scope)
+
+
+Affected Feature/Endpoint: (e.g., Issue Comments, Pull Request Descriptions, User Profile Bio, GitHub Actions, Dependabot)
+Affected Version/Build (if applicable): (e.g., "Latest github.com production as of 2025-06-25")
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Vulnerability Description:
+ * Summary: A clear, concise summary of the vulnerability, its type, and its direct impact.
+   * Example: "A stored Cross-Site Scripting (XSS) vulnerability exists in the markdown rendering engine used for issue comments, allowing an attacker to execute arbitrary JavaScript in the context of other users viewing the affected comment."
+ * Detailed Explanation: Elaborate on the root cause and how it can be exploited. Which input is not properly sanitized or validated? What is the specific vulnerability (e.g., reflected XSS, stored XSS, CSRF, RCE, LFI, SQLi)?
+   * Example: "The vulnerability occurs because certain HTML tags or attributes are not correctly sanitized when markdown is rendered within issue comments. Specifically, the data-uri scheme within <a> tags' href attribute is improperly handled, allowing the injection of JavaScript payload upon user interaction (e.g., clicking the link). This bypasses GitHub's existing content security policies (CSPs) for this specific context, or leverages a flaw in the filtering logic."
+ * Security Impact: Describe the severity and potential consequences. What can an attacker achieve?
+   * Example: "Successful exploitation allows an attacker to perform actions on behalf of the victim (e.g., creating/deleting repositories, starring/forking, editing profile), deface the GitHub interface, steal user tokens/cookies (if not HTTPOnly), or conduct phishing attacks. Since it's stored XSS, the payload persists and affects anyone viewing the compromised comment."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2. Steps to Reproduce:
+Provide exact, numbered, and repeatable steps. This is critical for verification.
+Example:
+ * Prerequisites:
+   * Two GitHub accounts (Attacker and Victim).
+   * A public repository where the Attacker can create an issue.
+ * Reproduction Steps:
+   * As Attacker:
+     * Go to https://github.com/[your-username]/[your-repo]/issues/new.
+     * Create a new issue with any title and description.
+     * In the comment box for the newly created issue, paste the following markdown payload:
+       [Click Me](data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNhIE9uIEdpdEh1YiEnKTwvc2NyaXB0Pg==)
+
+       (Note: The base64 decodes to <script>alert('XSS On GitHub!')</script>)
+     * Submit the comment.
+   * As Victim:
+     * Log in to GitHub.
+     * Navigate to the issue created by the Attacker (e.g., https://github.com/[attacker-username]/[attacker-repo]/issues/1).
+     * As the Victim scrolls or views the issue comment, observe an alert() box popping up with the message "XSS On GitHub!".
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3. Proof of Concept (PoC):
+ * Payload/Code: Provide the exact payload used.
+   * Example: [Click Me](data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNhIE9uIEdpdEh1YiEnKTwvc2NyaXB0Pg==)
+ * Video/Screenshots: Attach a clear video or screenshots demonstrating the reproduction and the impact. This is essential for security reports.
+   * Example: Attach xss_demo_github.mp4 or xss_screenshot.png.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4. Root Cause (Optional but Highly Recommended):
+If you have insights into the underlying cause (e.g., a specific library version, a parsing flaw, a missing filter), include it.
+Example: "The vulnerability likely stems from insufficient sanitization of data: URIs during the markdown rendering process, specifically when applied to the href attribute of <a> tags. While other schemes might be filtered, the data: scheme allows embedding arbitrary content that bypasses the intended HTML sanitization filters, leading to script execution when rendered by the browser."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+5. Suggested Fix (Optional):
+Propose a high-level solution.
+Example: "Implement stricter validation and sanitization for data: URIs in markdown-rendered content. Specifically, ensure that no executable content (like JavaScript) can be embedded within data: URIs when rendering user-supplied markdown. A whitelist approach for allowed URI schemes and content types within data: URIs might be necessary."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+6. Environmental Details:
+ * Browser: (e.g., Chrome 126.0.6478.126 on Windows 11)
+ * GitHub URL: https://github.com
+ * Date of Test: June 25, 2025
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+7. Disclosure Policy:
+State your understanding and adherence to GitHub's responsible disclosure policy.
+Example: "I understand and agree to GitHub's responsible disclosure policy and will keep this vulnerability confidential until a fix is deployed and public disclosure is authorized."
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
