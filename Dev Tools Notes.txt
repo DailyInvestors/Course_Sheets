@@ -783,6 +783,8 @@ id -o exit_shellcode exit shellcode.o
 Now to Run
 objdump -d exit_shellcode
 
+proc/net/tcp
+
 
 
 
