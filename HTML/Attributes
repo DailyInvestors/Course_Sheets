@@ -105,7 +105,253 @@ document.getElementsByClassName(..);
      ¹. Style attributes take their value as a CSS property value pair. The syntax being the same as the CSS Style Block. The Properties are usually separated by a colon.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-2.
+2. TabIndex
+     ¹. Can be added to Any Element.
+     ². Takes its value as a Integer.
+     ³. A negative value -3, makes a element cabale of receiving "Focus".
+     ⁴. A tabindex of Zero0, makes a element focusable and reachable through "tabbing". Example:
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button with All Global Attributes</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            gap: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button:focus {
+            outline: 2px solid #28a745;
+            outline-offset: 3px;
+        }
+        .info {
+            font-size: 0.9em;
+            color: #555;
+            max-width: 600px;
+            text-align: center;
+        }
+        .info span {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <button
+        accesskey="b"                autocapitalize="words"       class="my-global-button"     contenteditable="true"       contextmenu="my-context-menu"dir="ltr"                    draggable="true"             enterkeyhint="done"          exportparts="part1,part2"    hidden                        id="myUniqueButton"          inputmode="none"             is="custom-button"           itemid="https://example.com/item/123" itemprop="name"              itemref="relatedElementId"   itemscope                     itemtype="http://schema.org/CreativeWork" lang="en-US"                 nonce="randomString"         part="my-part"               popovertarget="my-popover"   popovertargetaction="toggle" role="button"                slot="action-slot"           spellcheck="true"            style="background-color: purple; color: yellow;" tabindex="0"                 title="Click me to perform an action" translate="yes"               inert                         data-custom-attribute="myValue" onabort="alert('Aborted!');"                 onauxclick="console.log('Auxiliary click!');"
+        onbeforeinput="console.log('Before input!');"
+        onbeforematch="console.log('Before match!');"
+        onbeforetoggle="console.log('Before toggle!');"
+        onblur="console.log('Button blurred!');"
+        oncancel="alert('Cancel event!');"
+        oncanplay="console.log('Can play media!');"
+        oncanplaythrough="console.log('Can play through media!');"
+        onchange="console.log('Change event!');"
+        onclick="alert('Button clicked!');"
+        onclose="console.log('Close event!');"
+        oncontextmenu="console.log('Context menu opened!');"
+        oncopy="console.log('Content copied!');"
+        oncuechange="console.log('Cue changed!');"
+        oncut="console.log('Content cut!');"
+        ondblclick="alert('Button double-clicked!');"
+        ondrag="console.log('Element being dragged!');"
+        ondragend="console.log('Drag ended!');"
+        ondragenter="console.log('Drag entered!');"
+        ondragleave="console.log('Drag left!');"
+        ondragover="console.log('Drag over!');"
+        ondragstart="console.log('Drag started!');"
+        ondrop="console.log('Element dropped!');"
+        ondurationchange="console.log('Duration changed!');"
+        onemptied="console.log('Media emptied!');"
+        onended="console.log('Media ended!');"
+        onerror="console.error('Error occurred!');"
+        onfocus="console.log('Button focused!');"
+        onformdata="console.log('Form data!');"
+        onfullscreenchange="console.log('Fullscreen change!');"
+        onfullscreenerror="console.log('Fullscreen error!');"
+        ongotpointercapture="console.log('Pointer capture obtained!');"
+        oninput="console.log('Input event!');"
+        oninvalid="alert('Invalid input!');"
+        onkeydown="console.log('Key down!');"
+        onkeypress="console.log('Key pressed!');"
+        onkeyup="console.log('Key up!');"
+        onload="console.log('Button loaded!');"
+        onloadeddata="console.log('Media data loaded!');"
+        onloadedmetadata="console.log('Media metadata loaded!');"
+        onloadstart="console.log('Media load started!');"
+        onlostpointercapture="console.log('Pointer capture lost!');"
+        onmousedown="console.log('Mouse down!');"
+        onmouseenter="console.log('Mouse enter!');"
+        onmouseleave="console.log('Mouse leave!');"
+        onmousemove="console.log('Mouse move!');"
+        onmouseout="console.log('Mouse out!');"
+        onmouseover="console.log('Mouse over!');"
+        onmouseup="console.log('Mouse up!');"
+        onpaste="console.log('Content pasted!');"
+        onpause="console.log('Media paused!');"
+        onplay="console.log('Media played!');"
+        onplaying="console.log('Media playing!');"
+        onpointercancel="console.log('Pointer canceled!');"
+        onpointerdown="console.log('Pointer down!');"
+        onpointerenter="console.log('Pointer enter!');"
+        onpointerleave="console.log('Pointer leave!');"
+        onpointermove="console.log('Pointer move!');"
+        onpointerout="console.log('Pointer out!');"
+        onpointerover="console.log('Pointer over!');"
+        onpointerup="console.log('Pointer up!');"
+        onprogress="console.log('Media progress!');"
+        onratechange="console.log('Rate changed!');"
+        onreset="console.log('Form reset!');"
+        onresize="console.log('Resized!');"
+        onscroll="console.log('Scrolled!');"
+        onsecuritypolicyviolation="console.log('Security policy violation!');"
+        onseeked="console.log('Seeked!');"
+        onseeking="console.log('Seeking!');"
+        onselect="console.log('Selected!');"
+        onslotchange="console.log('Slot changed!');"
+        onstalled="console.log('Stalled!');"
+        onsubmit="alert('Form submitted!');"
+        onsuspend="console.log('Suspended!');"
+        ontimeupdate="console.log('Time updated!');"
+        ontoggle="console.log('Toggled!');"
+        onvolumechange="console.log('Volume changed!');"
+        onwaiting="console.log('Waiting!');"
+        onwebkitanimationend="console.log('Webkit animation end!');"
+        onwebkitanimationiteration="console.log('Webkit animation iteration!');"
+        onwebkitanimationstart="console.log('Webkit animation start!');"
+        onwebkittransitionend="console.log('Webkit transition end!');"
+        onwheel="console.log('Wheel event!');"
+        onfocusin="console.log('Focus in!');"
+        onfocusout="console.log('Focus out!');"
+        onmessage="console.log('Message received!');"
+        onmessageerror="console.log('Message error!');"
+    >
+        Click Me (Global Attributes)
+    </button>
+
+    <menu type="context" id="my-context-menu">
+        <menuitem label="Custom Action 1" onclick="alert('Custom Action 1');"></menuitem>
+        <menuitem label="Custom Action 2" onclick="alert('Custom Action 2');"></menuitem>
+    </menu>
+
+    <div class="info">
+        This button demonstrates the usage of various <span>HTML Global Attributes</span>.
+        Many of these attributes are typically used in specific contexts (like forms, media, or web components)
+        or require corresponding JavaScript/CSS to show their effect.
+        <br><br>
+        Key attributes set: <span>tabindex="0"</span>, <span>id="myUniqueButton"</span>, <span>class="my-global-button"</span>, <span>title</span>, etc.
+        <br><br>
+        Try:
+        <ul>
+            <li>Pressing <span>Tab</span> to focus it.</li>
+            <li>Hovering over it to see the <span>title</span> tooltip.</li>
+            <li>Right-clicking to see the custom context menu (if supported and contextmenu is wired up).</li>
+            <li>Editing its text if you set <span>contenteditable="true"</span>.</li>
+            <li>Inspecting element in developer tools to see all attributes.</li>
+        </ul>
+    </div>
+
+    <script>
+        // You can programmatically access global attributes too
+        const myButton = document.getElementById('myUniqueButton');
+        if (myButton) {
+            console.log('Button ID:', myButton.id);
+            console.log('Button Tabindex:', myButton.tabIndex);
+            console.log('Button ContentEditable:', myButton.contentEditable);
+            console.log('Button Custom Data Attribute:', myButton.dataset.customAttribute);
+
+            // Example of how to toggle 'hidden' via JS
+            // setTimeout(() => {
+            //     myButton.hidden = !myButton.hidden;
+            //     console.log('Button hidden status toggled!');
+            // }, 5000);
+        }
+    </script>
+
+</body>
+</html>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2.1. Contenteditable
+     
+     ¹. If set to "True", it is editable.
+   
+     ². Is enumeratable.
+
+     ³. Default value = "inherited"
+
+     ⁴. Example:
+const editor = document.getElementById("my element");
+if(editor.contentEditable) {
+        .editor.setAttribute("contenteditable", "false");
+} else {
+         editor.setAttribute("contenteditable", "");
+}
+~~~~~~~~~~~~~~~~~~🤖~~~~~~~~~~~~~~~
+2.1. Using contenteditable with Global.
+<style contenteditable>
+style {
+  color: inherit;
+  display: block;
+  border: 1px solid;
+  font: gothic;
+  font-family: roman-gothic;
+  padding: 1em;
+  border-radius: 1em;
+  white-space: pre;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2.2: Custom Attributes
+
+     ¹. To create a custom attribute, add "data-" to the prefix.
+
+     ². To iterate, their is a built-in data API
+
+     ³. You can add custom elements in the form of "data- name" and access in the DOMz through dataset[name] on the elements???
+Example:
+<blockquote data-machine-learning="workshop"
+data-first-name="Daily" data-last-name"Investors"
+data-formely="Cyborg Tek" data- aspiring="Load Balancer" data-year-hired="2025">
+Gemini Free Education.
+</blockquote>
+
+      ⁴. Remember we can always use getAttribute()
+     
+      ⁵. el.dataset["machine learning"];
+        e.dataset.machineLearning;
+
+      ⁶. for (let key in el.dataset) {
+  customObject[key] = el.dataset[key];
+
+
+
+
+References: Gemini 
+            web.dev/learn
+            Google
+    
 
 
     
