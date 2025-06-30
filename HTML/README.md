@@ -1,4 +1,4 @@
- 🪄✨🫴🔥 This is a General Educational Resource. We created this HTML educational resource with the help of Gemini, Google, and Web.Dev. This goes over some of the basic to advanced fundamentals to help build in and with HTML.
+ 🪄✨🫴🔥 This is a General Educational Resource. We created this HTML educational resource with the help of Gemini, Google, Mozilla, and Web.Dev. This goes over some of the basic to advanced fundamentals to help build in and with HTML.
 
 Bugs and Vulnerabilities:
   1. We ourself can not afford to reward, for any new Bugs or Vulnerabilities. 
