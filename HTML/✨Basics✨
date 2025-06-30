@@ -16,5 +16,192 @@ Regardless the format, the AOM will still report it correctly.
 <section id="about" aria-labelledby="about_heading">
 <h2 id="about_heading"> Ways to Learn</h2>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Quotes and Citations°°°
+4.  For citations and Quotes, there are several Key elements to focus on {blockquote, q, cite} .
 
-4.  For citations and Quotes, there are several Key elements to focus on {blockquote, q, cite} 
+4.1 <br> or Break can create a line break in a block of text. Can be used on signatures, poems, etc. 
+
+4.2. If the anything is pulled from a review website, book, etc. The <cite> element can be used for the Title of the Source.
+<cite> has no implicit role. Doesn't include a arial-label.
+
+4.3 Most Browsers will add Padding to both <cite> and <blockquote>.
+
+4.4 <q> does add quotes by Default
+The default user-agent styles include open-quoye and close-quote generation.
+Example
+q::before {content: open-quote;}
+
+q::after {content: close-quote;}
+
+4.5 Lang Attribute is included to help the Browser understand what Language to use. Example:
+<html lang="en-US">
+Another Example would be to manipulate this to give your AI a different region of language, such as Italian.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🫴°°° HTML Entities°°°✨
+ 1. If you see < you have to escape it using &lt; or a encoding &#60;
+
+ 2. Their are four Reserved entities in HTML { <,>, &, "}> Their character reference is &lt;, &gt;, &amp;, last &quit;.
+
+ 3. A few more you may encounter are &copy; for copyright. &trade; for Trademark ™️. &nbsp; for Non Breaking Space. Their are over 2000 names character references you can find @ "https://html.spec.whatwg.org/multi page/named-charactera.html#names-character-references"
+another Great Reference is "mothereff.in" this has a multiple tools you can use in conjunction with Dev Tools.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🫴°°°Links°°° And Handling°°°
+   1. Links can be created by { a, area, form, link}
+
+   2. In a href, the href is the hyperlink. The a is what turns it into althe link. This attribute tag, can be used to create hyperlinks for the location of the Page, other pages within the same site, or codes to download files, send emails, even to include topics in a email.
+
+  3.   // is a implicit protocol, meaning "use the same protocol as is currently being used."
+
+  4. A "Relative URL" does not include a Domain name. It is relative to the current file! In order to link a page to a page, you must use a Relative URL. The href can begin with mail to: or tell: to email or make calls, with the link handling of the device.
+Example:
+<a href="../attributes/">Attributes</a>
+
+  5. Clicking on either <a href="#top">Top</a> or <a href="#">Top</a> both send the user/victim to the top of the Page.
+
+  6. To save scrolling, you can add a link at the top from the bottom.
+Example:
+<a href="#top"> Scroll to the Top.</a>
+
+  7. Their are several other types of URLS, such as "blogs", and "data URLs".
+
+  8. Some CSS attribute selectors can be used to target the styles by "Application Type". Example:
+[href^="mailto:"]< [href^="two:"]< and [href$=".PDF"].
+
+ 9. "download" attribute should be included when The href points to a downloadable resource.
+
+ 10. "canvas" can also create a downloadable PNG data URL.
+
+  11. "target" attribute enables the defining of the context for the link navigation, and form submission. In the <base> it includes the four elements { _self, _blank, _parent, _top. The "target" element is limited to these above.
+
+  12. To force a new Browser tap, we can use "target="_blank". Any link with this will open up a new tab with a "null name" 
+Example: Let's say we click on this link 
+<a href="registration.html" target"_blank"> Registration</a> This link will allow a new tab to be continuously opened. Now we can stop this problem from occuring by using "reg". Example:
+<a href="registration.html" target="reg">Registration</a>
+
+  13. "rel" attribute controls what kind of link the links create. This defines the relationship between the current document and the hyperlink. It also is apart of the IANA Link Registry, The HTML living Standard, and the freely-edites existing-rel-values-page. Some of the Key Values {alternate, author, bookmark, canconical, compression-dictionary,, dns-prefetch, external, expect, help, icon, license, manifest, me, modulepreload, next, nofollow, noopener,noreferrer, opener, pingback, pre connect, prefetch, preload, pretender,prev, privacy-policy, search, stylesheet,tag, terms-of-service}
+
+  14. "nofollow" is a important tag. First we have to use these to stop GoogleBots from tracking us. Normal Privacy settings, do not cover this. A nofollow can be included anywhere you don't want to be spidered or have spidered. 🫟
+Example:
+<link rel="alternative"> or <a rel="alternative">. 
+   14.1. RSS feeds show these alternatives type="application/RSS+XML" or type="application/atom+XML". However containing the type attribute, the translation still will include the hreflang Attribute.
+
+  15. Tracking Link Clicks
+    1. One way to track user interactions is to ping the URL. The "ping" Attribute if it is present, will include a space-seoerates list of "Secure" URLs. The Browser will send the POST request with the body PING to the URL listed as the value of PING.
+Example and Directions:
+<header>
+    <div class="site-branding">
+        <a href="/">
+            <img src="your-logo.png" alt="Your Company Logo" style="max-width: 180px; height: auto;">
+        </a>
+        <h1>Your Website Name or Main Page Title</h1>
+        <p class="tagline">Innovating solutions for a better tomorrow since 2000 &reg;</p>
+    </div>
+
+    <nav class="primary-nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Us</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/portfolio">Portfolio</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li class="has-dropdown">
+                <a href="#more">More <span class="arrow-down">&#9660;</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="/team">Our Team</a></li>
+                    <li><a href="/careers">Careers</a></li>
+                    <li><a href="/faq">FAQ&#63;</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="header-utilities">
+        <div class="search-bar">
+            <form action="/search" method="get">
+                <label for="site-search" class="sr-only">Search the site &raquo;</label>
+                <input type="search" id="site-search" name="q" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="user-auth-links">
+            <a href="/login">Login</a> &vert;
+            <a href="/signup">Sign Up</a> &vert;
+            <a href="/profile">My Account</a>
+        </div>
+
+        <div class="shopping-cart">
+            <a href="/cart">
+                <span class="cart-icon">🛒</span> Cart (<span id="cart-item-count">0</span>)
+            </a>
+        </div>
+
+        <div class="language-selector">
+            <label for="language-select" class="sr-only">Select Language</label>
+            <select id="language-select" onchange="window.location.href=this.value;">
+                <option value="/en" selected>English</option>
+                <option value="/es">Espa&ntilde;ol</option>
+                <option value="/fr">Fran&ccedil;ais</option>
+            </select>
+        </div>
+
+        <div class="social-links">
+            <a href="https://facebook.com/yourcompany"
+               target="_blank"
+               aria-label="Facebook"
+               ping="https://youranalytics.com/track/social-click?platform=facebook&amp;page=header">
+                <img src="facebook-icon.png" alt="Facebook" width="24" height="24">
+            </a>&nbsp;
+
+            <a href="https://twitter.com/yourcompany"
+               target="_blank"
+               aria-label="Twitter"
+               ping="https://youranalytics.com/track/social-click?platform=twitter&amp;page=header https://another-tracker.com/log?event=twitter_click">
+                <img src="twitter-icon.png" alt="Twitter" width="24" height="24">
+            </a>&nbsp;
+
+            <a href="https://linkedin.com/yourcompany"
+               target="_blank"
+               aria-label="LinkedIn"
+               ping="https://youranalytics.com/track/social-click?platform=linkedin&amp;page=header">
+                <img src="linkedin-icon.png" alt="LinkedIn" width="24" height="24">
+            </a>
+        </div>
+
+        <div class="cta-button">
+            <a href="/get-started"
+               class="button button-primary"
+               ping="https://youranalytics.com/track/cta-click?button=get_started&amp;location=header">
+                Get Started Today&hellip;
+            </a>
+        </div>
+    </div>
+</header>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To see the ping attribute in action:
+ * Save the above HTML code as an .html file.
+ * Open it in a browser like Chrome or Safari.
+ * Open your browser's Developer Tools (usually F12 or Right-Click -> Inspect Element, then go to the "Network" tab).
+ * Clear the network log.
+ * Click one of the social media links or the "Get Started Today" button.
+ * You should see the navigation request to the href URL, and also a separate, small POST request (often with a "PING" payload and Content-Type: text/ping) going to the URL(s) specified in the ping attribute.
+Remember that due to its limitations, especially Firefox's default behavior, ping is rarely the sole solution for comprehensive click tracking.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   °°° Links with javaScript°°°
+  1. The "links" attribute returns a "HTMLCollection" matching a and area elements that have a "href" attribute.
+Example:
+let a = document.links[0];
+
+a.href = 'newpage.html';
+a.protocol = 'ftp';
+a.setAttribute('href', 'https://soloist.ai/DailyInvestors/');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   
+  
+
+
+References: Mozilla 
+            Gemini 
+            Web.Dev
+            Google
