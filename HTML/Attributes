@@ -1,0 +1,111 @@
+Description: Doing refresh courses today while my girl n the kids sleep. Can't read in the Dark, but just another reason to stay on my A Game on everything else. Linux is by Far My Choice as the Best Systems. But not all attxkeaz repairs, patches, can be solved or found this way. Being able to only rely on Your Dev Tools, not Burp, Bot Requestly, or other Tools, we have to utilize what we have. Web.dev, Goo.gle, Microsoft Learn, Google Scholar, Anyone want my college Passwords 🤣😂😂 jkn
+But these are some notes 🎶 some1 mad need one Day 👾🔄
+
+
+
+1. Attributes: 
+Syntax: <a href="#register" target="_self">Registration</a>
+  
+    ¹. The first mistake most Devs do, they use Global Words. I do occasionally, to keep them in my memory, but Avoid at All Cost. 
+  
+    ². If a attribute contains a Space or Special Character must be quoted ""
+ 
+    ³. Case Sensitivite Attribute:
+<div id="myId">
+<div id="MyID">
+  
+    ⁴. Case Insensitive Attribute:
+<input type="text">
+<input type="TeXt">
+~~~~~~~~👾~~~~~~🎶~~~~~~~~~~~~~~~✨
+1.2: Boolean Attributes:
+  
+    ¹. Include { autofocus, inert, checked, disabled, required, reversed, allowfullscreen, default, loop, autoplay, controls, muted, read-only, multiple, selected.
+ 
+     ². True or False !== =!
+ 
+     ³. These 3 tags are equivalent:
+<input required>
+<input required="">
+<input required="required">
+  
+    ⁴. When toggling between both "True & False", add or remove the attributes with JavaScript. Example:
+const myMedia = document.getElementById("mediaFile");
+myMedia.removeAttribute("muted");
+myMedia.set Attribute("muted");
+ 
+    ⁵. In XML, remember all "Attributes" but include a value.
+~~~~~~~~~~~~~~~~~~~~~~~~🔄~~~~~~~~~
+1.3: Enumerated Attributes:
+  
+    ¹. A enumerated attribute is a attribute that has a set of predefined "Valid Values". Example:
+If you include <style contenteditable>, it Defaults to this <style contenteditable="true">
+
+    ². Most the time they resort to their "Default", however we can set them to be "False".
+ 
+    ³. If you have <input>, and something is missing, it will default to text.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1.4: Global Attributes🧲:
+ 
+    ¹. Global Attributes range from: 
+{ accesskey, anchor, autocapitlize, autocorrect, autofocus, class { Document.getElementsByClassName()}, contenteditable, data-*, dir { ltr, rtl, auto}, draggable, enterkeyhint, exportparts, hidden, id, inert, inputmode, is, itemid, itemprop, itemref, itemscope, item type, Lang, nonce, part, popover, role, alot, spell check, style, tab index, title, translate, virtual keyboard policy, writingsuggestions, attr-is, attr-lang, attr-popover-hint, global-attributes:the-id-attribute-2, attr-autocorrect, dom-elementcontenteditable-virtualkeyboardpolicy,the-hidden-attribute, the-dir-attribute, attr-nonce, attr-autocapitlize, attr-spellcheck, nonce-does-not-update-dom, the-draggable-attribute, element-attrdef-html-global-exportparts, attr-tabindex, attr-enterkeyhint, the-accesskey-attribute, attr-translate, writing-suggestions, global-attributes:classes-2, part-attr, the-inert-attribute, attr-slot, ref-for-dom-element-slot1, inert-subtrees, the-style-attribute, style-attribute, the-tirle-attribute, attr-inoutmode, attr-data-*, the-popover-attribute, dom-fe-autofocus}
+  
+    ². Id:
+To target the id Attribute, you will have to use escape or Special Characters. Usually in $0 format.
+ 
+    ³. Navigation:
+Normally includes at least 4 links. When the URL includes "#", this indicates it is a fragment idenitifier. If it matches an "Id" it is either then a ⚓ or a 🔖 📑.
+ 
+    ⁴. Setting "href="#top", or href="#" will scroll the user to the Top of the Page.
+~~~~~~~~~~~~~~~~~~~~~~~~🧲~~~~~~~~~
+
+1.5: CSS Selectors: 
+  ¹. To target a CSS Selector, you can use a id Selector such as #feedback. Or try a case-sentive Attribute Selector such as [id="feedback"]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.6: Scripting:
+    ¹. Let's say a element has the id "switch" Their are several methods we can use to extract. Example:
+const switchViaID = documentElementId("switch")
+
+const switchViaSelector = document.querySelector("#switch");
+ 
+    ². Or create one JavaScript function to target the Attribute by its ID. Example:
+<script>
+  /* switch is a reserved word in jS, so we use on off instead */
+  const onoff = document.getElementById('switch');
+  onoff.addEventListner('click', function() {
+    document.body.classList.toggle('black');
+  });
+</script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.7: <label>
+    ¹. Each label can be associated with one form control. A form control may have more then one Label.
+ 
+    ². The HTML label has a for Attribute, that takes its value from the value Id.
+
+    ³. Implicit Label: When the form control is between the Labels opening and closing tags, and the Attributes for and if aren't required.
+
+    ⁴. When including Radio Buttons, the same names are in <fieldset>, <legend>.
+   
+    ⁵. Their are over 40 aria-* states and Properties that can normally be accessible. They normally take on their space-seoerates id reference list.
+
+    ⁶. Using aria- labelled, you can create a reverse association from a "Form Control" to multiple labels.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+1.8: Class
+    
+     ¹. Just another way to call objects and processes. Example:
+document.getElementsByClassName(..);
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1.9: Style
+ 
+     ¹. Style attributes take their value as a CSS property value pair. The syntax being the same as the CSS Style Block. The Properties are usually separated by a colon.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2.
+
+
+    
