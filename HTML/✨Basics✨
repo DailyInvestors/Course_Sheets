@@ -1,0 +1,20 @@
+Description: This is going to have random educational facts. It will all be related to HTMl. But such a broad range of data , so will consider it Basics 🤷‍♂️
+
+1. Some "User-Agent$ stylesheets will include the following selectors. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+h2, :is(article, aside, nav, section) h1 {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+h3, :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Regardless the format, the AOM will still report it correctly.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+‽¿‽
+2. Outside of Headings, most text is structured by paragraphs <p> </p>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3. A option to provide a name is called a "aria-labelledby". Example:
+<section id="about" aria-labelledby="about_heading">
+<h2 id="about_heading"> Ways to Learn</h2>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4.  For citations and Quotes, there are several Key elements to focus on {blockquote, q, cite} 
