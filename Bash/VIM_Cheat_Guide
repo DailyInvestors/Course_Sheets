@@ -1,0 +1,224 @@
+I. The Absolute Basics (Getting Started)
+ * vim <filename>: Open a file.
+ * i: Enter Insert mode (to type text).
+ * <Esc>: Exit Insert mode (return to Normal mode).
+ * :w: Save the current file.
+ * :q: Quit Vim.
+ * :wq or ZZ: Save and quit.
+ * :q!: Quit without saving (discard changes).
+ * h: Move cursor left.
+ * j: Move cursor down.
+ * k: Move cursor up.
+ * l: Move cursor right.
+II. Navigation & Movement
+ * w: Move to the beginning of the next word.
+ * b: Move to the beginning of the previous word.
+ * e: Move to the end of the current word.
+ * 0 (zero): Move to the beginning of the current line.
+ * $: Move to the end of the current line.
+ * ^: Move to the first non-blank character of the current line.
+ * G: Go to the last line of the file.
+ * gg: Go to the first line of the file.
+ * <line_number>G: Go to a specific line number (e.g., 10G to go to line 10).
+ * H: Move to the top of the screen.
+ * M: Move to the middle of the screen.
+ * L: Move to the bottom of the screen.
+ * %: Jump to the matching parenthesis/bracket/brace.
+ * ctrl-f: Scroll forward one screen.
+ * ctrl-b: Scroll backward one screen.
+ * ctrl-d: Scroll down half a screen.
+ * ctrl-u: Scroll up half a screen.
+ * {: Move to the beginning of the previous paragraph.
+ * }: Move to the beginning of the next paragraph.
+ * (.: Move to the beginning of the previous sentence.
+ * ): Move to the beginning of the next sentence.
+III. Editing & Deletion
+ * x: Delete character under cursor.
+ * dw: Delete word.
+ * de: Delete to end of word.
+ * db: Delete to beginning of word.
+ * dd: Delete current line.
+ * <number>dd: Delete number of lines (e.g., 5dd to delete 5 lines).
+ * D: Delete from cursor to end of line.
+ * cc: Change (delete and enter insert mode) current line.
+ * cw: Change word.
+ * ce: Change to end of word.
+ * cb: Change to beginning of word.
+ * c$: Change from cursor to end of line.
+ * C: Same as c$.
+ * r: Replace a single character.
+ * R: Enter Replace mode (overtype characters).
+ * s: Delete character and enter Insert mode.
+ * S: Delete line and enter Insert mode (same as cc).
+ * J: Join current line with the next line.
+IV. Copy, Cut & Paste (Yank & Put)
+ * yy: Yank (copy) current line.
+ * <number>yy: Yank number of lines.
+ * yw: Yank word.
+ * ye: Yank to end of word.
+ * yb: Yank to beginning of word.
+ * y$: Yank from cursor to end of line.
+ * Y: Same as yy.
+ * p: Put (paste) after the cursor/line.
+ * P: Put (paste) before the cursor/line.
+ * dp: Delete and paste (move text).
+V. Undo & Redo
+ * u: Undo last change.
+ * ctrl-r: Redo last undone change.
+VI. Visual Mode
+ * v: Enter Visual mode (character-wise selection).
+ * V: Enter Visual Line mode (line-wise selection).
+ * ctrl-v: Enter Visual Block mode (rectangular selection).
+ * Once in Visual mode, use movement keys to select.
+ * d: Delete selected text.
+ * y: Yank (copy) selected text.
+ * c: Change (delete and enter insert mode) selected text.
+VII. Search & Replace
+ * /pattern: Search forward for pattern.
+ * ?pattern: Search backward for pattern.
+ * n: Go to next match.
+ * N: Go to previous match.
+ * *: Search forward for the word under the cursor.
+ * #: Search backward for the word under the cursor.
+ * :%s/old/new/g: Replace all occurrences of old with new in the entire file.
+ * :%s/old/new/gc: Replace all occurrences with confirmation.
+ * :<start>,<end>s/old/new/g: Replace in a specific range of lines (e.g., :10,20s/old/new/g).
+ * :'<,'>s/old/new/g`: Replace in selected visual block.
+ * &: Repeat the last :s command.
+VIII. Working with Multiple Files & Windows
+ * :e <filename>: Edit another file.
+ * :sp <filename>: Split window horizontally and open filename.
+ * :vsp <filename>: Split window vertically and open filename.
+ * ctrl-w w: Cycle through windows.
+ * ctrl-w h/j/k/l: Move to window left/down/up/right.
+ * ctrl-w q: Close current window.
+ * ctrl-w o: Close all other windows.
+ * :ls: List open buffers.
+ * :bnext: Go to next buffer.
+ * :bprev: Go to previous buffer.
+ * :b <buffer_number>: Go to specific buffer by number.
+ * :bd: Delete current buffer.
+IX. Macros (Recording and Playing Back Actions)
+ * q<register>: Start recording a macro into <register> (e.g., qa for register 'a').
+ * Perform your actions.
+ * q: Stop recording.
+ * @<register>: Play back the macro once.
+ * <number>@<register>: Play back the macro number of times.
+ * @@: Repeat the last executed macro.
+X. Indentation & Formatting
+ * >>: Indent current line.
+ * <<: Outdent current line.
+ * <number>>>: Indent number of lines.
+ * =: Auto-indent selected text in Visual mode.
+ * gg=G: Auto-indent the entire file.
+ * :set autoindent: Enable auto-indentation.
+ * :set smartindent: Smarter auto-indentation.
+ * :set expandtab: Use spaces instead of tabs.
+ * :set tabstop=<number>: Set tab width (e.g., tabstop=4).
+ * :set shiftwidth=<number>: Set indent width for >> and <<.
+ * :set softtabstop=<number>: Allows backspace to delete multiple spaces as if they were a tab.
+XI. Marks
+ * m<letter>: Set a mark at the current cursor position (e.g., ma).
+ * ` <letter>: Jump to the exact position of the mark.
+ * '<letter>: Jump to the beginning of the line containing the mark.
+ * ` `: Jump to the previous jump position.
+ * ``: Jump to the previous edit position.
+ * :marks: List all current marks.
+XII. Registers
+ * ": The unnamed register (last yanked/deleted text).
+ * "0: The last yanked text (even if something else was deleted).
+ * **"1 through "9: Numbered registers for deleted/changed text (1 is the most recent).
+ * "<letter>: Named registers (e.g., "ayw yanks a word into register 'a').
+ * "<letter>p: Paste from a specific register (e.g., "ap).
+ * "*: System clipboard register (for copying to/from other applications).
+ * "+: System clipboard register (similar to *, often preferred).
+ * "_: The black hole register (delete to it to prevent it from affecting other registers).
+ * :reg: View the contents of all registers.
+XIII. Command Line Mode (Ex Mode)
+ * :: Enter command line mode.
+ * :!<command>: Execute a shell command (e.g., :!ls -l).
+ * :r !<command>: Read the output of a shell command into the current buffer.
+ * :w !<command>: Send the current buffer as input to a shell command.
+ * :grep <pattern> <files>: Perform a grep search (requires 'grep' to be in your PATH).
+ * :copen: Open the quickfix list (after grep or compiler errors).
+ * :cnext: Go to next error in quickfix list.
+ * :cprev: Go to previous error.
+XIV. Advanced Movement & Text Objects
+ * viw: Select "inner word" (including leading/trailing whitespace).
+ * vaw: Select "a word" (including surrounding whitespace).
+ * vis: Select "inner sentence".
+ * vas: Select "a sentence".
+ * vip: Select "inner paragraph".
+ * vap: Select "a paragraph".
+ * vi": Select "inner double quotes".
+ * va": Select "a double quotes".
+ * vi( or vib: Select "inner parentheses".
+ * va( or vab: Select "a parentheses".
+ * vi{ or vib: Select "inner curly braces".
+ * va{ or vab: Select "a curly braces".
+ * These text objects can be combined with operators: diw (delete inner word), yi( (yank inner parentheses), ci" (change inner double quotes).
+XV. Customization & .vimrc
+ * ~/.vimrc: This is your Vim configuration file.
+ * :source ~/.vimrc: Reload your .vimrc file.
+ * set number: Show line numbers.
+ * set relativenumber: Show relative line numbers.
+ * set wrap: Wrap long lines.
+ * set nowrap: Don't wrap long lines.
+ * set tabstop=4: Set tab width to 4 spaces.
+ * set shiftwidth=4: Set auto-indent amount to 4 spaces.
+ * set expandtab: Convert tabs to spaces.
+ * set incsearch: Highlight matches while typing search pattern.
+ * set hlsearch: Highlight all search matches.
+ * set nohlsearch: Turn off search highlighting.
+ * set ignorecase: Ignore case in searches.
+ * set smartcase: Ignore case if search pattern is all lowercase, otherwise respect case.
+ * set hidden: Allow buffers to exist even if not in a window.
+ * set backup: Create backup files.
+ * set undofile: Persist undo history across sessions.
+ * set cursorline: Highlight the current line.
+ * set cursorcolumn: Highlight the current column.
+ * syntax on: Enable syntax highlighting.
+ * filetype indent on: Enable filetype-specific indentation.
+ * filetype plugin on: Enable filetype-specific plugins.
+ * set list: Show invisible characters (tabs, spaces, EOL).
+ * set listchars=tab:»-,trail:.,eol:$: Customize listchars.
+ * map <leader>w :w<CR>: Create a custom mapping (e.g., leader key followed by w to save).
+ * let mapleader = ",": Set your leader key (e.g., to comma).
+ * noremap: Non-recursive mapping (prevents re-mapping issues).
+ * inoremap: Non-recursive mapping for Insert mode.
+ * vnoremap: Non-recursive mapping for Visual mode.
+ * command! MyCommand echo "Hello": Define custom commands.
+XVI. Plugins (Via a Plugin Manager like Vim-Plug, Vundle, Pathogen)
+ * Plugin Managers: Essential for managing Vim plugins. (e.g., vim-plug is popular).
+ * Fuzzy Finders: fzf.vim, ctrlp.vim for quickly opening files.
+ * Auto-completion: YouCompleteMe, nvim-cmp (for Neovim) for intelligent code completion.
+ * Syntax/Linter: ALE (Asynchronous Linting Engine) for real-time error checking.
+ * Treesitter (Neovim): For advanced syntax highlighting and parsing.
+ * Git Integration: fugitive.vim (fantastic Git wrapper).
+ * File Explorer: NERDTree (tree-like file explorer).
+ * Status Line: lightline.vim, airline for enhanced status bars.
+ * Commenting: commentary.vim for easy commenting/uncommenting.
+ * Surround: vim-surround for quickly adding/changing/deleting surrounding characters.
+ * Matchup: Highlight matching parentheses, brackets, etc.
+ * Indent Guides: Visual guides for indentation levels.
+ * coc.nvim: A robust completion engine that supports Language Server Protocol (LSP).
+XVII. Lesser-Known but Powerful Tips
+ * ctrl-a: Increment number under cursor.
+ * ctrl-x: Decrement number under cursor.
+ * .: Repeat last change (very powerful!).
+ * ctrl-o: Go back to older cursor position in jump list.
+ * ctrl-i: Go forward to newer cursor position in jump list.
+ * gU: Convert text to uppercase (e.g., gUw for word).
+ * gu: Convert text to lowercase (e.g., guw for word).
+ * ~: Toggle case of character under cursor.
+ * g~: Toggle case (e.g., g~w for word).
+ * :'<,'>sort`: Sort lines in visual selection.
+ * :r <filename>: Insert the content of a file into the current buffer.
+ * set paste / set nopaste: Use set paste before pasting from external sources to avoid auto-indentation issues.
+Key Takeaways for Learning Vim:
+ * Practice, Practice, Practice: The only way to truly learn Vim is by using it constantly.
+ * Think in Verbs, Nouns, and Adjectives: Vim's commands are often composed of operators (verbs like d for delete, c for change, y for yank) and motions/text objects (nouns/adjectives like w for word, $ for end of line, iw for inner word).
+ * Don't Be Afraid of the Command Line: :help <command> is your best friend.
+ * Start Small, Build Up: Don't try to learn everything at once. Master the basics, then gradually add more commands and features.
+ * Customize Your .vimrc: As you learn, you'll find settings and mappings that make Vim more comfortable and efficient for your workflow.
+This comprehensive list should provide you with a solid foundation and many avenues to explore for becoming proficient in Vim!
