@@ -1,0 +1,5 @@
+alias market="curl -s 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd'"  
+
+alias cleanup="rm -rf ~/.cache/* /tmp/*"  
+
+alias encrypt='gpg -c'  # Encrypt file  
