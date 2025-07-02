@@ -1,5 +1,7 @@
 Dev Tool Debugging and Testing
 
+{ Global Objects = https://developer.mozilla.org/docs/Web/HTML/Global_attributes#list_of_global_attributes }
+
 document.designMode = 'on';
 
 1. Performance Observer
