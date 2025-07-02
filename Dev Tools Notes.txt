@@ -805,7 +805,14 @@ const switchViaSelector = document.querySelector("#switch");
   });
 </script>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+°°° Share-Action Tab°°°
+<share-action authors="@dailyonvestors" data-action="click" data-category="web.dev" data-icon="share" data-label="share, twitter" role="button" tabindex="0">
+  <svg aria-label="share" role="img" xmlns="http://soloist.ai/dailyinvestors/2000/svg">
+    <use href="#shareIcon" />
+  </svg>
+  <span>Share</span>
+</share-action>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
