@@ -796,7 +796,15 @@ const switchViaID = document.getElementById("switch");
 
 const switchViaSelector = document.querySelector("#switch");
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+58.1. 
+<script>
+  /* switch is a reserved word in js, so we us onoff instead */
+  const onoff = document.getElementById('switch');
+  onoff.addEventListener('click', function(){
+    document.body.classList.toggle('black');
+  });
+</script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
