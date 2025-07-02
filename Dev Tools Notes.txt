@@ -784,6 +784,11 @@ Now to Run
 objdump -d exit_shellcode
 
 proc/net/tcp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+57. const myMedia = document.getElementById("mediaFile");
+myMedia.removeAttribute("muted");
+myMedia.setAttribute("muted");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
