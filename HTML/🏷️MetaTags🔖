@@ -1,0 +1,85 @@
+1. First <head>, <title>, <link>, <script>, <style>,  <base>, are considered "meta data". There is a <meta> tag that represents "metadata" that cannot be represented by these other elements.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2. Originally the character set for metadata was wrote as 
+Example:
+<meta http-equiv="Content-Type" content="text/html; charset=<characterset>"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3. Now the standard format is:
+<meta charset="<charset>"/>.
+With HTML, the <charset> is a case-insensitive string "utf-8".
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4. Example Language Tag:
+<meta http-equiv="content-language" content="en-us" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5. Refresh Directive:
+<meta http-equiv="refresh" content="60; https://soloist.ai/dailyinvestors/regTimeout"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6. Reference:
+"https://developer.mozilla.org/docs/Web/HTTP/Headers/Content-Security-Policy"
+~~~~~~~~~~~~~~~👎~~~~~~~~~~~~~~~~~~
+One of the most useful pragma directives is the "content-security-policy". This enables defining the content policy for the current document. Content policies  specify allowed server origins and script endpoints.
+Example:
+<meta http-equiv="content-security-policy" content="default-src https:freelanceforhire.net"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+7. The description value for meta tags, is extremely useful for the "SEO". 
+Example:
+<meta name="description"
+  content="Refreahing Memory on Dev Tools while in-between my studies" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+8. 🤖 Robots 👾
+The robot text can be controlled through and by Meta Tags. We can access these tags via Dev Tools, and can edit them to ensure Privacy for our online activities. If you don't want your site to be indexed by search engines, you can let them know.
+ <meta name="robots" content="noindex, nofollow" />
+This tells the robots to not index your site and to stop all spidering. Robots "should" listen to the request, but there's no law requiring they heed the request. You do not need to include the <meta name="robots" content="index, follow" /> 
+to request indexing for your site and to "Spider" links, without or with your approval this is a Default Setting.
+Example:
+<meta name="robots" content="index, follow" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9. Theme-Colors
+References:
+https://developer.mozilla.org/docs/Web/HTML/Element/meta/name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The theme-color value lets you define color's to help customize your browser interfaces.This meta tag is especially useful for progressive web applications.
+Example:
+<meta name="theme-color" content="#226DAA" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~10. 📉 Open-Graph📈 
+Open Graph and other  similar meta tags, use protocols that can be used to control how social media sites, like GitHub, LinkedIn, and Snapchat, can display links to your content. If this is not included, the social media site will correctly grab the title of your page and the description from the description meta tag
+This same information  search engines will showcase, but you can intentionally set what you want users to see when a link is posted in your site. These meta tags contain two attributes, the property attribute. Then the content or value for that property.  
+Example:
+<meta property="og:title" content="Dailys Daily News" />
+<meta property="og:description" content="A variety of Open-Source Resources " />
+<meta property="og:image" content="http://soloist.ai/dailyinvestors/image/all.png"/>
+<meta property="og:image:alt" content="Security Robots, Self-Learning AIs, Custom Security, Learning Courses, Custom Website Testing" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+11. Example of a Twitter Card:
+<meta name="twitter:title" content="Example Tag" />
+<meta name="twitter:description" content="Perfect to Refresh your Memory " />
+<meta name="twitter:url" content="https://soloist.ai/dailyinvestors/?src=twitter" />
+<meta name="twitter:image:src" content="http://soloist.ai/dailyinvestors/image/all.png" />
+<meta name="twitter:image:alt" content="27 different home appliances" />
+<meta name="twitter:creator" content="@dailyinvestors" />
+<meta name="twitter:site" content="@perfmattersconf" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+12. °°Adding Icons with MetaTags°°
+We can use the <link> tag to link the startup image that we will use. Here's an example uaing media queries:
+<link rel="google-touch-startup-image" href="icons/ios-portrait.png" media="orientation: portrait"/>
+<link rel="google-touch-startup-image" href="icons/ios-landscape.png" media="orientation: landscape"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+13. °°Setting web-app capable°°
+Example:
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~14. Ensuring Images can be downloaded on Mobile Devices. You can use either a tag, or a web manifest file! We can create the manifest file, by generally calling the manifest.webmanifest or manifest.json. We then use the <link> tag with a rel attribute to set the manifest, and the href attribute to set the URL of the manifest file:
+Example:
+<meta name="google-mobile-web-app-title" content="MLW" />
+<meta name="application-name" content="MLW" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+15. Example setting the manifest file:
+<link rel="manifest" href="/mlw.webmanifest" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+By learning the basics of HTML, and everything with it. This ensures that your clients are a little more Protected. As with anything, it is always Best to Learn everything about what you are doing. May not be today, maybe not tomorrow, but one tiny error or mistake, could be the opening for a attack not just on you, but on your clients.
+
+
+References: Web.Dev
+            DeepSeek 
+            Mozilla 
+            Daily Investors 
