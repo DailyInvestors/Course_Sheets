@@ -77,6 +77,38 @@ Example:
 <link rel="manifest" href="/mlw.webmanifest" />
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 By learning the basics of HTML, and everything with it. This ensures that your clients are a little more Protected. As with anything, it is always Best to Learn everything about what you are doing. May not be today, maybe not tomorrow, but one tiny error or mistake, could be the opening for a attack not just on you, but on your clients.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example Tags:
+<meta name="viewport" content="width=device-width" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=1" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<link rel="icon" sizes="16x16 32x32 48x48" type="image/png" href="/images/mlwicon.png" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<link rel="apple-touch-icon" sizes="180x180" href="/images/mlwicon.png" />
+<link rel="mask-icon" href="/images/mlwicon.svg" color="#226DAA" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<link rel="alternate" href="https://soloist.ai/dailyinvestors/fr/" hreflang="fr-FR" />
+
+<link rel="alternate" href="https://solist.ai/dailyinvestors/pt/" hreflang="pt-BR" />
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<link rel="alternate" type="application/x-pdf" href="https://soloist.ai/dailyinvestors/mlw.pdf"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<link rel="canonical" href="https://solist.ai/dailyinvestors"/>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note: These two attributes can reduce the blocking nature of JavaScripts download and execution: "defer" and "async". 
+Example:
+<script>
+  document.getElementById('switch').addEventListener('click', function() {
+    document.body.classList.toggle('black');
+  });
+</script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To Include JavaScript in a external file:
+<script src="js/switch.js" defer></script>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
 
 
 References: Web.Dev
