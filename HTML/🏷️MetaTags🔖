@@ -114,7 +114,10 @@ Note: One of the drawbacks of this element is that anchor links are resolved wit
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Note: Anything between <!-- and --> will not be visible or parsed.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+°°Using ID's°°
+<section id="about" aria-labelledby="about_heading">
+<h2 id="about_heading">What you can learn</h2>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 References: Web.Dev
