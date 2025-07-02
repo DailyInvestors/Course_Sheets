@@ -791,6 +791,11 @@ proc/net/tcp
 myMedia.removeAttribute("muted");
 myMedia.setAttribute("muted");
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+58. Scripting
+const switchViaID = document.getElementById("switch");
+
+const switchViaSelector = document.querySelector("#switch");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
