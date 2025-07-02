@@ -106,8 +106,14 @@ Example:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 To Include JavaScript in a external file:
 <script src="js/switch.js" defer></script>
+Note: Adding the defer attribute. This defers the execution of the script until everything is rendered!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+°°Target Tag°°
+<base target="_top" href="https://soloist.ai/dailyinvestors" />
+Note: One of the drawbacks of this element is that anchor links are resolved with <base>. The <base> effectively converts the link <a href="#ref"> to <a target="_top" href="https://soloist.ai/dailyinvestors#ref">, triggering an HTTP request to the base URL with the fragments attached.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note: Anything between <!-- and --> will not be visible or parsed.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
