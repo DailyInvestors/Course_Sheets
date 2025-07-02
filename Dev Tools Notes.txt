@@ -814,9 +814,34 @@ const switchViaSelector = document.querySelector("#switch");
 </share-action>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+const editor = document.getElementById("myElement");
+if(editor.contentEditable) {
+  editor.setAttribute("contenteditable", "false");
+} else {
+  editor.setAttribute("contenteditable", "");
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Note: Setting tab at times may be essential.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+el.dataset["machineLearning"]; // workshop
+e.dataset.machineLearning; // workshop
+
+for (let key in el.dataset) {
+  customObject[key] = el.dataset[key];
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
+Resources: Google
+           Gemini " So who Knows"
+           Daily Investors 
+           DeepSeek 
+           Web.Dev
+           W3
+           Mozilla 
+           LinkedIn Learning 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
