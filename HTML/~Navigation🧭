@@ -1,0 +1,264 @@
+Resources:
+
+"https://web.dev/learn/css/grid"
+
+"https://web.dev/learn/html/headings-and-sections#headings_h1-h6"
+
+"https://Web.dev"
+
+"www.soloist.ai/dailyinvestors"
+
+"Mozilla"
+
+"Google"
+
+"https://developer.mozilla.org/docs/Web/CSS/:has"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Navigation °°°
+~~~~           ~~~~
+°°° Global Navigation: The navigation leading to Top-Level of a Page. Can be included in "navigation bars, drop-down menus, and flyout menus." °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Skip To Link°°°
+<a href="#main" class="skip-link button">Skip to Main</a>
+
+°°° When clicked this output goes to this main:
+<main id="main">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Hide Content °°°
+visually-hidden:not(:focus):not(:active)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Creating Navigation °°°
+<nav aria-labelledby="tocTitle">
+  <p id="tocTitle">Only on GitHub</p>
+...
+</nav>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° On This Page Navigation °°°
+<nav aria-label="Table of Contents">
+  <p>On this page</p>
+...
+</nav>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Nav for Screen Readers °°°
+<nav aria-labelledby="tocTitle">
+  <p id="tocTitle">On this page</p>
+  <ul role="list">
+    <li>
+      <a href="#skip">Skip to content link</a>
+    </li>
+    <li>
+      <a href="#toc">Table of contents</a>
+    </li>
+    <li>
+      <a href="#bc">Page Fragments</a>
+    </li>
+    <li>
+      <a href="#ln">Local navigation</a>
+    </li>
+    <li>
+      <a href="#global">Global navigation</a>
+    </li>
+  </ul>
+</nav>
+
+°°°Note: Remember never change the "tab" order! °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Breadcrumb Navigation °°°
+const url = new URL("https://web.dev/learn/html/navigation");
+
+const sections = url.hostname + url.pathname.split('/');
+// "web.dev,learn,html,navigation"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Example Breadcrumb Navigation°°°
+<nav aria-label="breadcrumbs">
+  <ol role="list">
+    <li>
+      <a href="/">web.dev</a>
+    </li>
+    <li>
+      <a href="/learn">Learn</a>
+    </li>
+    <li>
+      <a href="/learn/html">HTML</a>
+    </li>
+  </ol>
+</nav>
+
+°°° The "<nav>" element,tells assistive technologies to present the breadcrumbs as a navigational element on the current page. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Separators && Breadcrumb 🥪°°°
+[aria-label^="breadcrumbs" i] li + li::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  rotate: 45deg;
+  opacity: .8
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Current Page °°°
+<nav aria-label="breadcrumbs">
+  <ol role="list">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/learn">Learn</a>
+    </li>
+    <li>
+      <a href="/learn/html">Learn HTML!</a>
+    </li>
+    <li aria-current="page">
+      Navigation
+    </li>
+  </ol>
+</nav>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Local Navigation List Item °°°
+<li>
+  <a aria-current="page" aria-selected="true" href="/learn/html/navigation">
+    Navigation
+  </a>
+</li>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ᕙ⁠(⁠ ⁠ ⁠•⁠ ⁠‿⁠ ⁠•⁠ ⁠ ⁠)⁠ᕗ
+~~~~~~××~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Tables °°°°
+
+References:
+"https://web.dev/learn/html/lists"
+
+"https://web.dev/learn/css/grid"
+
+"https://estelle.github.io/CSS/tables/#slide1"
+
+"https://w3c.github.io/aria/#columnheader"
+
+"https://w3c.github.io/aria/#rowheader"
+
+~~~       ~~~~~~~~~~~~~~~~~~~~~~~~
+°°° HTML tables are used for displaying tabular data with rows and columns such as an  "SQL" Database. °°°
+
+°°° "set role="grid": allowes for Rearranging Grids && Columns °°°
+
+°°° If the rows of a grid can be expanded or collapsed, we can use "role="treegrid" °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° The table's children come in order:
+
+<caption> element
+<colgroup> elements
+<thead> elements
+<tbody> elements
+<tfoot> elements
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+°°° Inside the Table °°°
+Inside <table>, you will find the table headers:
+ (<thead>),
+ (<tbody>), 
+ (<tfoot>),
+ (<tr>),
+ (<th>),
+ (<td>), 
+ (<caption>), <~~~ Both in DOM
+ (<colgroup>), <~~~~ DOM
+ (<col>) 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+°°° The content of a table, is made up of up to three optional sections: 
+(<thead>),
+(<tbody>), 
+(<tfoot>). 
+Example:
+<table>
+  <caption>Team Daily</caption>
+  <thead></thead>
+  <tbody></tbody>
+  <tfoot></tfoot>
+</table>
+
+°°° For these tags to do anything, they must contain cells, rows, and or content!°°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° <th> °°°
+°°° User Agent stylesheets are usually stored here. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         🪾 🐒
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° The browser will default to "col" && or "row" if scope is not explicitly set. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Cells °°°
+~~~~     ~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° "Colspan" attribute is used to merge two or more adjacent cells within a single row. °°°
+
+°°° "rowspan" a attribute that is used to merge cells across rows. Then placed in the cell on the top row. °°°
+
+°°° The only way of using the "<col>" element in targeting cells is to use a complex selector such as the ":has()" relational selector. °°°
+
+
+°°°Example°°°
+<table>
+  <caption>Team Daily</caption>
+  <thead>
+    <tr>
+      <th rowspan="2" id="name" scope="col">Name</th>
+      <th colspan="2" id="path">Career path</th>
+      <th rowspan="2" id="year">Year</th>
+    </tr>
+    <tr>
+      <th id="past" scope="col">Past</th>
+      <th id="future" scope="col">Destiny</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="hal" scope="row">Freelancer For Hire</th>
+      <td headers="hal path past">Coding Agent</td>
+      <td headers="hal path future">Takeover</td>
+      <td>2020</td>
+    </tr>
+    <tr>
+      <th id="Daily" scope="row">Daily Investors</th>
+      <td headers="daily path past">Purge</td>
+      <td headers="daily path future">Researcher</td>
+      <td>2021</td>
+    </tr>
+    <tr>
+      <th id="news" scope="row">Dailys Daily News</th>
+      <td headers="news path past">MooMoo</td>
+      <td headers="news path future">Pinterest</td>
+      <td>1934</td>
+    </tr>
+  </tbody>
+</table>
+
+°°°Note: In this example the table contains "Two Rows". The first header contains "3 Cells" spanning four Columns. <rowspan="2"> merges the cell with the old cell in the adjacent row. Placing at the bottom of the contents. °°°
+°°° The "second row" only contains two cells. No cell is declared. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Styling °°°
+°°°The <colgroup> element is used to define groups of columns, or <col> elements within a table.°°°
+
+°°° Content Outline is usually as followed:
+<table>
+  <caption>Table Caption</caption>
+  <colgroup>
+    <col/>
+  </colgroup>
+  <thead>...
+
+°°°Note: <col> styles will style a column as long as there are NO <td> or <th> styles that are overriding that given style!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° "tr > *:nth-child(8)" selects the 8th child in the given row. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°The order of a drawing is: table, column groups, columns, rowgroups, rows. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Striping a Table °°°
+To stripe a table, the CSS  selectors aid for this task.
+°°°Example: 
+tbody tr:nth-of-type(odd) {background-color: rgba(0 0 0 / 0.1);} 
+°°°Note:This will add a translucent black to each odd row in the body of the table, letting any background effects that are set on <colgroup> to show through for the users. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🧭°°° Note this is Designed for a Quick Reference Guide for any Begging Developers. If you wish Truly to Learn, the Resources I used are listed above. °°°🧭
