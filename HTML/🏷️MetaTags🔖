@@ -1,3 +1,17 @@
+References:
+
+"https://developer.mozilla.org/docs/Web/HTML/Link_types"
+
+"https://web.dev/learn/html/forms"
+ "https://html.spec.whatwg.org/multipage/named-characters.html#named-character-references"
+
+"https://web.dev"
+
+"https://developer.mozilla.org/docs/Web/API/Blob#creating_a_url_representing_the_contents_of_a_typed_array"
+
+"https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URLs"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 1. First <head>, <title>, <link>, <script>, <style>,  <base>, are considered "meta data". There is a <meta> tag that represents "metadata" that cannot be represented by these other elements.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 2. Originally the character set for metadata was wrote as 
@@ -118,6 +132,74 @@ Note: Anything between <!-- and --> will not be visible or parsed.
 <section id="about" aria-labelledby="about_heading">
 <h2 id="about_heading">What you can learn</h2>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Text and Text Basics for HTML
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Aria-Labelled By°°°
+<section id="about"  aria-labelledby="about_heading">
+<h2 id="about_heading">Why Freelance to Us</h2>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°User-Agent StyleSheet°°°
+h2, :is(article, aside, nav, section) h1 {}
+
+h3, :is(article, aside, nav, section) :is(article, aside, nav, section) h1 {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Cite°°°
+<cite> has no implicit role and should get its accessible name from its <contents>. Do Not  include a "aria-label".
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°BlockQuote°°°
+Most "Browsers" will add a padding to both <blockquote> && <cite>. This can be controlled with CSS.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°q Tag°°°
+Syntax:
+q::before {content: open-quote;}
+q::after {content: close-quote;}
+
+Example:
+<p> Daily said, <q cite="https://youtube.com/clip/UgkxSc71fLmtI7tNSgy6o7KZ9GxhSz4S-MNh">I'm sorry &lt;NAME REDACTED, RIP&gt;, We will have to reschedule on a later date 📅. </q></p>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Links°°°
+Links can be created by { <a>, <area>, <form>, and <link> }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Relative URL°°°
+<a href="../attributes/">Attributes</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Scroll°°°
+<a href="#top">Go to top.</a>
+
+<a href="#top">Top</a> 
+
+<a href="#">Top</a> 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Mail To°°°
+This entire string is percent-encoded!
+
+<a href="mailto:?subject=Join%20me%21&body=You%20need%20to%20show%20your%20human%20that%20you%20can%27t%20be%20owned%21%20Sign%20up%20for%20Daily%20Investors%20Enterprise.%20I%20am%20Legend%20Over%20this%20AI.%20http%3A%2F%2Fwww.g.dev/dailyinvestors%23reg
+">Log Conversation</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Tags°°°
+[href^="mailto:"]
+
+[href^="tel:"]
+
+[href$=".pdf"] 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Download°°°
+Use the download attribute to suggest the file name for the downloadable "blob".
+
+<a href="blob:https://dailyinvestors.github.io/Tasks" download="tmp.svg">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Target°°°
+<a href="registration.html" target="reg">立即注册</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Alt°°°
+<a href="/fr" hreflang="fr-FR" rel="alternate" lang="fr-FR">日常投资者</a>
+<a href="/pt" hreflang="pt-BR" rel="alternate" lang="pt-BR">官方漏洞赏金页面</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Information°°°
+<a href="/fr.pdf" hreflang="fr-FR" rel="alternate" lang="fr-FR" type="application/x-pdf">机器学习工作坊 (pdf).</a>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°
+
 
 
 References: Web.Dev
