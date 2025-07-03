@@ -1,0 +1,228 @@
+°°° FORMS °°°
+
+Resources: 
+
+"https://web.dev/learn/html/dialog"
+
+"https://web.dev/learn/forms"
+
+"https://web.dev/learn/html/forms#built-in_validation"
+
+~~~      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° The HTML "<form>" element identifies documents containing interactive controls for submitting information. Stored inside the <form> tag,  you will find all the interactive controls for that "<form>" °°°
+
+°°° When using <form> you can validate the information entered, and submit the data to a server. °°°
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Validations °°°
+
+°°° All the different form control values van go through client-side constraint validation. This can prevent submissions until the data matches the required criteria. °°°
+
+°°° You can also turn this feature off by setting the "novalidate" attribute on the <form>. °°°
+
+°°° The "formnovalidate" on a button, can save the form data for later completion, prevents validation. Basically a Persistenence of sorts. °°°
+
+°°° Example Client-Side DOM Sanitizer, called: "DomPurify":
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML and JavaScript Sanitizer Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+    </head>
+<body>
+    <h1>User Comment Section</h1>
+    <textarea id="user-input" rows="10" cols="50">
+<img src="x" onerror="alert('XSS Attack!');">
+<p>Hello <script>alert('Evil script!');</script> world!</p>
+<a href="javascript:alert('Another XSS!');">Click me</a>
+<div onmouseover="alert('Mouse over XSS!')">Hover here</div>
+<b>This is safe bold text.</b>
+    </textarea>
+    <button onclick="displaySanitizedContent()">Display Sanitized Content</button>
+
+    <h2>Sanitized Output:</h2>
+    <div id="output"></div>
+
+    <script>
+        function displaySanitizedContent() {
+            const userInput = document.getElementById('user-input').value;
+
+            // DOMPurify.sanitize() will remove potentially dangerous HTML and JavaScript.
+            // By default, it allows a safe subset of HTML tags and attributes.
+            const cleanHTML = DOMPurify.sanitize(userInput);
+
+            document.getElementById('output').innerHTML = cleanHTML;
+
+            console.log('Original Input:', userInput);
+            console.log('Sanitized Output:', cleanHTML);
+        }
+    </script>
+</body>
+</html>
+
+°°° JavaScript Sanitizer for Client-Side :
+// 1. Create a new <div> element
+const container = document.createElement('div');
+container.id = 'myContainer'; // 
+
+Give it an ID
+container.style.border = '2px solid blue'; // Add some style
+container.style.padding = '10px';
+container.style.margin = '20px';
+console.log('Created container:', container);
+
+// 2. Create a heading and append it to the container
+const heading = document.createElement('h2');
+heading.textContent = 'My Dynamic List'; // Set its text content
+container.appendChild(heading); // Add the heading to the container
+console.log('Added heading to container.');
+
+// 3. Create an unordered list (ul)
+const ul = document.createElement('ul');
+ul.style.listStyleType = 'disc'; // Set list style
+ul.style.marginLeft = '20px';
+console.log('Created unordered list.');
+
+// 4. Define some list items
+const items = ['Item One', 'Item Two', 'Item Three', 'Item Four'];
+
+// 5. Loop through items and create <li> elements
+items.forEach((text, index) => {
+    const li = document.createElement('li'); // Create a list item
+    li.textContent = `${text} (Index: ${index})`; // Set its text
+    li.style.color = index % 2 === 0 ? 'green' : 'purple'; // Style based on index
+    ul.appendChild(li); // Append list item to the unordered list
+});
+console.log('Added list items to UL.');
+
+// 6. Append the unordered list to the container
+container.appendChild(ul);
+console.log('Added UL to container.');
+
+// 7. Append the entire container to the <body> of the document
+document.body.appendChild(container);
+console.log('Container appended to body! Check the page.');
+
+// --- You can also add interactivity ---
+// 8. Create a button
+const button = document.createElement('button');
+button.textContent = 'Add New Item';
+button.style.marginTop = '10px';
+container.appendChild(button); // Append button to container
+console.log('Added button.');
+
+// 9. Add an event listener to the button
+let newItemCount = 0;
+button.addEventListener('click', () => {
+    newItemCount++;
+    const newLi = document.createElement('li');
+    newLi.textContent = `New Dynamic Item ${newItemCount}`;
+    newLi.style.fontWeight = 'bold';
+    newLi.style.color = 'red';
+    ul.appendChild(newLi); // Add new item to the existing list
+    console.log(`Added "New Dynamic Item ${newItemCount}"`);
+});
+console.log('Added click event listener to button.');
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Submit Button °°°
+<input type="submit" value="Submit Form">
+<button type="submit">Submit Form</button>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° The <form> element's action and method attribute values define the URL that processes the form data. °°°
+
+°°° Using the form attribute, it is also possible to include "form controls" outside the "<form>" and to omit form controls stored inside the <form>°°°
+
+°°° When using "<form>" attributes you can also disassociate controls by leaving it empty or a space.°°°
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Methods °°°
+°°°The "method" attribute defines the HTTP protocol of the request. Normally  GET or POST. °°°
+
+°°° Commonly Used Methods°°°
+ * GET
+ * HEAD
+ * POST
+ * PUT
+ * DELETE
+ * CONNECT
+ * OPTIONS
+ * TRACE
+ * PATCH
+ * PROPFIND (WebDAV)
+ * PROPPATCH (WebDAV)
+ * MKCOL (WebDAV)
+ * COPY (WebDAV)
+ * MOVE (WebDAV)
+ * LOCK (WebDAV)
+ * UNLOCK (WebDAV)
+ * REPORT (WebDAV)
+ * MKACTIVITY (WebDAV)
+ * CHECKOUT (WebDAV)
+ * MERGE (WebDAV)
+ * M-SEARCH (UPnP)
+ * NOTIFY (UPnP)
+ * SUBSCRIBE (UPnP)
+ * UNSUBSCRIBE (UPnP)
+ * SEARCH (RFC 5323)
+ * PROPFIND
+ * PROPPATCH
+ * LOCK
+ * MERGE
+ * M-SEARCH
+ * NOTIFY
+ * SUBSCRIBE
+ * UNSUBSCRIBE
+ * SEARCH
+ * ACL
+ * BASELINE-CONTROL
+ * BIND
+ * CHECKIN
+ * LABEL
+ * LINK
+ * MKCALENDAR
+ * MKREDIRECTREF
+ * MKWORKSPACE
+ * ORDERPATCH
+ * PRI
+ * REBIND
+ * UNBIND
+ * UNCHECKOUT
+ * UNLINK
+ * UPDATE
+ * UPDATEREDIRECTREF
+ * VERSION-CONTROL
+ * Dialog
+
+°°°Note: There may be more methods, guaranteed. However this is a quick  resourceful example created by Gemini.°°°
+
+°°°With "GET" the form data is sent as a (parameter string) of name=value pairs, that are appended to the action's URL.°°°
+
+°°° With "POST" the data is appended to the body of the HTTP request. This is more secure to send your personal data.°°°
+
+°°°There is also a "DIALOG method".  <form method="dialog"> 
+ Submitting this form will close the dialog, if submitted inside a dialog. °°°
+include both the formmethod="dialog"
+and 
+"formnovalidate"
+on the submit button, to ensure everything GETs submitted.°°°
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Form Buttons🔘 °°°
+Form buttons can have more than the attributes. If a button includes  { formaction, formenctype, formmethod, formnovalidate, or formtarget attribute }, there set values for that button takes precedence over the action, enctype, method, and target!
+
+°°°Note: Remember to give the Button a Name, this way you can keep track of it.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°° Results of a Submitted Form°°°
+
+<form method="GET">
+  <label for="student">Pick a student:</label>
+  <select name="student" id="student">
+    <option value="hoover">Hoover Sukhdeep</option>
+    <option>Blendan Smooth</option>
+    <option value="crispy">Crispy Doughnuts</option>
+  </select>
+  <input type="submit" value="Submit Form">
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
