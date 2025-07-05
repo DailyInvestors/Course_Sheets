@@ -178,6 +178,22 @@ button {
 2. Every <form> needs a <label>.
 3. <legend> Must Always be the first element!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Submitting Forms••
+
+1. The first and most known way is to click the submit button. After the user clicks the button it then send a Request to the URL.
+
+°°Example°°
+<button>Submit</button>
+
+🚨 Note:
+°°°To disable the default Submit behavior, we can add 
+"type="button" 
+to the <button>. This will tell the Browser that the "<button>" shouldnt be submitted to that given form.°°°
+
+°°°We can also use the <input> element with type="submit" for a option, instead of using  a <button> element. This input looks and behaves no different then a <button>. Basically instead of using the <label> element to✨ describe the <input>. Instead we use the value attribute.°°°🦸
+°°Example
+<input type="submit" value="Submit">
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
 
 °°👾° These are just basic notes not designed for any Publication or Teachings. These are off several Open-Source websites that will offer you a Better Course then what these notes may provide. However these are also designed for a Quick Reference, to which I hope this may one day help, whoever is reading this.
 Daily🦸
