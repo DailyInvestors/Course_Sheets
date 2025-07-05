@@ -1,0 +1,213 @@
+••Validating Forms°°
+
+⚠️References: 
+
+"https://web.dev/learn/forms/auto"
+
+"https://web.dev/learn/forms/validation##javascript"
+
+"https://developer.mozilla.org/docs/Web/API/Constraint_validation"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✨ This Cheat-Guide is designed to Validate the Front End of the Server. You must focus on the Backend at a later time.✨
+
+••Required••
+°°° We can use HTML to help specify the format, and constraints.
+Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name (required)</label>
+        <input required type="text" id="name" name="name">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+•••When using this, the "required" causes a error.
+Example:
+<label for="name">Name (required)</label>
+<input required type="text" id="name" name="name">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. All browsers display and use different text for their Errors.
+
+2. Wording may be different depending on the language.
+
+3. We can use jS, to change the type of error.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Required Email••
+
+Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="email">Email (required)</label>
+        <input required type="email" id="email" name="email">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+1. When validating, check each submission. Try with no words, try with characters, try with different emails. 
+
+2. Compare all the differences of each Validation.
+
+3. If you see a Error. Try to recreate. Why is this here? Can we change this? Should we? Is it a Bug? Can it lead to Privilege Escalation?
+
+4. Browsers will also test the format of <type>.
+
+5. Validate the see the authencity of the email. Is it real? Timedate? 
+
+6. Remember to Never use a Global object, unless explicitly having to.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+7. Now that you made a attribute/element "required", how can we ensure Password Rule Sets???
+
+••Example: 
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="password">Password (required)</label>
+        <input required type="password" id="password" name="password"aria-describedby="password-validation">
+        <span id="password-validation" class="validation-message">Please use at least eight characters.</span>
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+.validation-message {
+  display: block;
+  padding-top: 0.4em;
+}
+
+label {
+  font-size: 1.3em;
+}
+
+7.1 Enforcing 8 character Minimum:
+••Example:
+<label for="password">Password (required)</label>
+<input required="" minlength="8" type="password" id="password" name="password">
+
+7.2 The name of this attribute is <minlength>. With setting the value to 8, you now have a validation rule. If you want the opposite, use <maxlength>.
+
+8. For numerical input, we can use <min> & <max> to achieve the same result.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9. It is a best practice to try and ensure your users, & Testers know and understand your Validation Rules. To do this we can add a <aria-describedby> attribute to a element using the id of the form.
+••Example:
+<label for="password">Password (required)</label>
+<input required minlength="8" type="password" id="password"
+  name="password" aria-describedby="password-minlength">
+<div id="password-minlength">Enter at least eight characters</div>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Pattern Attribute°°
+10. At times, we may want to create advanced validation rules. We can use a HTML attribute. This is called a <pattern>. We can define a regular expression as the value.
+
+••Example:
+<label for="monster">What is your favorite monster? (required)</label>
+<input required pattern="[a-z]{2,20}" type="text" id="monster" name="monster">
+
+🚨In this lowercase letters are required.
+
+°°Looking at the example above, how can we now change this to also require Upercase letters??
+  °We can achieve this by manipulating the code, by editing and adding  pattern="[a-zA-Z]{2,20}"⚠️
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Styling Form Fields with CSS°°
+11. We can achieve staying in our forms, by making these required!
+
+°°Example:
+We can style these required fields using the :required CSS pseudo class.°°°
+
+••Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name (required)</label>
+        <input required type="text" id="name" name="name">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+input:required {
+  border: 2px solid;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+12. Now we can use the 
+:invalid pseudo-class 
+to add styles to any invalid form control. We can also use the 
+:valid pseudo-class
+for styling valid form elements.
+
+••Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name (required)</label>
+        <input required type="text" id="name" name="name">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+input:invalid {
+  border: 2px solid red;
+}
+
+13. Never use colors to validate errors or describe. We have devices that may be malfunctioning, Humans can be color blind, and malicious attackers may change these to scare off or trick their victims.
+
+14. Use the 
+:user-invalid pseudo-class 
+over the 
+:user-invalid tag 
+because the :user-invalid has a set default as :user-invalid.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Validation with jS°°
+
+°° With all Browsers being different?? How can we create the same Error messages for all of our Users?
+
+°We must use the setCustomValidity() method. This works off of the Constraint Validation API.°°°
+
+Example:
+const nameInput = document.querySelector('[name="name"]');
+
+nameInput.addEventListener('invalid', () => {
+    nameInput.setCustomValidity('Please enter your name.');
+ });
+
