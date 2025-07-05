@@ -4,6 +4,15 @@ References: Google
             Web.Dev
             Mozilla
          👾Team Daily🪄
+"https://soloist.ai/dailyinvestors"
+
+"https://web.dev/learn/forms/fields" 
+
+"https://developer.mozilla.org/docs/Web/HTML/Element/input#input_types"
+
+"https://web.dev/learn/forms/validation"
+
+"https://web.dev/learn/forms/styling"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ••Form Control•• 🪄 ✨ 🤖 
@@ -12,4 +21,122 @@ References: Google
 
 °°°At times, a form field can be used to refer to a "form control". "{ <input> and <textarea> }"°°°
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example: HTML Form
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name">
+      </div>
+      <div>
+        <label for="photo">Photo</label>
+        <input type="file" id="photo" name="photo">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+••CSS For 🔝 Form
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+button {
+  margin-top: 2rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••To describe both the form and the form control, we must use a "label". In this the "For Attribute" matches the "id".°°°
+
+°°°Example°°°
+<label for="color">What is your color choice‽¿‽</label>
+
+<input type="text" id="color" name="color">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Capturing User Input••
+°°°"Name Attributes"°°°
+Let's first describe this attribute. Let's say, Team Daily is the Form Control Name. Then the User enters Administrator. The "Request" will say 
+    "Team Daily-Administrator"
+•°•°•°•°•°•°|°•°|•°•°•°•°•°•°•°•°•°
+••Input Types Example°°
+°°°Subscribe Box
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <input type="checkbox" id="subscribe" name="subscribe" value="Team.Daily">
+    <label for="subscribe">Subscribe to web.dev?</label>
+      </div>
+      <button>Save setting</button>
+    </form>
+  </div>
+</main>
+
+°°°CSS Value for thisForm°°°
+input {
+  margin-right: 1rem;
+}
+
+button {
+  margin-top: 1rem;
+}
+
+🚨 Note: "type="checkbox""Can render a checkbox instead of a text field! The "default" value for "type" is text. Meaning that if you   want a text <input>, you can leave out the type attribute.
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+••Text Area Element°°
+
+°°°Allows you to enter multiple lines°°°
+
+°°°Example°°°
+<label for="comment">Comment</label>
+
+<textarea id="comment" name="comment"></textarea>
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+••Text Options••
+If you want to enter multiple options or a option for your text, we must use the dataset element with <input>°°°
+
+°°°Example°°°
+<label for="color">Color</label>
+<select id="color" name="color">
+  <option value="ruby">Ruby</option>
+  <option value="red">Red</option>
+</select>
+
+🚨Note:
+1. Add a select element.
+2. Connect it to a <label>.
+3. Add ID Attribute.
+4. Give it a "name".
+5. Between the "start and end tag" of the <select> element. We can add multiple <option> elements. Each element will represent a single Section.
+6. Every option has a unique <value> attribute.
+7. The Browser will always use the First Option by default. Unless otherwise specified.
+Example:
+<main>
+  <div class="wrapper">
+    <form action="https://dsilyinvestors.github.io/Tasks/7225931596b7eeafc448ad55d9c980fd" target="-blank">
+      <div>
+        <label for="Security">How many Cyber Attacks occure every day?</label>
+        <select id="Logs" name="logs">
+          <option value="one-million">One Million</option>
+          <option value="two-million">Two Million</option>
+          <option value="help">Help Guide</option>
+        </select>
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value
+button {
+  margin-top: 1rem;
+}
+
+🚨 Note: We can see one Option has the <selected> attribute.
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+•• Pre-Select Option👽°°
+
 
