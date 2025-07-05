@@ -1,4 +1,15 @@
-••• Testing Forms•••
+f•••✨ Testing Forms•••🪄
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+Resources: 
+
+"https://chrome.google.com/webstore/detail/form-troubleshooter/lpjhcgjbicfdoijennopbjooigfipfjh"
+
+"https://web.dev/vitals-tools-workflow"
+
+"https://developer.chrome.com/docs/lighthouse/overview#devtools"
+
+"https://developers.google.com/speed/docs/insights/v5/about/"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Does your form work on all Devices???
 °° First Test on your Device
 °° Next test on your Desktop
@@ -8,4 +19,46 @@
 •• If you have different devices, such as I do. Test with them now.
 •• Dev Tools also allows you to switch between Devices
 •• Try Different Networks
-•• With different Security Features 
+•• With different Security Features
+•• Have others Test it, watch their Reactions.
+•• Have several different AIs test and check it. This way it covers Humans and Machine.
+•• After you have both Human and AI, ask them follow-up Questions. For suggestions? Every Free Opinion is better then None.
+°° Now try in different Languages.
+°° Try with different coding Languages.
+°° Ask a Expert, one of us will Gladly Help.
+•• Research 
+•• Try different addresses 
+•• Different area codes 
+•• Try different attacks/tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°Measuring°°
+°° There are several ways I will talk about measuring. My preferred method for Everything is Dev Tools. Now some users may prefer Burp Suite, Requestly, etc to test. However in my opinion as a Specialist, Dev Tools and Mozillas Dev Tools are the best options for Testing.
+
+1. PS1: PageSpeed Insights
+•• Reports using field data.
+•• We can use their API to build our own Monitoring Tool.
+•• Includes data from the Chrome User Experience.
+
+2. Lighthouse
+••Identifies performance, SEO, best practice roles, and accessibility issues.
+••Basically a self-perforned Audit.
+°° Can be command-line.
+•• Can be a Node Module
+•• Can be used with the Lighthouse-CI Tool.
+•• Can be ran with GitHub Actions and probably their AI as well.
+
+3. Form Trouble-Shooter Extension
+
+4. Wave
+
+5. Axe
+
+3-5 Notify you of basics basically, such as missing labels, missed connections, etc 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°° How to Analyze °°
+1. Create a custom program
+2. Convert files
+3. Create Robots, or analytic cookies to your preferred choice of custom server.
+4. Google Analytics 
+•• Contains Snippets we can use. Or you can ask any AI for Snippets and Skeletons.
+5. If you want any type of custom Analytics, just ask 😉
