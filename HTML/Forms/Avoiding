@@ -1,0 +1,35 @@
+°°°Avoiding Re-entering or Repeating°°°
+
+References: Google
+            Web-Dev
+            Gemini
+            DeepSeek 
+
+"https://web.dev/learn/forms/auto#autocomplete"
+
+"https://web.dev/learn/forms/autofill"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Use autofill. Browsers use heuristics to determine the address field for autofill form fills.
+
+••Example:
+<label for="email">Email</label>
+<input type="email" name="email" id="email">
+
+°°Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name</label>
+<input type="text" name="name" id="name" autocomplete="name">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
