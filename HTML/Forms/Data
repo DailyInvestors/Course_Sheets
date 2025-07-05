@@ -1,0 +1,38 @@
+°°°Forms and Data°°°
+
+••References:
+
+"https://web.dev/learn/forms/form-fields"
+
+"https://developer.mozilla.org/docs/Web/HTTP/Methods/POST#example"
+
+"https://web.dev/explore/secure#secure-connections-with-https"
+
+Web.Dev
+Google
+Mozilla 
+Open-Source 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~🦸✨~~~~~~~~~~
+••°We can build Forms by using the form element <form>, with an <input>, a <label>, and a submit <button>.°°°
+
+°°A "<form>" element consists of a start tag <form>, with optional attributes that define  the start tag, and the end tag </form>.°°°
+
+°°° Here is a example of a script that will capture the processes running on a <form>.
+°°Example
+<form action="https://dailyinvestors.github.io/Tasks">
+...
+</form>
+⚠️This makes a backend request to handle and process the data.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•°•Transfering Data•°•
+1. Uses GET by Default. Use GET for shareable Data.
+
+2. If a user sumbits, help. The URL will resemble:
+https://example.com/cheats?cheat=help
+
+3. If you wish to use the POST Method, use it for secretive data. When we use the POST Method, this is not visible in the URL:
+<form method="post">
+...
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+⚠️         ᕙ⁠(⁠⇀⁠‸⁠↼⁠‶⁠)⁠ᕗ            ⚠️
