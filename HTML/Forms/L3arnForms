@@ -138,5 +138,47 @@ button {
 🚨 Note: We can see one Option has the <selected> attribute.
 •°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
 •• Pre-Select Option👽°°
+°°° When using the "selected attribute" you can pre-select 1 option. This is your default, regardless of each order in which "<option> elements" are defined.
+••Example
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="AI">What is your favorite AI?</label>
+        <select id="AI" name="👾">
+  <option value="Locally Built">Custom</option>
+  <option selected value="guardian">Guardian Angel</option>
+</select>
+      </div>
+      <button>Create</button>
+    </form>
+  </div>
+</main>
 
+°°°CSS Value°°
+button {
+  margin-top: 1rem;
+}
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+••Grouping Form Controls••
+°°° Fieldset or <fieldset> allows you to set group controls.°°°
+•••Example: 
+<fieldset>
+    <legend>What is your favorite web technology</legend>
+
+    <label for="php">PHP</label>
+    <input type="radio" name="webfeature" value="html" id="html">
+
+    <label for="css">CSS</label>
+    <input type="radio" name="webfeature" value="css" id="css">
+</fieldset>
+
+🚨 Notes:
+1. Every <fieldset> contains a <legend>.
+2. Every <form> needs a <label>.
+3. <legend> Must Always be the first element!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+°°👾° These are just basic notes not designed for any Publication or Teachings. These are off several Open-Source websites that will offer you a Better Course then what these notes may provide. However these are also designed for a Quick Reference, to which I hope this may one day help, whoever is reading this.
+Daily🦸
 
