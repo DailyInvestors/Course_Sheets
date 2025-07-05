@@ -8,6 +8,8 @@
 
 "https://developer.mozilla.org/docs/Web/API/Constraint_validation"
 
+"https://web.dev/learn/forms/javascript#ensure_users_are_notified_about_errors_in_real_time"
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ✨ This Cheat-Guide is designed to Validate the Front End of the Server. You must focus on the Backend at a later time.✨
@@ -210,4 +212,91 @@ const nameInput = document.querySelector('[name="name"]');
 nameInput.addEventListener('invalid', () => {
     nameInput.setCustomValidity('Please enter your name.');
  });
+
+⚠️ To learn this step by step:
+1. First Query the element where you want to set the custom error message. 
+
+2. Listen to the invalid event of your defined element. 
+
+3.Set the message with setCustomValidity(). 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+15. Here is a example for Please Enter your Username:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="username">username (required)</label>
+        <input required type="text" id="username" username="name">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+°° JS Value:
+const usernameInput = document.querySelector('[username="name"]'); 
+
+usernameInput.addEventListener('invalid', () => {  
+  usernameInput.setCustomValidity('Please enter your username.');
+});
+
+
+15.1: Test with and without the JavaScript. 
+
+15.2: Try on multiple browsera
+
+15.3: Try with different usernames. Real and Moch.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Real-Time Validation°°°
+1.We can do this by listening to the "<onblur> event" of a form control. 
+
+2.Then validate the input immediately when a user leaves a form field.
+
+3. Validate also when a user comes to the Page.
+
+Example:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name</label>
+        <input required minlength="10" type="text" id="name" name="name" aria-describedby="name-validation">
+        <span id="name-validation" aria-live="assertive" class="validation-message"></span>
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value°°
+button {
+  margin-top: 1rem;
+}
+
+.validation-message {
+  display: block;
+  padding-top: 0.4em;
+  color: red;
+}
+
+••JS Value:
+document.addEventListener('blur', function (event) {
+    // Validate the field
+    const isValid = event.target.validity.valid;
+    const message = event.target.validationMessage;
+    const connectedValidationId = event.target.getAttribute('aria-describedby');
+    const connectedValidation = connectedValidationId ? document.getElementById(connectedValidationId) : false;
+  
+    if (connectedValidation && message && !isValid) {
+      connectedValidation.innerText = message;
+    } else {
+      connectedValidation.innerText = '';
+    }
+}, true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
