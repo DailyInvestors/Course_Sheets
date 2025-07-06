@@ -221,8 +221,21 @@ to the <button>. This will tell the Browser that the "<button>" shouldnt be subm
   </select>
   <input type="submit" value="Submit Form">
 </form>
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
+•• When using "<input> elements" to where the user can't edit the value. You should always include a value, that includes the input elements with a type of {hidden, radio, checkbox, submit, button, and reset tag}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Example FieldSet••
+<fieldset>
+  <legend>Your Choice:</legend>
+  <ul start="6">
+    <li>
+      <fieldset>
+        <legend>Daily Investors</legend>
+        <ul>
+          <li>
+            <!-- the rest of the code here -->
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
