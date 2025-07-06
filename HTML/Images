@@ -1,0 +1,71 @@
+•••Images and HTML••
+
+✨References:
+
+"https://web.dev/learn/images"
+
+"https://web.dev/learn/design/responsive-images"
+
+"https://bugs.webkit.org/show_bug.cgi?id=240656"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+••Images°°
+1. Most images and Background images should be applied with CSS.
+
+2. The main method used for images are both the <img> tag with the src attribute referencing an image resource. Then the <alt> attribute describing the image.
+••Example:
+<img src="images/Pic.png" alt="Eve">
+
+3. Using the <srcset> attribute, enables providing multiple image for your project.
+••Example:
+<img src="images/Pic.png" alt="Pic"
+  srcset="images/Pic.png 400w, images/Pic-xl.jpg 800w"
+  sizes="(max-width: 800px) 400px, 800px" />
+
+4. Now a different option using the <picture> and <source> tags.
+••Example2:
+<picture>
+  <source src="images/Pic.png" media="(max-width: 800px)" />
+  <source src="images/Pic-xl.jpg" />
+  <img src="images/Pic.png" alt="Pic" />
+</picture>
+
+5. Both the <img> tag, & <input type="image">, can include height and width attributes.
+
+6. We can use the <svg> tag for SVG Images and Extensions.
+
+7. The <figure> element, along with  the <figcaption> element, can enable a image to include a description.
+
+8. The src file is the path and filename of a embedded image. 
+
+9. Example of <alt> text.
+<img src="path/filename" alt="descriptive text" />
+
+9¹. If it is a SVG Image:
+<img src="switch.svg" alt="light switch" role="img" />
+
+10. "<source> attributes" include srcset, sizes, media, width, and height.
+
+11. Lazy loading.•°✨
+••This mechanism tells the Browser how to load the image.
+•• The default <eager> value means the image is loaded instantly as the HTML is <parsed>.
+•• By setting <loading="lazy"> the image loading is deferred until it  comes into the viewport. 
+••Example:
+<img src="switch.svg" alt="light switch" loading="lazy" />
+
+
+12.Aspect Ratio
+••As CSS is usually included in the <head>, it is parsed before any <img> is encountered.
+••Example Height & Width Ratio°°
+<img src="switch.svg" alt="light switch" role="img" width="70" height="112" />
+
+
+13. The <img> element also can support {ismap, crossorigin, decoding, referrerpolicy, in Blink-based browsers, fetchpriority attributes.} 
+
+14. Example Response when a image is submitted with the x and y tags:
+&imageSubmitName.x=169&imageSubmitName.y=66 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🚨: These are just quick self help references, not designed for any type of Publication. If you wish to learn more, all Resources are always Provided.
