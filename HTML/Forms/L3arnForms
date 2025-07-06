@@ -194,7 +194,40 @@ to the <button>. This will tell the Browser that the "<button>" shouldnt be subm
 °°Example
 <input type="submit" value="Submit">
 •°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~✨ Basics on Forms ✨---
+••Simple Button••
+<input type="submit" value="Submit Form">
+<button type="submit">Submit Form</button>
+
+••The attributes of the <form> element sets the HTTP method.••
+
+••The <form>'s action and method attributes define the URL which processes the form data & the HTTP method used to submit the data.••
+
+•• You can set the <action> to determine where your data can be sent.••
+
+••If a <form method="dialog"> is inside a <dialog>, submitting this form will close the dialog.Howevwr this is the recommended method
+<formmethod="dialog"> & <formnovalidate> on the submit button.••
+
+••When a button includes a {formaction, formenctype, formmethod, formnovalidate, & formtarget attribute}, the value that is set on the button, activating the form submission will take precedence over the {action, enctype, method,& target} set on that <form>.•••
+
+••Method Example••
+<form method="GET">
+  <label for="student">Pick a student:</label>
+  <select name="student" id="student">
+    <option value="daily">Daily Investors</option>
+    <option>Guardian Angel</option>
+    <option value="art">Artificial Intelligence</option>
+  </select>
+  <input type="submit" value="Submit Form">
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
 
 °°👾° These are just basic notes not designed for any Publication or Teachings. These are off several Open-Source websites that will offer you a Better Course then what these notes may provide. However these are also designed for a Quick Reference, to which I hope this may one day help, whoever is reading this.
 Daily🦸
 
+Note: Some things may be repeated. I purposely will go over things several times, why?? To keep them in my memory. Every code I type, not only do I type it, but write eveydown. A simple language book, takes me 3 times longer, why? Because it is on thing to power read, another to train.
