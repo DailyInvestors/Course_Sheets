@@ -1,0 +1,132 @@
+••• Audio && Video •••
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+
+🚨References:
+
+"https://jakearchibald.com/2022/html-codecs-parameter-for-av1/"
+
+"https://developer.mozilla.org/docs/Web/API/WebVTT_API"
+
+"web.dev"
+
+"https://www.w3.org/WAI/WCAG21/Understanding/time-based-media"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. Both the <video> & <audio> elements can be used to (embed media players) directly with the src attribute or can be used (as the container!).
+
+2. <video> can be used to embed an audio file.
+
+3. <audio> e is preferable to embed sound in files.
+
+4. Opening tags can include several other attributes such as {controls, autoplay, loop, mute, preload, and all the global attributes}.
+
+5. Remember it is best to Never Use Global Anything.
+
+6. <video> elements can also support { height, width, and poster attributes }.
+
+7. Example1:
+
+<video src="videos/robots.webm" poster="images/robots.jpg" controls>
+  <p>View <a href="https://youtube.com/link">video on Youtube</a></p>
+</video>
+
+
+8. The <poster> attribute helps provide a image to display "as the video loads".
+
+9. Example Media Tags:
+
+<video controls poster="images/robots.jpg">
+  <source src="videos/robots.webm" type="video/webm">
+  <source src="videos/robots.mp4" type="video/mp4">
+  <source src="videos/robots.ogv" type="video/ogg">
+  <track label="English" kind="subtitles" srclang="en" src="vtt/subtitles-en.vtt" default />
+  <track label="Francais" kind="subtitles" srclang="fr" src="vtt/subtitles-fr.vtt" />
+  <p>Watch <a href="https://youtube.com/link">video on Youtube</a></p>
+</video>
+
+
+10. When using the <type> attribute, we can include a <codecs> parameter.
+
+11.  Example Codec:
+
+<source src="videos/robots.webm" type="video/webm;codecs=vp8,vorbis">
+
+12. Example Codec:
+
+<source src="videos/robots.mp4" type="video/mp4; codecs=avc1.4d002a">
+
+13. The <poster> attribute helps enable the source of an image to show while the video is downloading.
+
+14. Always include "BooLean" controls. This will allow your users to access to the controls that you allow.
+
+15. It is best to always try to include <track> elements to help specify timed text tracks.
+••Example:
+
+<track label="English" kind="subtitles" srclang="en" src="vtt/subtitles-en.vtt" default />
+<track label="Français" kind="subtitles" srclang="fr" lang="fr-fr" src="vtt/subtitles-fr.vtt" />
+
+••• This should always be on the same domain as the HTML document. Unless it is a crossorigin attribute.
+
+16. There are five enumerated values for the track kind attribute {subtitles, captions, descriptions, chapters, & metadata.}
+
+
+17. Try to include <subtitles> alongside the <srclang> attribute for dialogue transcription and translations.
+
+
+18. We can target the appearance of any subtitle by styling the targeting ::cue/ ::cue() tags.
+
+19. <kind="description"> is for text descriptions.
+
+20. Using the WebVTT format makes the video accessible for hearing impaired users.
+
+21. ••Background Video Example••
+
+<video playsinline autoplay loop muted poster="images/robots.jpg" role="none">
+  <source src="videos/robots.webm" type="video/webm">
+  <source src="videos/robots.mp4" type="video/mp4">
+  <source src="videos/robots.ogv" type="video/ogg">
+</video>
+
+
+22. ••Custom Video Control Example°
+
+<button id="playPause" aria-controls="idOfAudio"
+  data-pause-text="Pause audio"
+  data-play-text="Play audio">Pause audio</button>
+
+
+•• Once setting the tags, we can then use jS to further customize your media.
+
+
+23. Each button that controls the audio should have a event handler.
+
+
+24. Use both below to create customized controls:  HTMLMediaElement.play()  HTMLMediaElement.pause(). 
+
+
+25. ••Example For Media Controls°°
+
+ const pauseButton = document.getElementById('playPause');
+
+pauseButton.addEventListener("click", pauseAndPlay, false);
+
+function pauseAndPlay() {
+  console.log(this);
+  const media = document.getElementById(this.getAttribute('aria-controls'));
+
+  if (media.paused) {
+    media.play();
+    this.innerText = this.dataset.pauseText;
+  } else {
+    media.pause();
+    this.innerText = this.dataset.playText;
+  }
+}
+
+
+26. •• Example of a Control ••
+document.querySelector('[aria-controls]').removeAttribute('controls');
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            👾            🤖               👾
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
