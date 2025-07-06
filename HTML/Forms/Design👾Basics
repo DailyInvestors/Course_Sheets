@@ -1,0 +1,92 @@
+~~Basic Self-Help Cheat Guides for Designing~~~
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+1. Create a Rough Draft on Paper
+2. Use a <label> for every Control Form.
+3. Never mix the placeholder with a label. 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Label Phrasing••
+Example1:
+<label for="email">Enter your email address</label>
+
+Example2:
+<label for="email">Email address</label>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Label Positions••
+1. Best Practice to place the label above the Control Form.
+2. Best Security Practice do everything opposite of the Best Practice 😂 
+
+"https://ai.googleblog.com/2014/07/simple-is-better-making-your-web-forms.html"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Designing Forms••
+
+"https://web.dev/learn/forms/fields"
+
+1. Remember for multiple lines use the <textarea> element.
+
+2. For site's terms & conditions, use 
+<input type="checkbox">.
+
+3. <type="tel">: Enables users on a touch device to recieve a keyboard that shows only the characters needed to enter a telephone number.
+
+4. <type="email">: Allows the user on a mobile device to display a keyboard that is optimized only to enter email addresses.
+
+5. Research states it is best to use only one column. Security Experts will state that using more then one will throw off your attacked. At times creating something the easy way, just makes it easier for the skilled hacker.
+
+6. Recommended <button> size is 48px.
+
+7. Use <margin> to ensure spacing between the padding in Form controls.
+
+8. To increase or decrease the size of a Form Control, we can use <padding> &  <font-size>.
+
+9. 1rem default size is 16px.
+
+10. Always ensure each Form Control has their own Set Error.
+
+11.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Defining a Pointer••
+
+Example:
+// pointer device, for example, a mouse
+@media (pointer: fine) {
+  input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+// pointer device of limited accuracy, for example, a touch-based device
+@media (pointer: coarse) {
+  input[type="checkbox"] {
+    width: 30px;
+    height: 30px;
+  }
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Defining Passwords••
+Example:
+<label for="password">Password (required)</label>
+<input required minlength="8" type="password" id="password" name="password" aria-describedby="password-minlength">
+<span id="password-minlength">Enter at least eight characters</span>
+•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
+••Requirements••
+Example:
+<label for="name">Name (required)</label>
+<input name="name" id="name" required>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••References:
+
+"https://web.dev/learn/css"
+
+"https://www.deque.com/blog/anatomy-of-accessible-forms-required-form-fields/"
+
+"https://www.lukew.com/ff/entry.asp?725"
+
+""https://developer.mozilla.org/docs/Web/CSS/@media/pointer"
