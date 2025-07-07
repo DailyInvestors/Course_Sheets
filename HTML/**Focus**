@@ -1,0 +1,146 @@
+***Focus***
+.•°•.•°•.•°•°•°•°•°•.°°•°•°•°°°•°•.
+
+✨References:
+
+"https://web.dev/"
+Gemini 
+DeepSeek
+Perplexity 
+Mozilla 
+Daily
+GitHub 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Examples**
+:focus,
+:focus-visible 
+:focus-within 
+flex-flow: row-reverse;
+contenteditable
+tabindex
+autofocus
+element.focus()
+share-action
+HTMLElement.focus()
+element.focus({preventScroll:true})
+Document.activeElement
+contenteditable="true
+disabled
+inert
+accent-color
+Element.removeAttribute('disabled')
+HTMLTextareaElement
+***
+
+
+***"flexbox, grid, positioning, transforms, & multi-column", all can alter the visual order for any content.***
+
+***All elements must provide all the different features of the element being cloned.***
+
+*** We can then use JavaScript to program all the functionality of the element it is moching.***
+
+***disabled is not "Global". <disabled> applies to
+ {
+<button>, <input>, <optgroup>, <option>, <select>, <textarea>,  <fieldset>.  <optgroup> <fieldset>, <legend>.
+}
+***
+
+***The same elements that also support disabled are also (targetable) with  :disabled and :enabled classes.***
+
+***To renable a disabled element, most of the time it has to be removed with:
+Element.removeAttribute('disabled')
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**In this example we use TabIndex:
+
+<p>Click in any input, then press the tab key.</p>
+<ol>
+  <li><input tabindex="3" ></li>
+  <li><input tabindex="6" ></li>
+  <li><input tabindex="2" ></li>
+  <li><input tabindex="0" ></li>
+  <li><input tabindex="0"></li>
+  <li><input tabindex="-1"></li>
+  <li><input tabindex="0"></li>
+  <li><input tabindex="8"></li>
+  <li><input tabindex="1"></li>
+  <li><input tabindex="5"></li>
+  <li><input tabindex="7"></li>
+  <li><input tabindex="4"></li>
+</ol>
+
+
+**CSS Value:
+:root { font-family: segoe UI, system-ui, -apple-system, sans-serif}
+
+input, ol {font-size: 2rem}
+input { width: 5rem;}
+input:focus {
+  background-color: palegoldenrod;
+  border-color: green;
+  outline: 2px solid red;
+}
+ol {columns: 4 7rem;}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** In this example we use the CSS to customize a bit more***
+
+<p><label>Place your cursor in the text box, then press your tab key several times:<input/></label></p>
+<div>
+  <span tabindex="0">flexbox.</span>
+  <span tabindex="0">CSS </span>
+  <span tabindex="0">with</span>
+  <span tabindex="0">styled </span>
+  <span tabindex="0">then</span>
+  <span tabindex="0">This</span>
+  <span tabindex="0">order</span>
+  <span tabindex="0">reverse</span>
+  <span tabindex="0">in</span>
+  <span tabindex="0">written</span>
+  <span tabindex="0">was </span>
+  <span tabindex="0">sentenced</span>
+</div>
+
+**CSS Value:
+
+:root { font-family: segoe UI, system-ui, -apple-system, sans-serif}
+div {
+  display: inline-flex;
+  flex-flow: row-reverse; 
+  gap: 0.5em; 
+}
+span:nth-of-type(6) {
+  order: 3;
+}
+span { border: 1px dashed;}
+span:focus {
+  background-color: palegoldenrod;
+  border-color: green;
+  outline: 2px solid red;
+}
+
+***In this <flex-flow: row-reverse;>  reverses the visual order.***
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Here is a example of the TabIndex set to 0 with a custom element:
+
+<share-action authors="@front-end.social/@dailyinvestors" data-action="click" data-category="GitHub" data-icon="share" data-label="share, market.picks" role="button" tabindex="0">
+  <svg aria-label="share" role="img" xmlns="http://soloist.ai/dailyinvestors/333/svg">
+    <use href="#shareIcon" />
+  </svg>
+  <span>Share</span>
+</share-action>
+
+*** Local Navigation Example:
+
+<web-navigation-drawer type="standard" tabindex="-1">
+
+**By making this a negative balance this ensures our element will be focusable.**"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Example of Autofocus***
+
+<dialog open>
+  <form method="dialog">
+    <button type="submit" autofocus>close</button>
+  </form>
+</dialog>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
