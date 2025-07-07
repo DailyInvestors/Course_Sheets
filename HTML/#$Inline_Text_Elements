@@ -1,0 +1,75 @@
+***Text Elements***
+
+✨ References:
+
+"https://developer.mozilla.org/docs/Web/MathML"
+
+"https://Web.dev/"
+
+"https://www.w3.org/International/articles/inline-bidi-markup/uba-basics"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Code**
+
+**<code> "Use to document code examples"**
+
+** When using multiple lines place <code>, inside of the <pre> element.**
+
+<p>This is a example of using <code>.
+  <code>01000011 01101111 01101101 01110000 01110010 01100101 01110011 01110011 an 01101001 01101101 01100001 01100111 01100101</code>
+  This is just a simple example . </p>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Examples 
+<date>
+<time>
+<datetime>
+<samp>
+<kbd>
+<var>
+<del>
+<cite>
+<s>
+<ins>
+<abbr>
+<dfn>
+<bdi>
+<bdo>
+<ruby>
+<rp>
+<rt>
+<em>
+<mark>
+<strong>
+<I>
+<span>
+<blockquote>
+<u>
+<b> 
+<br>
+<he>
+<wbr>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Power of 2***
+***The power of two in pythagorean theorem used the <sup> superscript element***
+
+**Example:
+<p>
+  If <var>a</var> and <var>b</var> are the legs and <var>c</var> is the hypotenuse then 
+<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> =
+<var>c<sup>2</sup></var>.
+</p>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Ruby Example***
+<ruby>漢<rp>（</rp><rt>かん</rt><rp>）</rp>字<rp>（</rp><rt>じ</rt><rp>）</rp></ruby>
+
+**CSS Value:
+ruby {font-size: 3rem;}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Example using Byte Code***
+
+<p>This is a basic example defining bytes, code.
+<code>01000011<wbr/>01101111<wbr/>01101101<wbr/>01110000<wbr/>01110010<wbr/>01100101<wbr/>01110011<wbr/>01110011 an 01101001<wbr/>01101101<wbr/>01100001<wbr/>01100111<wbr/>01100101</code>
+This also helps demonstrate on the usage of wbr. </p>
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
