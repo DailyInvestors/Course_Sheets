@@ -1,0 +1,675 @@
+** HTML and APIs **
+🏮Note: I believe in my account DailysDailyNews, in the JavaScript lessons, I am pretty sure I covered React and a Little bit of Selenium for API Testing🔥.***
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🏮References: Gemini, DeepSeek
+
+"https://developer.mozilla.org/docs/Web/API/Worker"
+
+"https://developer.mozilla.org/docs/Web/API/IndexedDB_API"
+
+"https://developer.mozilla.org/docs/Web/API/HTML_Drag_and_Drop_API"
+
+"https://developer.mozilla.org/docs/Web/API/Document_Object_Model"
+
+"https://developer.mozilla.org/docs/Web/API/Fullscreen_API"
+
+"https://developer.mozilla.org/docs/Web/Web_Components/Using_shadow_DOM"
+
+"https://web.dev/learn/accessibility/aria-html#the_accessibility_tree"
+
+"https://web.dev/learn/html/headings-and-sections"
+
+"https://web.dev/"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**APIs**
+*** The DOM is basically a API for accessing & manipulating ***
+
+***Every type of DOM node is represented by an interface based  Node. This node interface is what enables is to query these APIs.***
+
+*** The DOM contains all of the node elements for each "document"***
+
+***APIs enable us to query these nodes.***
+
+**The <EventTarget> interface, which provides us with addEventListener() and removeEventListener(), is inherited by the <Node> and <Window> interfaces⚡***
+
+***Every node inside the DOM can be edited with JavaScript.***
+
+***Several Methods***
+HTMLMediaElement.duration 
+
+HTMLMediaElement.currentTime 
+
+HTMLMediaElement.ended 
+
+HTMLImageElement.alt
+
+document.querySelectorAll
+
+imageInstance.alt
+
+HTMLElement {{ 
+
+HTMLAnchorElement - <a>
+HTMLAreaElement - <area>
+HTMLAudioElement - <audio>
+HTMLBaseElement - <base>
+HTMLButtonElement - <button>
+HTMLCanvasElement - <canvas>
+HTMLDataElement - <data>
+HTMLDataListElement - <datalist>
+HTMLDetailsElement - <details>
+HTMLDialogElement - <dialog>
+HTMLEmbedElement - <embed>
+HTMLFieldSetElement - <fieldset>
+HTMLFormElement - <form>
+HTMLHtmlElement - <html>
+HTMLIFrameElement - <iframe>
+HTMLImageElement - <img>
+HTMLInputElement - <input>
+HTMLLabelElement - <label>
+HTMLLegendElement - <legend>
+HTMLLIElement - <li>
+HTMLLinkElement - <link>
+HTMLMapElement - <map>
+HTMLMediaElement - <audio>, <video>
+HTMLMenuElement - <menu>
+HTMLMetaElement - <meta>
+HTMLMeterElement - <meter>
+HTMLModElement - <ins>, <del>
+HTMLObjectElement - <object>
+HTMLOListElement - <ol>
+HTMLOptGroupElement- <optgroup>
+HTMLOptionElement - <option>
+HTMLOutputElement - <output>
+HTMLPictureElement - <picture>
+HTMLProgressElement - <progress>
+HTMLQuoteElement - <q>, <blockquote>, <cite>
+HTMLScriptElement - <script>
+HTMLSelectElement - <select>
+HTMLSlotElement - <slot>
+HTMLSourceElement - <source>
+HTMLStyleElement - <style>
+HTMLTableCellElement - <td>, <th>
+HTMLTableColElement - <col>, <colgroup>
+HTMLTableElement - <table>
+HTMLTableRowElement - <tr>
+HTMLTableSectionElement - <thead>, <tbody>, <tfoot>
+HTMLTemplateElement - <template>
+HTMLTextAreaElement - <textarea>
+HTMLTimeElement - <time>
+HTMLTitleElement - <title>
+HTMLTrackElement - <track>
+HTMLVideoElement - <video>
+HTMLCollection.namedItem()
+HTMLPElement
+HTMLUnknownElement
+offsetHeight
+imageInstance.alt
+sectionInstance.offsetHeight
+HTMLOptionsCollection
+}
+)};
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**  Here we use the <HTMLImageElement.alt> to retrieve all the alt attributes of a image:
+
+let allImages = document.querySelectorAll('img');
+allImages.forEach((imageInstance) => {
+  console.log(imageInstance.alt);
+});
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Here we will use the <HTMLElement.offsetHeight> to retrieve the height of each section of the page.**
+
+let allSections = document.querySelectorAll('section');
+allSections.forEach((sectionInstance) => {
+  console.log(sectionInstance.offsetHeight);
+});
+
+**When changing the device orientation or the viewport, the DOM will update these immediately.*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***In this example, we will use both the first child, and the next sibling properties, by "Douglas Crockford".
+
+const walk_the_DOM = function walk(node, callback) {
+  callback(node);
+  node = node.firstChild;
+  while (node) {
+    walk(node, callback);
+    node = node.nextSibling;
+  }
+};
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** In this example we will use appendChild() and cloneNode():
+
+customElements.define('star-rating',
+  class extends HTMLElement {
+    constructor() {
+      super(); // Always call super first in constructor
+      const starRating = document.getElementById('star-rating-template').content;
+      const shadowRoot = this.attachShadow({
+        mode: 'open'
+      });
+      shadowRoot.appendChild(starRating.cloneNode(true));
+    }
+  });
+
+⚡This is also a powerful word We can use .this to help force our methods.***
+Example:
+super this document 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***⚡Documents👾🦸***
+
+***<Document> inherits from <node>***
+
+***<Document> cam  also inherit from the <HTMLDocument> interface.***
+
+*** Example Documents ***
+Node
+HTMLDocument
+document 
+document.body
+document.styleSheets
+Document.location Document.lastModified Document.Cookie
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Window***     
+               ✨
+
+"https://developer.mozilla.org/docs/Web/JavaScript/Reference"
+
+***Contains tons of Global Objects that we can use to manipulate.***
+
+***The Window interface can query the contents of the tab as and the overall contents of the window and device.***
+
+***Examples:
+resizeTo()
+devicePixelRatio() 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+💀👾🤖🤖👾💀💀👾🤖🤖👾💀👾🤖🤖💀
+Let's imagine a diagram that illustrates the DOM structure and points out where APIs come into play.
+
+Conceptual Visualization: The DOM & API Interaction
+
+Title: The Dynamic Web: DOM, APIs, and User Interaction
+
+🔥[Section 1: The Browser Environment (Outer Container - Light Blue)]
+ * Label: Web Browser
+ * Description: This represents the entire environment where your web page lives.
+   * Inside the Browser Box:
+  
+
+
+🔥   [Section 2: The Document Object Model (DOM) - Central, Tree-like Structure - White/Light Gray]
+     * Label: Document Object Model (DOM)
+     * Description: This is a tree-like representation of your HTML document. Each box or circle in this tree is a "node."
+       * Root Node (Top):
+         * document (Blue Box)
+         * Arrow pointing from document to window (see below for Window Object)
+       * Children of document:
+         * <html> (Green Box)
+           * Children of <html>:
+             * <head> (Orange Box)
+               * Children of <head>:
+                 * <title> (Text Node: "My Web Page")
+                 * <link> (CSS File)
+                 * <script> (JS File)
+             * <body> (Purple Box)
+               * Children of <body> (Example Nodes):
+                 * <h1> (Text Node: "Welcome!")
+                 * <p> (Text Node: "Click here to see more.")
+                   * Label on <p>: id="introParagraph" (small text next to it)
+                 * <button> (Text Node: "Load Data")
+                   * Label on <button>: id="dataButton" (small text next to it)
+                 * <div> (Empty, initially)
+                   * Label on <div>: id="contentArea" (small text next to it)
+                 * <img> (with src and alt attributes)
+                   * Label on <img>: id="productImage"
+  
+
+🔥   [Section 3: Web APIs - Connected to the DOM - Various Colored Boxes/Circles]
+     These APIs are distinct from the DOM structure but interact with it. Draw lines from the API boxes to the relevant DOM nodes to show interaction.
+     * A. DOM Manipulation APIs (Directly connected to DOM nodes):
+       * Label: DOM Manipulation API
+       * Description: Methods to interact with and change the DOM.
+       * Examples (Small Text next to API box):
+         * document.getElementById() -> Line pointing from this to <p id="introParagraph">, <button id="dataButton">, <div> id="contentArea", <img> id="productImage"
+         * element.addEventListener() -> Line pointing from this to <button id="dataButton"> (for click event)
+         * element.innerHTML = "..." -> Line pointing from this to <div> id="contentArea" (to add content)
+         * element.appendChild() / element.removeChild() -> Line pointing to various DOM nodes (e.g., adding a new paragraph to contentArea)
+         * element.setAttribute() -> Line pointing to <img> id="productImage" (to change src)
+         * element.style.color = "..." -> Line pointing to any visible element (e.g., <p id="introParagraph">)
+     * B. Event API (Closely linked to DOM, but separate concept):
+       * Label: Event API
+       * Description: Handles user interactions and other events.
+       * Examples:
+         * click event (from button) -> Line from "Event API" to <button id="dataButton">
+         * mouseover event
+         * load event
+     * C. Fetch API (External Communication):
+       * Label: Fetch API
+       * Description: For making network requests (e.g., getting data from a server).
+       * Interaction:
+         * Line from "Fetch API" box to "Server/External Data Source" (see below)
+         * Another line from "Fetch API" box to <div> id="contentArea" (to update it with fetched data)
+     * D. Local Storage API (Client-side Data Storage):
+       * Label: Local Storage API
+       * Description: Stores data persistently in the user's browser.
+       * Interaction:
+         * Line from "Local Storage API" box to a "Browser Storage" icon/box (separate from DOM)
+         * Can be triggered by user interaction (e.g., a "Save Settings" button, which then uses DOM Manipulation to get data, then Local Storage API to save it).
+     * E. Geolocation API (Device Capabilities):
+       * Label: Geolocation API
+       * Description: Accesses the user's geographical position.
+       * Interaction:
+         * Line from "Geolocation API" box to a "User Device Location" icon.
+         * Can be used to display user's location on the page (updating a <p> element in the DOM).
+     * F. Web Animations API (Visual Enhancements):
+       * Label: Web Animations API
+       * Description: Programmatic control over animations.
+       * Interaction:
+         * Line from "Web Animations API" box to <img> id="productImage" or <div> id="contentArea" (e.g., to fade in/out or move elements).
+     [Section 4: External Entities (Outside the Browser Box)]
+     * Label: Server / External Data Source (Cloud Icon)
+     * Description: Where your data might come from (e.g., a database, another website).
+       * Line connecting "Fetch API" to this cloud.
+     * Label: User (Stick Figure Icon)
+     * Description: The person interacting with the web page.
+       * Arrow pointing from "User" to "Browser Environment" (to signify interaction).
+  
+
+🔥 [Section 5: The Window Object (Top-level, overarching)]
+     * Label: window Object (Larger, more encompassing box/circle, possibly semi-transparent, overlaying parts of the browser environment).
+     * Description: The global object representing the browser window. It contains the document object and many global APIs.
+     * Lines emanating from window to "DOM," "Fetch API," "Local Storage API," "Geolocation API," etc., signifying that these are often accessed via the window object (e.g., window.document, window.fetch).
+Key / Legend:
+ * Colors:
+   * Blue: Core Browser/Global Objects
+   * Green/Orange/Purple: HTML Structure (DOM Nodes)
+   * Red/Yellow/Cyan/Magenta: Specific Web APIs
+ * Shapes:
+   * Rectangles: Main components
+   * Circles/Ovals: Specific API methods or individual DOM elements
+   * Arrows: Flow of data or control / Relationship
+How it Works (Illustrative Flow):
+ * Page Load: The browser parses the HTML, creates the document object, and builds the DOM tree.
+ * User Interaction: The "User" clicks the <button id="dataButton">.
+ * Event Handling: The "Event API" (addEventListener) on the button detects the click event.
+ * API Call: The JavaScript code (not explicitly shown but implied to be within the browser) executes a fetch() call (using the "Fetch API") to the "Server/External Data Source."
+ * Data Retrieval: The "Fetch API" gets data back from the server.
+ * DOM Update: The JavaScript code then uses "DOM Manipulation APIs" (getElementById, innerHTML) to find the <div> id="contentArea" and insert the fetched data into it, visually updating the page for the user.
+ * More Interactions: The user might save a preference, triggering the "Local Storage API" to store data in the "Browser Storage." Or, the page might use the "Geolocation API" to show the user's current location.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    %% Section 1: The Browser Environment (Outer Container)
+    subgraph Browser Environment [Web Browser]
+        direction LR
+
+        %% Section 5: The Window Object (Top-level, overarching)
+        B["window Object"]:::window_obj
+
+        %% Section 2: The Document Object Model (DOM) - Central, Tree-like Structure
+        subgraph DOM [Document Object Model (DOM)]
+            direction TB
+            A[document]:::document_root
+            A --&gt; H[<html>]:::html_node
+            H --&gt; I[<head>]:::head_node
+            H --&gt; J[<body>]:::body_node
+
+            I --&gt; K[<title> "My Web Page"]
+            I --&gt; L[<link> (CSS File)]
+            I --&gt; M[<script> (JS File)]
+
+            J --&gt; N[<h1> "Welcome!"]
+            J --&gt; O[<p id="introParagraph"> "Click here to see more." ]:::paragraph_node
+            J --&gt; P[<button id="dataButton"> "Load Data"]:::button_node
+            J --&gt; Q[<div id="contentArea">]:::div_node
+            J --&gt; R[<img id="productImage">]:::img_node
+        end
+
+        %% Section 3: Web APIs - Connected to the DOM
+        subgraph WebAPIs [Web APIs]
+            S[DOM Manipulation API]:::dom_api
+            T[Event API]:::event_api
+            U[Fetch API]:::fetch_api
+            V[Local Storage API]:::local_storage_api
+            W[Geolocation API]:::geolocation_api
+            X[Web Animations API]:::web_animations_api
+        end
+
+        %% Connections within the Browser Environment
+        B --&gt; DOM
+        B --&gt; WebAPIs
+        B --&gt; U
+        B --&gt; V
+        B --&gt; W
+
+        S --&gt; O
+        S --&gt; P
+        S --&gt; Q
+        S --&gt; R
+
+        T --&gt; P
+
+        U --&gt; Q
+
+        X --&gt; R
+        X --&gt; Q
+
+    end
+
+    %% Section 4: External Entities (Outside the Browser Box)
+    Y[(Server / External Data Source)]:::external_server
+    Z{User}:::user_actor
+
+    %% Connections to External Entities
+    U --&gt; Y
+    Z --&gt; Browser Environment
+
+    V --&gt; C[(Browser Storage)]:::browser_storage
+    W --&gt; D[(User Device Location)]:::device_location
+
+    %% Illustrative Flow (as described in the text)
+    Z -- click --&gt; P
+    P -- triggers --&gt; T
+    T -- activates --&gt; U
+    U -- request --&gt; Y
+    Y -- data --&gt; U
+    U -- update --&gt; S
+    S -- render --&gt; Q
+
+    %% Styling (using class definitions)
+    classDef browser_env fill:#e0f2f7,stroke:#333,stroke-width:2px;
+    classDef document_root fill:#bbdefb,stroke:#333;
+    classDef html_node fill:#c8e6c9,stroke:#333;
+    classDef head_node fill:#ffe0b2,stroke:#333;
+    classDef body_node fill:#e1bee7,stroke:#333;
+    classDef paragraph_node fill:#f8f8f8,stroke:#999,stroke-dasharray: 5 5;
+    classDef button_node fill:#f8f8f8,stroke:#999,stroke-dasharray: 5 5;
+    classDef div_node fill:#f8f8f8,stroke:#999,stroke-dasharray: 5 5;
+    classDef img_node fill:#f8f8f8,stroke:#999,stroke-dasharray: 5 5;
+
+    classDef dom_api fill:#ffcdd2,stroke:#d32f2f;
+    classDef event_api fill:#fff9c4,stroke:#fbc02d;
+    classDef fetch_api fill:#b2ebf2,stroke:#00acc1;
+    classDef local_storage_api fill:#d1c4e9,stroke:#5e35b1;
+    classDef geolocation_api fill:#c5cae9,stroke:#3f51b5;
+    classDef web_animations_api fill:#ffecb3,stroke:#ff8f00;
+
+    classDef window_obj fill:#e1f5fe,stroke:#2196f3,stroke-width:3px;
+    classDef external_server fill:#cfd8dc,stroke:#607d8b,stroke-dasharray: 5 5;
+    classDef user_actor fill:#90a4ae,stroke:#455a64;
+    classDef browser_storage fill:#a7ffeb,stroke:#00bfa5;
+    classDef device_location fill:#c8e6c9,stroke:#4caf50;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Basic Version API Tester***
+
+#!/bin/bash
+
+# api_fetcher_v3.sh - A bash script for fetching data from APIs
+
+
+# --- Configuration ---
+# Base URL for the API. Replace with your actual API endpoint.
+API_BASE_URL="https://jsonplaceholder.typicode.com"
+
+# Example API Key (replace with your actual API key if needed)
+# API_KEY="YOUR_API_KEY_HERE"
+# API_SECRET="YOUR_API_SECRET_HERE" # Example secret
+
+# --- Functions ---
+
+# Function to display usage information
+usage() {
+    echo "Usage: $0 [OPTION]" >&2 # Send usage to stderr
+    echo "Fetch data from a specified API endpoint." >&2
+    echo >&2
+    echo "Options:" >&2
+    echo "  -g, --get <endpoint>            Perform a GET request to the specified endpoint." >&2
+    echo "  -q, --query <endpoint> <param=value>... Perform a GET request with query parameters." >&2
+    echo "  -h, --header <endpoint> <header:value>... Perform a GET request with custom headers." >&2
+    echo "  -p, --post <endpoint> <json_data> Perform a POST request with JSON data." >&2
+    echo "  -x, --xargs-get <endpoint_template> <ids_file> Process a list of IDs using xargs for GET." >&2
+    echo "  -e, --example                   Show examples of how to use this script." >&2
+    echo "  --help                          Display this help message." >&2
+    echo >&2
+    echo "Examples:" >&2
+    echo "  $0 -g /posts/1" >&2
+    echo "  $0 -q /comments postId=1 id=2" >&2
+    echo "  $0 -h /todos/1 'Authorization: Bearer YOUR_TOKEN'" >&2
+    echo "  $0 -p /posts '{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}'" >&2
+    echo "  $0 -x /posts/{} ids.txt  (where ids.txt contains IDs like 1, 2, 3)" >&2
+    echo >&2
+    exit 1
+}
+
+# Helper function to make a curl request and handle output/errors
+make_curl_request() {
+    local method="$1"
+    local url="$2"
+    local headers_array=("$3") # Treat as an array
+    local data="$4"
+    local content_type="$5"
+
+    local curl_cmd=(curl -s -w "%{http_code}" "$url")
+
+    # Add method if not GET
+    if [ "$method" != "GET" ]; then
+        curl_cmd+=("-X" "$method")
+    fi
+
+    # Add headers
+    if [ "${#headers_array[@]}" -gt 0 ]; then
+        for header in "${headers_array[@]}"; do
+            curl_cmd+=("-H" "$header")
+        done
+    fi
+
+    # Add data for POST/PUT
+    if [ -n "$data" ]; then
+        curl_cmd+=("-d" "$data")
+        curl_cmd+=("-H" "$content_type")
+    fi
+
+    # Execute curl command. Redirect stderr to /dev/null for sensitive info from curl itself.
+    # We still capture the body and HTTP code.
+    response=$( "${curl_cmd[@]}" 2>/dev/null )
+    local curl_exit_code=$? # Capture curl's exit code
+
+    local http_code=$(echo "$response" | tail -n1)
+    local body=$(echo "$response" | sed '$d')
+
+    if [ "$curl_exit_code" -ne 0 ]; then
+        echo "Curl command failed with exit code: $curl_exit_code" >&2
+        echo "Body (if any): $body" >&2
+        return 1 # Indicate failure
+    fi
+
+    if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+        # On success, print the parsed JSON body to stdout
+        echo "$body" | jq .
+        return 0 # Indicate success
+    else
+        # On error, print error messages and JSON body (if any) to stderr
+        echo "Error (HTTP $http_code):" >&2
+        echo "$body" | jq . >&2 # Output error body to stderr
+        return 1 # Indicate failure
+    fi
+}
+
+
+# Function to make a GET request
+fetch_get() {
+    local endpoint="$1"
+    local url="${API_BASE_URL}${endpoint}"
+    echo "Fetching GET from: ${url}" >&2 # Send informational message to stderr
+    make_curl_request "GET" "$url" "" "" ""
+}
+
+# Function to make a GET request with query parameters
+fetch_get_with_query() {
+    local endpoint="$1"
+    shift
+    local query_string=""
+    local first_param=true
+
+    for param in "$@"; do
+        if [ "$first_param" = true ]; then
+            query_string="?${param}"
+            first_param=false
+        else
+            query_string="${query_string}&${param}"
+        fi
+    done
+
+    local url="${API_BASE_URL}${endpoint}${query_string}"
+    echo "Fetching GET with query from: ${url}" >&2 # Send informational message to stderr
+    make_curl_request "GET" "$url" "" "" ""
+}
+
+
+# Function to make a GET request with custom headers
+fetch_get_with_header() {
+    local endpoint="$1"
+    shift
+    local url="${API_BASE_URL}${endpoint}"
+    local headers_array=()
+
+    for header in "$@"; do
+        headers_array+=("$header")
+    done
+
+    echo "Fetching GET with headers from: ${url}" >&2 # Send informational message to stderr
+    make_curl_request "GET" "$url" "${headers_array[*]}" "" ""
+}
+
+
+# Function to make a POST request with JSON data
+fetch_post() {
+    local endpoint="$1"
+    local json_data="$2"
+    local url="${API_BASE_URL}${endpoint}"
+
+    echo "Posting to: ${url}" >&2 # Send informational message to stderr
+    echo "Data: ${json_data}" >&2 # Send informational message to stderr
+
+    make_curl_request "POST" "$url" "" "$json_data" "Content-Type: application/json"
+}
+
+# Function to fetch data for a single ID (used by xargs)
+fetch_single_id() {
+    local id="$1"
+    local endpoint_template="$2"
+    local endpoint="${endpoint_template/\{\}/$id}" # Replace {} with the ID
+    local url="${API_BASE_URL}${endpoint}"
+
+    echo "--- Fetching ID: $id ---" >&2 # Send informational message to stderr
+    # Call the generic curl request function.
+    # The `|| true` prevents xargs from exiting on the first error, allowing all items to be processed.
+    # The `|| echo ...` is an additional error message for this specific xargs loop.
+    make_curl_request "GET" "$url" "" "" "" || echo "Failed to fetch data for ID: $id" >&2
+    echo "----------------------" >&2 # Send informational message to stderr
+}
+
+export -f make_curl_request # Export function for xargs
+export -f fetch_single_id
+export API_BASE_URL # Export base URL for functions used by xargs
+
+# --- Main Logic ---
+
+if [ "$#" -eq 0 ]; then
+    usage
+fi
+
+case "$1" in
+    -g|--get)
+        if [ -z "$2" ]; then
+            echo "Error: Endpoint missing for GET request." >&2
+            usage
+        fi
+        fetch_get "$2"
+        ;;
+    -q|--query)
+        if [ -z "$2" ]; then
+            echo "Error: Endpoint missing for GET with query parameters." >&2
+            usage
+        fi
+        endpoint="$2"
+        shift 2
+        if [ "$#" -eq 0 ]; then
+            echo "Error: No query parameters provided." >&2
+            usage
+        fi
+        fetch_get_with_query "$endpoint" "$@"
+        ;;
+    -h|--header)
+        if [ -z "$2" ]; then
+            echo "Error: Endpoint missing for GET with headers." >&2
+            usage
+        fi
+        endpoint="$2"
+        shift 2
+        if [ "$#" -eq 0 ]; then
+            echo "Error: No headers provided." >&2
+            usage
+        fi
+        fetch_get_with_header "$endpoint" "$@"
+        ;;
+    -p|--post)
+        if [ -z "$2" ] || [ -z "$3" ]; then
+            echo "Error: Endpoint or JSON data missing for POST request." >&2
+            usage
+        fi
+        fetch_post "$2" "$3"
+        ;;
+    -x|--xargs-get)
+        if [ -z "$2" ] || [ -z "$3" ]; then
+            echo "Error: Endpoint template or IDs file missing for xargs GET." >&2
+            usage
+        fi
+        endpoint_template="$2"
+        ids_file="$3"
+
+        if [ ! -f "$ids_file" ]; then
+            echo "Error: IDs file '$ids_file' not found." >&2
+            exit 1
+        fi
+
+        echo "Processing IDs from '$ids_file' using xargs..." >&2
+        # -I {} tells xargs to replace {} with each line from stdin
+        # -P 4 for parallel processing (e.g., 4 concurrent jobs)
+        # We need to pass the endpoint_template as an argument to fetch_single_id
+        cat "$ids_file" | xargs -I {} -P 4 bash -c 'fetch_single_id "$@" "$0"' {} "$endpoint_template"
+        echo "Xargs processing complete." >&2
+        ;;
+    -e|--example)
+        echo "--- Examples ---" >&2
+        echo "1. Basic GET request for a post with ID 1:" >&2
+        echo "   ./api_fetcher_v3.sh -g /posts/1" >&2
+        echo >&2
+        echo "2. GET request with query parameters to get comments for postId 1:" >&2
+        echo "   ./api_fetcher_v3.sh -q /comments postId=1" >&2
+        echo >&2
+        echo "3. GET request with multiple query parameters (e.g., for filtering):" >&2
+        echo "   ./api_fetcher_v3.sh -q /comments postId=1 id=2" >&2
+        echo >&2
+        echo "4. GET request with a custom header (e.g., Authorization token - replace YOUR_TOKEN):" >&2
+        echo "   ./api_fetcher_v3.sh -h /todos/1 'Authorization: Bearer YOUR_TOKEN'" >&2
+        echo "   (Note: If YOUR_TOKEN is sensitive, curl errors related to it will be suppressed)" >&2
+        echo >&2
+        echo "5. POST request to create a new post:" >&2
+        echo "   ./api_fetcher_v3.sh -p /posts '{\"title\": \"foo\", \"body\": \"bar\", \"userId\": 1}'" >&2
+        echo >&2
+        echo "6. Processing a list of IDs using xargs (create a file named 'ids.txt' with IDs like 1, 2, 3...):" >&2
+        echo "   echo -e \"1\\n2\\n3\" > ids.txt" >&2
+        echo "   ./api_fetcher_v3.sh -x /posts/{} ids.txt" >&2
+        echo >&2
+        ;;
+    --help)
+        usage
+        ;;
+    *)
+        echo "Invalid option: $1" >&2
+        usage
+        ;;
+esac
+
