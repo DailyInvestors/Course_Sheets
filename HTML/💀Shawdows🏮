@@ -1,1 +1,568 @@
-Will Continue on a Later 📅
+***The Web Component***
+made up of three parts—HTML templates, Custom Elements, and the Shadow DOM***
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🏮References: 
+
+"https://web.dev/declarative-shadow-dom"
+
+"https://developer.mozilla.org/docs/Web/API/CustomElementRegistry/define"
+
+"https://web.dev/articles/shadowdom-v1"
+
+"https://developer.mozilla.org/docs/Web/Web_Components/Using_custom_elements"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Templates***
+**Used to declare fragments of HTML to be cloned and injected into the DOM with JavaScript.**
+**Example:
+<template id="star-rating-template">
+  <form>
+    <fieldset>
+      <legend>Rate your attitude:</legend>
+      <rating>
+        <input type="radio" name="rating" value="1" aria-label="1 star" required />
+        <input type="radio" name="rating" value="2" aria-label="2 stars" />
+        <input type="radio" name="rating" value="3" aria-label="3 stars" />
+        <input type="radio" name="rating" value="4" aria-label="4 stars" />
+        <input type="radio" name="rating" value="5" aria-label="5 stars" />
+      </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+  </form>
+</template>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ <template id="star-rating-template">
+   <form>
+  <fieldset>
+    <legend>Rate your attitude:</legend>
+     <rating>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+</form>
+</template>
+   
+**CSS Value:
+rating {
+  display: inline-flex;
+}
+/* make the current radio visually hidden */
+input[type=radio]{ 
+  appearance: none;
+  margin: 0;
+  box-shadow: none; /* remove shadow on invalid submit */
+}
+
+/* generated content is supported on <input> */
+input[type=radio]::after {
+  content: '\2605';
+  font-size: 32px;
+}
+
+/* by default, if no value is selected, all stars are grey. 
+See https://web.dev/learn/forms to learn about requiring radio buttons */
+input[type=radio]:invalid::after {
+  color: #ddd;
+}
+
+/* if the rating has focus or is hovered, make all stars darker */
+rating:hover input[type=radio]:invalid::after,
+rating:focus-within input[type=radio]:invalid::after
+{color: #888;}
+
+/* make all the stars after the focused one light grey, until a value is selected */
+rating:hover input[type=radio]:hover ~ input[type=radio]:invalid::after,
+rating input[type=radio]:focus ~ input[type=radio]:invalid::after  {color: #ddd;}
+
+
+/* if a value is selected, make them all selected */
+rating input[type=radio]:valid {
+  color: orange;
+}
+/* then make the ones coming after the selected value look inactive */
+rating input[type=radio]:checked ~ input[type=radio]:not(:checked)::after{
+  color: #ccc;
+  content: '\2606'; /* optional. hollow star */
+}
+
+
+**JS Value:
+/* 
+let starRating = document.getElementById("star-rating-template").content;
+document.body.appendChild(starRating);
+*/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Template with a Document Fragments**
+**Example:
+ <template id="star-rating-template">
+   <form>
+  <fieldset>
+    <legend>Rate your attitude:</legend>
+     <rating>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+</form>
+</template>
+<div id="foo"></div>
+<div id="bar"></div>
+
+**CSS Value:
+rating {
+  display: inline-flex;
+} 
+/* make the current radio visually hidden */
+input[type=radio]{ 
+  appearance: none;
+  margin: 0;
+  box-shadow: none; /* remove shadow on invalid submit */
+}
+
+/* generated content is supported on input. */
+input[type=radio]::after {
+  content: '\2605';
+  font-size: 32px;
+}
+
+/* by default, if no value is selected, all stars are grey */
+input[type=radio]:invalid::after {
+  color: #ddd;
+}
+
+/* if the rating has focus or is hovered, make all stars darker */
+rating:hover input[type=radio]:invalid::after,
+rating:focus-within input[type=radio]:invalid::after
+{color: #888;}
+
+/* make all the stars after the focused one light grey, until a value is selected */
+rating:hover input[type=radio]:hover ~ input[type=radio]:invalid::after,
+rating input[type=radio]:focus ~ input[type=radio]:invalid::after  {color: #ddd;}
+
+
+/* if a value is selected, make them all selected */
+rating input[type=radio]:valid {
+  color: orange;
+}
+/* then make the ones coming after the selected value look inactive */
+rating input[type=radio]:checked ~ input[type=radio]:not(:checked)::after{
+  color: #ccc;
+  content: '\2606'; /* optional. hollow star */
+}
+
+
+*JS Value:
+
+let starRating = document.getElementById("star-rating-template").content;
+document.body.appendChild(starRating);
+
+**this example has appended the contents of the <template> into the <body>, and displaying in the DOM**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Slot Element***
+**HTML provides a <slot> element as a placeholder inside the <template>.**
+**In this template we change <legend> to a <slot>:
+
+<template id="star-rating-template">
+  <form>
+    <fieldset>
+      <slot name="star-rating-legend">
+        <legend>Rate your attitude:</legend>
+      </slot>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**<star-rating></star-rating>**
+
+<star-rating>
+  <legend slot="star-rating-legend">Daily Investors</legend>
+</star-rating>
+<star-rating>
+  <legend slot="star-rating-legend">GitHub</legend>
+</star-rating>
+<star-rating>
+  <legend slot="star-rating-legend">Microsoft</legend>
+  <p>Is this text editable?</p>
+</star-rating>
+
+***Similar to both the <span>, & <rating>, th3 <star-rating> element will have no user-agent applied.**
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*** Custom Elements ***
+••To define any Custom Element, we must use JavaScript for this Task••
+**In this example, We define the <star-rating> by extending the <HTMLElement>:
+
+customElements.define('star-rating',
+  class extends HTMLElement {
+    constructor() {
+      super(); // Always call super first in constructor
+      const starRating = document.getElementById('star-rating-template').content;
+      const shadowRoot = this.attachShadow({
+        mode: 'open'
+      });
+      shadowRoot.appendChild(starRating.cloneNode(true));
+    }
+  });
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Example+**
+
+ <template id="star-rating-template">
+   <form>
+  <fieldset>
+    <slot name="star-rating-legend"><legend>Rate your experience:</legend></slot>
+     <rating>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+</form>
+</template>
+
+<star-rating>
+  <legend slot="star-rating-legend">Daily Investors</legend>
+</star-rating>
+<star-rating>
+  <legend slot="star-rating-legend">Cyborg Tek</legend>
+</star-rating>
+<star-rating>
+  <legend slot="star-rating-legend">Mike Tyson</legend>
+  <p>Is this text editable?</p>
+</star-rating>
+<star-rating>
+  <!-- this examples does not have content within a `slot` attribute -->
+  <p>Is this text editable?</p>
+</star-rating>
+
+
+**CSS Value:
+rating {
+  display: inline-flex;
+}
+/* make the current radio visually hidden */
+input[type=radio]{ 
+  appearance: none;
+  margin: 0;
+  box-shadow: none; /* remove shadow on invalid submit */
+}
+
+/* generated content is supported on input. */
+input[type=radio]::after {
+  content: '\2605';
+  font-size: 32px;
+}
+
+/* by default, if no value is selected, all stars are grey */
+input[type=radio]:invalid::after {
+  color: #ddd;
+}
+
+/* if the rating has focus or is hovered, make all stars darker */
+rating:hover input[type=radio]:invalid::after,
+rating:focus-within input[type=radio]:invalid::after
+{color: #888;}
+
+/* make all the stars after the focused one light grey, until a value is selected */
+rating:hover input[type=radio]:hover ~ input[type=radio]:invalid::after,
+rating input[type=radio]:focus ~ input[type=radio]:invalid::after  {color: #ddd;}
+
+
+/* if a value is selected, make them all selected */
+rating input[type=radio]:valid {
+  color: orange;
+}
+/* then make the ones coming after the selected value look inactive */
+rating input[type=radio]:checked ~ input[type=radio]:not(:checked)::after{
+  color: #ccc;
+  content: '\2606'; /* optional. hollow star */
+}
+   
+
+**JS Value:
+
+//let starRating = document.getElementById("star-rating-template").content;
+//document.body.appendChild(starRating);
+
+customElements.define('star-rating',
+  class extends HTMLElement {
+    constructor() {
+      super(); // Always call super first in constructor
+      const starRating = document.getElementById('star-rating-template').content;
+      const shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(starRating.cloneNode(true));
+  }
+});
+
+
+**The Browser will then attach a (Shadow DOM) tree to the node,while appending a clone of the template contents to that shadow DOM.**
+
+**attachShadow() is limited to its usage**
+
+const shadowRoot = this.attachShadow({mode: 'open'});
+shadowRoot.appendChild(starRating.cloneNode(true));
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Shadow DOM**
+
+ <template id="star-rating-template">
+   <style>
+     rating {
+       display: inline-flex;
+     }
+    input { 
+      appearance: none;
+      margin: 0;
+      box-shadow: none; 
+    }
+    input::after {
+      content: '\2605';
+      font-size: 32px;
+    }
+    rating:hover input:invalid::after,
+    rating:focus-within input:invalid::after {
+      color: #888;
+    }
+    input:invalid::after,
+    rating:hover input:hover ~ input:invalid::after,
+    input:focus ~ input:invalid::after  {
+      color: #ddd;
+     }
+    input:valid {
+      color: orange;
+    }
+    input:checked ~ input:not(:checked)::after {
+      color: #ccc;
+      content: '\2606'; /* optional. hollow star */
+    }
+   </style>
+   <form>
+  <fieldset>
+    <slot name="star-rating-legend"><legend>Rate your experience:</legend></slot>
+     <rating>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </rating>
+    </fieldset>
+     <button type="reset">Reset</button>
+
+*JS Value:
+
+
+//let starRating = document.getElementById("star-rating-template").content;
+//document.body.appendChild(starRating);
+
+customElements.define('star-rating',
+  class extends HTMLElement {
+    constructor() {
+      super(); // Always call super first in constructor
+      const starRating = document.getElementById('star-rating-template').content;
+      const shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(starRating.cloneNode(true));
+  }
+});
+
+**In this example above, the styling is applied to the shadow DOM, not the CSS. Everything else is ran with JavaScript.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+** Here in this example, we will use <input> instead of <input[type="radio"]> as your selector:
+
+ <template id="star-rating-template">
+  <style>
+    rating {
+      display: inline-flex;
+    }
+    input {
+      appearance: none;
+      margin: 0;
+      box-shadow: none;
+    }
+    input::after {
+      content: '\2605'; /* solid star */
+      font-size: 32px;
+    }
+    rating:hover input:invalid::after,
+    rating:focus-within input:invalid::after {
+      color: #888;
+    }
+    input:invalid::after,
+      rating:hover input:hover ~ input:invalid::after,
+      input:focus ~ input:invalid::after  {
+      color: #ddd;
+    }
+    input:valid {
+      color: orange;
+    }
+    input:checked ~ input:not(:checked)::after {
+      color: #ccc;
+      content: '\2606'; /* hollow star */
+    }
+  </style>
+  <form>
+    <fieldset>
+      <slot name="star-rating-legend">
+        <legend>Rate your attitude:</legend>
+      </slot>
+      <rating>
+        <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+        <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+        <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+        <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+        <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+      </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+  </form>
+</template>
+
+**The shadow tree is the DOM tree inside the shadow DOM.**
+
+**The shadow root is the root node of the shadow tree.**
+
+**To target a specific host: Use <:host()>**
+
+**To select each of the custom elements, we can use:
+star-rating { /* styles */ } 
+in the global CSS, or 
+:host(:not(#nonExistantId))**
+
+**We can use the <part> Attribute to edit any of the CSS Values.**
+
+**How?? We can use the <::part()> pseudo-element to match elements within the shadow tree to match the parameter.**
+
+** If the markup begins similar to this;
+
+<template id="star-rating-template">
+  <form part="formPart">
+    <fieldset part="fieldsetPart">
+ 
+  **We then can target the form and fieldset:
+
+star-rating::part(formPart) { /* styles */ }
+star-rating::part(fieldsetPart) { /* styles */ }
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ <template id="star-rating-template">
+   <style>
+ 	rating {
+   	  display: inline-flex;
+ 	}
+	input {
+  	  appearance: none;
+  	  margin: 0;
+  	  box-shadow: none;
+	}
+	input::after {
+  	  content: '\2605'; /* solid star */
+  	  font-size: 32px;
+	}
+	rating:hover input:invalid::after,
+	rating:focus-within input:invalid::after {
+  	  color: #888;
+	}
+	input:invalid::after,
+	rating:hover input:hover ~ input:invalid::after,
+	input:focus ~ input:invalid::after  {
+  	  color: #ddd;
+ 	}
+	input:valid {
+  	  color: orange;
+	}
+	input:checked ~ input:not(:checked)::after {
+  	  color: #ccc;
+  	  content: '\2606'; /* hollow star */
+	}
+     :host(:not(#nonExistantId)) { /* try changing this to :host(.first) */
+       margin-bottom: 3em;
+       display: block;
+       color: rebeccapurple;
+     }
+     :host button {
+       font-style: italic;
+       /* we could have just used `button` */
+     }
+     ::slotted(legend)::after {
+       content: " - matches `::slotted(legend)` from the shadow DOM"
+     }
+   </style>
+
+ <form part="formPart">
+  <fieldset part="fieldsetPart">
+	<slot name="star-rating-legend"  part="legendPart"><legend>Rate your attitude:</legend></slot>
+
+     <rating>
+       <input type="radio" name="rating" value="1" aria-label="1 star" required/>
+       <input type="radio" name="rating" value="2" aria-label="2 stars"/>
+       <input type="radio" name="rating" value="3" aria-label="3 stars"/>
+       <input type="radio" name="rating" value="4" aria-label="4 stars"/>
+       <input type="radio" name="rating" value="5" aria-label="5 stars"/>
+     </rating>
+    </fieldset>
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+</form>
+</template>
+
+<star-rating class="first">
+  <legend slot="star-rating-legend">Daily Investors</legend>
+</star-rating>
+<star-rating id="second">
+  <legend slot="star-rating-legend">Cyborg Tek</legend>
+</star-rating>
+<star-rating data-count="third">
+  <legend slot="star-rating-legend">GitHub<input></legend>
+  <p>Is this text visible?</p>
+</star-rating>
+<star-rating>
+  <p>Is this text visible?</p>
+</star-rating>
+
+
+**CSS Value:
+star-rating::part(fieldsetPart)::after  {
+ content: " - this matches `star-rating::part(fieldsetPart)`"
+}
+:where(star-rating) {
+  margin-bottom: 0;
+  display: block;
+}
+
+
+
+**JS Value:
+
+//let starRating = document.getElementById("star-rating-template").content;
+//document.body.appendChild(starRating);
+
+customElements.define('star-rating',
+  class extends HTMLElement {
+    constructor() {
+      super(); // Always call super first in constructor
+      const starRating = document.getElementById('star-rating-template').content;
+      const shadowRoot = this.attachShadow({mode: 'open'});
+      shadowRoot.appendChild(starRating.cloneNode(true));
+  }
+});
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ 
+
+🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
