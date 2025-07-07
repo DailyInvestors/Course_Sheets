@@ -7,3 +7,6 @@ Bugs and Vulnerabilities:
   
 
 Further Resources: Google offers a variety of Public Resources, as well as Web.Dev. Microsoft offers similar education through Microsoft Learn. Each language also offers DOCs on their Download Pages. 
+
+
+Note: We appreciate and and all Donations for our Work. We are also up for Investors and Sponsors. Our other account is setup for this, will eventually make this one all the same. Thank You and God Bless
