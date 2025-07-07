@@ -2,7 +2,19 @@
 
 ✨ References:
 
+"https://www.scottohara.me//blog/2022/09/12/details-summary.html"
+
+"https://css-tricks.com/exploring-what-the-details-and-summary-elements-can-do/"
+
 "https://developer.mozilla.org/docs/Web/MathML"
+
+"https://web.dev/learn/html/template#shadow_dom"
+
+"https://web.dev/learn/css/selectors#pseudo-element"
+
+"https://jqueryui.com/accordion/"
+
+"https://en.wikipedia.org/wiki/Accordion_(GUI)"
 
 "https://Web.dev/"
 
@@ -49,6 +61,13 @@
 <br>
 <he>
 <wbr>
+<details>
+<summary>
+<open>
+HTMLDetailsElement
+HTMLDetailsElement.open
+addEventListener()
+removeAttribute("open")
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 *** Power of 2***
 ***The power of two in pythagorean theorem used the <sup> superscript element***
@@ -72,4 +91,172 @@ ruby {font-size: 3rem;}
 <code>01000011<wbr/>01101111<wbr/>01101101<wbr/>01110000<wbr/>01110010<wbr/>01100101<wbr/>01110011<wbr/>01110011 an 01101001<wbr/>01101101<wbr/>01100001<wbr/>01100111<wbr/>01100101</code>
 This also helps demonstrate on the usage of wbr. </p>
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+✨Details and Summary✨
+~~                  ~~~~~~~~~~~~~~~
+•••Example FAQ:
+#FAQ [type="checkbox"] + div.answer {
+  /* all the answer styles */
+  display: none;
+}
+#FAQ [type="checkbox"]:checked + div.answer {
+  display: block;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example
+<span style="font-family:Arial;vertical-align:baseline;">&nbsp;&nbsp; &nbsp;&nbsp;</p>
+
+</details>
+  </aside>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example:
+details summary::before {
+  /* all the styles */
+}
+details[open] summary::before {
+  /* changes applied when open only */
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example CSS:
+
+  transform: rotate(90deg);
+  transform-origin: 50% 50%;
+}
+[open] summary::after {
+  transform: rotate(0deg);
+}
+
+
+/* styles ported over from the second example */
+@layer step2styles {
+  details {
+    border: 1px solid;
+    padding: 0 1rem;
+    background: white;
+  }
+  details + details {
+    border-top: none;
+  }
+  details[open] {
+      padding-bottom: 1em;
+  }  
+  summary {
+    padding: 1rem 2em 1rem 0;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}
+
+/* cascade layer: page setup. Doesn't impact the accordion */
+@layer setupPage {
+  
+:root {
+  font-size: 112.5%;
+  line-height: 1.5;
+}
+body {
+  background: #a4bacc99;
+  color: #226daa;
+  font-family: Raleway, sans-serif;
+  margin: 1rem;
+}
+* {
+  box-sizing: border-box;
+}
+
+aside {
+  width: 38em;
+  max-width: 98vw;
+}
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Example Toggle between Browsers***
+
+<aside>
+<h2>Quirks:</h2>
+<input>
+<details>
+  <p>This details contains no summary. The browser will create one for us.</p>
+</details>
+
+<details>
+  <p>This details has a summary, but it is not the first element in the details. Browsers will render this correctly, without hoisting the element.</p>
+  <summary>Last child</summary>
+</details>
+ 
+  <details>a
+    <summary>This has a <a target="_blank" href="https://web.dev/learn/html">link</a></summary>
+  <p>It shouldn't. Some browswers will add that <a href="https://web.dev/learn/html"  target="_blank" >link</a> to the tabbing sequence, others wont. </p>
+</details>
+    <details>
+    <summary>Text <label for="input">A label</label> <input type="checkbox"  id="input"></summary>
+  <p>If you click on the label, some browsers will toggle the state of the checkboxes, others will toggle the checkbox AND toggle the visibility of the content of the details.</p>
+</details>
+<details>
+  <summary>First child</summary>
+  <p>This details and summary is marked up correctly. It is included for comparison reasons.</p>
+</details>
+  
+</aside>
+
+**CSS Value:
+@layer setupPage, step2styles, markers;
+
+details {
+  border-radius: 0.5rem;
+  margin: 1rem ;
+  transition: 50ms;
+}
+details[open] {
+    padding-bottom: 1em;
+}  
+
+label {
+  color: green;
+  background: palegoldenrod;
+}
+summary::before,
+summary::after {
+    transition: 200ms;
+  }
+
+summary:first-child {
+  color: red;
+}
+
+@layer markers {
+  summary {
+  position: relative;
+}
+
+summary::before,
+summary::after {
+  content: '';
+
+
+**JS Value:
+const dialogs = document.querySelectorAll('dialog');
+const summaries = document.querySelectorAll('summary');
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***Example to Remove a Tag**
+
+**JS Value
+const summaries = document.querySelectorAll('summary');
+
+summaries.forEach((summary) => {
+  summary.addEventListener('click', closeOpenedDetails);
+});
+
+function closeOpenedDetails() {
+  summaries.forEach((summary) => {
+    let detail = summary.parentNode;
+      if (detail != this.parentNode) {
+        detail.removeAttribute('open');
+      }
+    });
+}
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
