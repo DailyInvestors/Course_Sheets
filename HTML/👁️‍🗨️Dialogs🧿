@@ -1,1 +1,199 @@
-Will Create and Finish Later Today.
+References:
+
+"https://www.nngroup.com/articles/modal-nonmodal-dialog/"
+
+"https://developer.mozilla.org/docs/Web/API/Fullscreen_API"
+
+"https://web.dev/
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+°° The model dialog is a special type of pop-up box on a web page: It is a pop-up that interrupts the user to focus on itself.°°
+
+••Use ::backdrop to style in CSS•••
+
+••Examples:
+<dialog>
+HTMLDialogElement
+formmethod="dialog"
+method="dialog
+HTMLDialogElement.close()
+HTMLDialogElement.showModal()
+dialog.show()
+dialog.showModal
+HTMLDialogElement.show()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Example:
+ <hr/>
+    <p>Additional buttons</p>
+      <button id="jsbutton">JS close</button>
+      <button id="reset" type="reset">Reset</button>
+    </p>
+  </form>
+</dialog>
+
+<button id="modal">Open Modal dialog</button>
+<p id="text"></p>
+<hr/>
+<h2>Random interactive elements</h2>
+<p>Basic Dialogs for review's .</p>
+<p>This is where you can put your Questions?</p>
+<p><a href="https://soloist.ai/dailyinvestors ">Dailys Daily News</a></p>
+  <p><label>Place your input: <input></label></p>
+      <p>
+       <label> Select Here:
+           <select name="Stocks">
+          <option>Earnings</option>
+          <option>Insider Sales</option>
+          <option>News and Media</option>
+           </select>
+       </label>
+    </p>
+
+
+••CSS Value:
+body {
+  background: #a4bacc99;
+  color: #226daa;
+  font-family: Raleway, sans-serif;
+  accent-color: #226DAA;
+}
+a:hover, a:focus {
+  text-underline-offset: 0.25em;
+}
+[aria-label="close"] {
+  appearance: none;
+  float: right;
+  border: 1px solid;
+  border-radius: 50%;
+}
+dialog :focus {
+  outline: 2px solid #226DAA;
+}
+
+
+••JS Value:
+const dialog = document.getElementById('dialog');
+const text = document.getElementById('text');
+const jsbutton = document.getElementById('jsbutton');
+const modal = document.getElementById('modal');
+const reset = document.getElementById('reset');
+
+modal.addEventListener('click', (event) => {
+  dialog.showModal();
+  text.textContent = '';
+});
+
+jsbutton.addEventListener('click', (event) => {
+  dialog.close();
+  text.innerHTML += '"JS close" closed the dialog.<br/>';
+});
+
+
+dialog.addEventListener('cancel', (event) => {
+  text.innerHTML += 'cance event happened<br/>';
+});
+
+dialog.addEventListener('close', (event) => {
+  text.innerHTML += 'close event happened<br/>';
+});
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+***HTMLDialogElement has 3 main methods,& the methods inherited from HTMLElement:
+
+dialog.show() /* opens the dialog */
+dialog.showModal() /* opens the dialog as a modal */
+dialog.close() /* closes the dialog */
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••HTMLDialogElement.show Example:
+
+<dialog id="dialog" open>
+    <form>
+    <button type="submit" aria-label="close" formmethod="dialog" formnovalidate>X</button>
+  </form>
+    <h2 id="dialogid">Feedback</h2>
+  <p>In this example, we basically have a feedback popup?</p>
+      <ol>
+      <li>Try closing this dialog using <kbd>Esc</kbd>. Does it work?</li>
+      <li>Close this modal with a form submission (the X): if the formmethod is set to `dialog`, the dialog will close. (open the dialog up again after you try it.)</li>
+        <li>Activate the "close the dialog" button. Where does focus go?</li>
+
+      </ol>
+  <p>If these two buttons weren't included, how could the user close the dialog?</p>
+  </form>
+</dialog>
+
+<button id="modalless">Open modalless dialog</button>
+<p id="text"></p>
+<hr/>
+<h2>Random interactive elements</h2>
+<p>Before opening the dialog, tab thru these interactive elements. Then try again when the dialog is open.</p>
+<p>When the dialog is open, because the dialog was opened with <code>show()</code> it is non-modal. These are normal interactive elements .</p>
+<p><a href="https://soloist.ai/dailyinvestors ">Team Daily</a></p>
+  <p><label>Here is feedback input: <input></label></p>
+      <p>
+       <label>Here is Feedback Options:
+           <select name="Linux">
+          <option>Python</option>
+          <option>JavaScript</option>
+          <option>NodeJS</option>
+           </select>
+       </label>
+    </p>
+<button id="closeIt">Exit</button>
+
+•••CSS Value:
+body {
+  background: #a4bacc99;
+  color: #226daa;
+  font-family: Raleway, sans-serif;
+  accent-color: #226DAA;
+}
+a:hover, a:focus {
+  text-underline-offset: 0.25em;
+}
+[aria-label="close"] {
+  appearance: none;
+  float: right;
+  border: 1px solid;
+  border-radius: 50%;
+}
+:focus {
+  outline: 2px solid #226DAA;
+}
+dialog {width: 30rem; max-width: 60vw;}
+li {margin-bottom: 1em;}
+
+
+••JS Value:
+const dialog = document.getElementById('dialog');
+const text = document.getElementById('text');
+const jsbutton = document.getElementById('closeIt');
+const modalless = document.getElementById('modalless');
+const reset = document.getElementById('reset');
+
+modalless.addEventListener('click', (event) => {
+  dialog.show();
+  text.textContent = '';
+});
+
+jsbutton.addEventListener('click', (event) => {
+  dialog.close();
+  text.innerHTML += '"close the dialog" closed the dialog.<br/>';
+});
+
+
+dialog.addEventListener('cancel', (event) => {
+  text.innerHTML += 'cance event happened<br/>';
+});
+
+dialog.addEventListener('close', (event) => {
+  text.innerHTML += 'close event happened<br/>';
+});
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Close Button without JS:
+<dialog open>
+  <form method="dialog">
+    <button type="submit" autofocus>close</button>
+  </form>
+</dialog>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
