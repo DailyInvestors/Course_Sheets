@@ -299,4 +299,105 @@ document.addEventListener('blur', function (event) {
     }
 }, true);
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+👾Security && Privacy🔏👾
 
+🚨 References:
+
+"https://web.dev/explore/secure#secure-connections-with-https"
+
+"https://geekflare.com/http-to-https-redirection/"
+
+"https://en.wikipedia.org/wiki/Query_string"
+
+"https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html"
+
+"https://web.dev/articles/sign-up-form-best-practices#federated-login"
+
+"https://cloud.google.com/blog/products/identity-security/account-authentication-and-password-management-best-practices"
+
+"https://en.wikipedia.org/wiki/California_Consumer_Privacy_Act"
+
+"https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3244203"
+
+"https://en.wikipedia.org/wiki/General_Data_Protection_Regulation"
+
+"https://www.w3.org/TR/app-privacy-bp/"
+
+"https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+
+"https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+
+"https://benhoyt.com/writings/dont-sanitize-do-escape/"
+
+"https://web.dev/articles/sanitizer"
+
+"https://en.wikipedia.org/wiki/Internet_bot#Malicious_bots"
+
+"https://www.google.com/recaptcha/about/"
+
+"https://akismet.com/"
+
+"https://soloist.ai/dailyinvestors"
+
+"https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html"
+
+"https://pages.nist.gov/800-63-3/sp800-63b.html"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••HoneyPot Example••
+
+<main>
+  <div class="wrapper">
+    <form>
+      <label hidden class="honeypot" for="honeypot">
+    Keep this field blank
+      </label>
+    <input hidden autocomplete="off" class="honeypot" id="honeypot" type="text" tabindex="-1" />
+  </label>
+      <div>
+ <label for="email">Email</label>
+        <input autocomplete="email" required type="email" id="email" name="email">
+      </div>
+      <div>
+ <label for="password">Password</label>
+        <input autocomplete="new-password" type="password" id="password" name="password">
+      </div>
+      <button>Submit</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+ button {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+.honeypot {
+  display: none;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Basic Sanitizer •••
+
+const sanitizer = new Sanitizer(); // Creates a default sanitizer
+const unsafeHTML = 'Hello <script>alert("XSS")</script> World!';
+const safeHTML = sanitizer.sanitize(unsafeHTML); // Removes <script> tag
+console.log(safeHTML); // Output: Hello  World!
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Inserting Sanitized HTML into the DOM •••
+
+const untrustedString = 'abc <script>alert(1)</script> def';
+const target = document.getElementById('target');
+target.setHTML(untrustedString); // Only safe HTML is inserted
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Only Allow Certain Tags•••
+
+const sanitizer = new Sanitizer({ elements: ['p', 'b', 'div'] });
+const unsafeHTML = '<p>Safe</p><script>bad()</script><b>Bold</b>';
+const safeHTML = sanitizer.sanitize(unsafeHTML);
+// Only <p>, <b>, and <div> are kept; <script> is removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
