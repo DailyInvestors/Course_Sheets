@@ -1,0 +1,169 @@
+⚡✨ Elements && Attributes ⚡✨
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+⚡ References: Perplexity 
+               DeepSeek
+
+"https://web.dev/learn/forms/form-element#where_is_the_data_processed"
+
+"https://www.w3.org/WAI/WCAG21/Understanding/timeouts.html"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. In most cases to process and store data, it is best to use the <form> tag.
+
+2. We can customize and restrict the <form> with JavaScript.
+
+3. Example Form and Method using XML and JavaScript. If anyone needs a file that can turn any payload, or file into our out of XML format, message me.
+
+<form id="myForm" name="customForm" action="/submit" method="post">
+  <input type="text" name="username" placeholder="Username">
+  <input type="email" name="email" placeholder="Email">
+  <button type="submit">Send</button>
+</form>
+
+
+••JS Value:
+// Access the form by ID
+const form = document.getElementById('myForm');
+
+// Customize form attributes
+form.action = '/new-endpoint';
+form.method = 'GET';
+
+// Access form fields
+const usernameField = form.elements['username'];
+const emailField = form.elements['email'];
+
+// Change placeholder dynamically
+usernameField.placeholder = 'Enter your user name';
+
+✨OR✨
+
+••JS Value:
+const formByName = document.forms['customForm'];
+
+✨OR✨
+
+••JS Value:
+const formByIndex = document.forms[0]; // First form in the document
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Intercepting a Submission••
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Access field values
+  const username = form.elements['username'].value;
+  const email = form.elements['email'].value;
+
+  // Custom logic (e.g., validation, analytics, AJAX)
+  console.log('Username:', username);
+  console.log('Email:', email);
+
+  // Optionally, submit via AJAX or call form.submit() if needed
+});
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Creating & Sumbiting•••
+
+const dynamicForm = document.createElement('form');
+dynamicForm.action = '/dynamic-endpoint';
+dynamicForm.method = 'POST';
+
+const input = document.createElement('input');
+input.type = 'hidden';
+input.name = 'data';
+input.value = 'customValue';
+
+dynamicForm.appendChild(input);
+document.body.appendChild(dynamicForm);
+
+dynamicForm.submit(); // Submit the form
+~~~~~~~~~~~~~~~~~~~~👁️‍🗨️~~~~~~~~~~~~~~~~~~~~~~~~~👁️‍🗨️~~~~~~~
+•••Calling a Parent Class•••
+// Parent class
+class Person {
+  constructor(name) {
+    this.name = name;
+  }
+  greet() {
+    console.log(`Hello ${this.name}`);
+  }
+}
+
+// Child class extending Person and adding new attributes
+class Student extends Person {
+  constructor(name, studentId) {
+    super(name); // Calls the parent class constructor
+    this.studentId = studentId; // New attribute unique to Student
+  }
+  display() {
+    console.log(`Name: ${this.name}, Student ID: ${this.studentId}`);
+  }
+}
+
+const student1 = new Student('Jack', 'S123');
+student1.greet();    // Output: Hello Jack
+student1.display();  // Output: Name: Jack, Student ID: S123
+
+🚨 Note: Using Super and This are essential for our Super User Powers.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Forms••
+••A form is basically a container:
+
+<form method="post">
+  <label for="name">Name</label>
+  <input type="text" name="name" id="name">
+  <button formaction="/name">Save</button>
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Form Submission works by first submitting the form to the Browser. This is done by the Developers preferred method, usually GET or POST. PATCH works for repairs.Then the browser checks if the {Submit <button>} has a {<formaction> attribute}. Finally it will begin looking at all the attributes, such as )autocomplete, accept-charset, etc(.👁️‍🗨️
+
+••Example Form using POST:
+
+<form method="post" action="/color">
+    <label for="developer">Who is your favorite Developer?</label>
+    <input type="text" name="developer" id="developer">
+    <button>Save</button>
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Ways to create a Button°°°
+1. type="button
+2. <input type="submit" value="Submit">
+3. JavaScript. 
+4. We can use <enterkeyhint> to change the label of the Enter key for on-screen keyboards.
+5. <input type="image" alt="Submit" src="submit.png">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••We can use <input type="file"> to enable uploads. We can also use the <multiple> tag to enable multiple uploads at one time. Without using encoding most of the time, these files can't be submitted:
+
+<label for="file">Choose file to upload</label>
+<input type="file" id="file" name="file" multiple>
+
+
+••HTML Example:
+<main>
+  <div class="wrapper">
+      <form method="post" enctype="multipart/form-data">
+ <div>
+   <label for="file">Choose file to upload</label>
+   <input type="file" id="file" name="file" multiple>
+ </div>
+ <div>
+   <button>Upload image</button>
+ </div>
+</form>
+  </div>
+</main>
+
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+•• The last step would be to change the enctype:
+
+<form method="post" enctype="multipart/form-data">
+…
+</form>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Will Continue More Later:
