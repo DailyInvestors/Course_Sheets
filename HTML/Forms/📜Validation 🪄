@@ -343,6 +343,8 @@ document.addEventListener('blur', function (event) {
 "https://cheatsheetseries.owasp.org/cheatsheets/Database_Security_Cheat_Sheet.html"
 
 "https://pages.nist.gov/800-63-3/sp800-63b.html"
+
+"Perplexity"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ••HoneyPot Example••
 
