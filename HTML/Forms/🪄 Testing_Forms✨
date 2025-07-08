@@ -1,14 +1,30 @@
 f•••✨ Testing Forms•••🪄
 •°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•
-Resources: 
+Resources: Perplexity 
 
 "https://chrome.google.com/webstore/detail/form-troubleshooter/lpjhcgjbicfdoijennopbjooigfipfjh"
+
+"https://support.google.com/analytics/answer/1010054"
+
+"https://support.google.com/analytics/answer/1033021"
 
 "https://web.dev/vitals-tools-workflow"
 
 "https://developer.chrome.com/docs/lighthouse/overview#devtools"
 
 "https://developers.google.com/speed/docs/insights/v5/about/"
+
+"https://www.microsoft.com/design/inclusive/"
+
+"https://web.dev/articles/how-to-review"
+
+"https://web.dev/articles/user-centric-performance-metrics"
+
+"https://support.google.com/analytics/answer/6180923"
+
+"https://web.dev/articles/color-and-contrast-accessibility"
+
+"https://web.dev/articles/performance-poor-connectivity#testing"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. Does your form work on all Devices???
 °° First Test on your Device
@@ -62,4 +78,68 @@ Resources:
 4. Google Analytics 
 •• Contains Snippets we can use. Or you can ask any AI for Snippets and Skeletons.
 5. If you want any type of custom Analytics, just ask 😉
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••We can add {focus indicators} using the :focus CSS pseudo-class.
+
+input:focus {
+  outline: 4px solid #222;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Telephone Skeleton:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="number">Telephone number</label>
+        <input type="tel" id="number" name="number">
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+•••One way we can test a button is by the env(). This will help determine if our button is visible or hidden.•••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Goal Funnels°°°
+••A goal funnel ({conversion funnel} is a series of interactions that lead to a goal. Such as adding a Attribute. {conversion} Basically defining and accomplishing your Goal/s•••
+
+••Example:
+A user opens page C with the form.
+The user fills out the <label>.
+The user fills out the area code field.
+The user creates the form.
+The user navigates through JavaScript•••
+🚨 Note: This above is the Google way. How I prefer to do this. Use a Task manager, Create one for Short Term. One for Medium and Long. Then take your Biggest Goal, and brake it down to Byte Size Pieces, and place them in your categories. Personally, I choose the hardest first, and save the easiest for last.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example of a Custom Event•••
+// Step 1: Create the custom event with analytics data
+const analyticsEvent = new CustomEvent('trackAnalytics', {
+  detail: {
+    category: 'Button',
+    action: 'Click',
+    label: 'Signup Button'
+  }
+});
+
+// Step 2: Listen for the custom event (e.g., in your analytics handler)
+document.addEventListener('trackAnalytics', function(e) {
+  // Replace with your analytics tracking logic
+  console.log('Analytics Event:', e.detail);
+  // Example: analytics.track(e.detail.category, e.detail.action, e.detail.label);
+});
+
+// Step 3: Dispatch the event when tracking is needed
+document.dispatchEvent(analyticsEvent);
+
+
+•••✨Remember we can create Custom Events for Everything, including every single👁️‍🗨️ Mechanism that makes up your Page or Application.👾
+
+••• We can also set up Event Alarm's and Reports to be sent via our Custom Techniques°°°
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
