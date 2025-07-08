@@ -1,0 +1,119 @@
+⚡HTML Autofill 👋 
+
+🚨 References:
+
+"https://developer.mozilla.org/docs/Web/HTML/Attributes/autocomplete#values"
+
+"https://web.dev/"
+
+"https://en.wikipedia.org/wiki/List_of_the_most_common_passwords"
+
+"https://web.dev/articles/sms-otp-form"
+
+"https://developer.chrome.com/docs/identity/web-apis/web-otp"
+
+"https://developer.mozilla.org/docs/Web/HTML/Attributes/autocomplete#values"
+
+"https://developer.mozilla.org/docs/Web/HTML/Attributes/autocomplete#values"
+
+"https://www.w3.org/WAI/WCAG21/Understanding/identify-input-purpose.html"
+
+"https://soloist.ai/dailyinvestors"
+
+"https://developer.mozilla.org/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion#the_autocomplete_attribute_and_login_fields"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Example FormField:
+
+<label for="name">Name</label>
+<input name="name" id="name">
+
+••Autofill works by saving either saving the Name or ID. Then next time you visit a website, and its value is the same name or ID, then it will automatically fill from your storage memory.••
+
+••Use the :autofill CSS pseudo-class to style the form controls that the browser has autofilled.••
+
+••Use :autofill & the prefixed version :-webkit-autofill for the best browser compatibility.••
+
+••Try to use the autocomplete tag whenever possible••
+
+•• Examples:
+autocomplete="billing postal-code"
+autocomplete="email
+autocomplete="new-password
+autocomplete="current-password
+autocomplete="one-time-code"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example of Autocomplete:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="address-one">Address line</label>
+        <input autocomplete="address-line1" required type="text" id="address-one" name="address-one">
+      </div>
+      <div>
+        <label for="city">City</label>
+        <input autocomplete="address-level2" required type="text" id="city" name="city">
+      </div>
+      <div>
+        <label for="state">State / Province / Region (optional)</label>
+        <input autcomplete="address-level1" type="text" id="state" name="state">
+      </div>
+      <div>
+ <label for="zip">ZIP / Postal code (optional)</label>
+        <input autocomplete="postal-code" type="text" id="zip" name="zip">
+      </div>
+      <div>
+ <label for="country">Country</label>
+        <input autocomplete="country" type="text" id="country" name="country">
+      </div>
+      <button>Save address</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+ button {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Autocomplete Example:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+ <label for="email">Email</label>
+        <input autocomplete="email" required type="email" id="email" name="email">
+      </div>
+      <div>
+ <label for="password">Password</label>
+        <input autocomplete="new-password" type="password" id="password" name="password">
+      </div>
+      <button>Sign up</button>
+    </form>
+  </div>
+</main>
+
+••CSS Value:
+ button {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••One Time Code Example:
+
+<label for="one-time-code">One-time code</label>
+
+<input autocomplete="off" type="text" name="one-time-code" id="one-time-code">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
