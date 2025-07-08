@@ -1,0 +1,81 @@
+••Basic Description for Locality:
+
+<html⚡ lang="en-us">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+•••We can add <link> elements in A website's <head> to describe the alternate versions:
+
+<link rel="alternate" title="The form element"
+  href="https://example.com/en/form" hreflang="en">
+<link rel="alternate" title="Das Formularelement"
+  href="https://example.com/de/form" hreflang="de">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Basic Border:
+
+input {
+  border-inline-start-width: 4px;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Generic Input Example:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="address-one">Address line 1</label>
+        <input required type="text" id="address-one" name="address-one">
+      </div>
+      <div>
+        <label for="address-two">Address line 2 (optional)</label>
+        <input type="text" id="address-two" name="address-two">
+      </div>
+      <div>
+        <label for="city">City</label>
+        <input required type="text" id="city" name="city">
+      </div>
+      <div>
+        <label for="state">State / Province / Region (optional)</label>
+        <input type="text" id="state" name="state">
+      </div>
+      <div>
+ <label for="zip">ZIP / Postal code (optional)</label>
+        <input type="text" id="zip" name="zip">
+      </div>
+      <div>
+ <label for="country">Country</label>
+        <input type="text" id="country" name="country">
+      </div>
+      <button>Save address</button>
+    </form>
+  </div>
+</main>
+
+
+••CSS Value:
+ button {
+  margin-top: 1rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+References:
+
+"https://developer.mozilla.org/docs/Web/HTML/Global_attributes/lang"
+
+"https://web.dev/
+
+"https://translate.google.com/"
+
+"https://developer.mozilla.org/docs/Web/CSS/CSS_Logical_Properties"
+
+"https://web.dev/learn/css/logical-properties"
+
+"https://www.uxmatters.com/mt/archives/2008/06/international-address-fields-in-web-forms.php"
+
+"http://www.columbia.edu/%7Efdc/postal/"
