@@ -1,0 +1,190 @@
+ 🦅 ••CSS && Forms•• 🦅
+
+🚨 References: Perplexity 
+
+"https://web.dev/learn/css/flexbox"
+
+"https://web.dev/learn/css/grid"
+
+"https://web.dev/learn/css/layout"
+
+"https://www.sarasoueidan.com/blog/focus-indicators/"
+
+"http://simpl.info/datalist"
+
+"https://developer.mozilla.org/docs/Glossary/Vendor_Prefix#css_prefixes"
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Styling••
+••The base for a basic form normally contains: <input>, <textarea>, <select>, and <button>.•••
+
+•• For fonts it is best to use either "em" or "rem".•••
+
+
+••Increase Font-Size:
+
+.form-element {
+  font-size: 1.3rem;
+  line-height: 1.2;
+} 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+•• Defining our Elements••
+•• Margin allows us to increase or descrease the space between elements.••
+
+••Padding can increase or decrease the space {around} the element.••
+
+••We can use CSS to group together elements to help our users identify what should be together.••
+
+
+Example:
+body {
+  font-family: system-ui, sans-serif
+}
+
+form div {
+  margin-top: 1rem;
+}
+
+label,
+input,
+textarea
+button,
+select{
+  font-size: 1.3rem;
+  line-height: 1.2
+}
+
+form {
+  width: 30em;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+label {
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+input,
+textarea {
+  padding: 0.4rem;
+  width: 100%;
+}
+
+button {
+  margin-top: 2rem;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• When creating forms, it is best to always give it a solid line, to ensure it resemblesba form. Such as using a solid line for <input>:
+
+input,
+textarea {
+  border: 1px solid;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Depending on your needs, at times you may want a background for your Buttons:
+
+button {
+  margin-top: 2rem;
+  background: #3740ff;
+  color: #fff;
+  border: none;
+  padding: 0.6rem;
+}
+
+button:hover,
+button:focus {
+  background: #272eb5
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••In this example we will override the default style for :focus: 🦅
+
+button:focus {
+    outline: 4px solid green;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~🐛~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••When using the <select> tag, this comes with a default styling. We can change and edit this by using the arrow strategy:
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    background-image: url(arrow.png);
+    background-repeat: no-repeat;
+    background-position: right .7em top 50%, 0 0;
+    background-size: .65em auto;
+}
+
+
+••We can remove the default arrows of a <select>, by using the <appearance> property.••
+
+••Now if you wish to show the ⬆️ of your choice: We must define the ⬆️ as a background.•••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Most fonts have a default value of 16px••
+
+••Stlying Radio and Checkbox:
+First we have to hide the default checkbox and radio button:
+input[type="radio"],
+input[type="checkbox"] {
+   position: absolute;
+   opacity: 0;
+}
+
+Note: We must use <position: absolute> in combination with <opacity: 0> instead of  using <display: none> & <visibility: hidden> This makes the controls only visually hidden•••
+
+
+Now to show our custom elements, we have several options: We can use ::before, the <background> property, or SVG Image:
+
+input[type="radio"] + label::before {
+  content: "";
+  width: 1em;
+  height: 1em;
+  border: 1px solid black;
+  display: inline-block;
+  border-radius: 50%;
+  margin-inline-end: 0.5em;
+}
+
+input[type="radio"]:checked + label::before {
+  background: black;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Example Styling for CheckBox:
+
+  height: 0.5em;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid white;
+  position: absolute;
+  left: 0.25em;
+  top: 0.25em;
+}
+
+input[type="radio"]:checked + label:before {
+  background: #3740ff; /* replace with image */
+}
+
+input[type="checkbox"]:focus + label:before {
+  outline: 2px solid #7AACFE; /* for non-webkit browsers */
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: 3px;
+}
+
+input[type="radio"]:focus + label:before {
+  outline: 2px solid #7AACFE; /* for non-webkit browsers */
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: 3px;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example of Accent Color
+•• Basically a one line code to bring your websites styles to a form.
+
+checkbox {
+  accent-color: orange;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+👋
