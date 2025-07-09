@@ -1,6 +1,10 @@
 °°°Forms and Data°°°
 
-••References:
+••References: Perplexity 
+
+"https://stackoverflow.com/questions/6003819/what-is-the-difference-between-properties-and-attributes-in-html/6004028#6004028"
+
+"https://web.dev/articles/more-capable-form-controls#form-associated_custom_elements"
 
 "https://web.dev/learn/forms/form-fields"
 
@@ -36,3 +40,90 @@ https://example.com/cheats?cheat=help
 </form>
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ⚠️         ᕙ⁠(⁠⇀⁠‸⁠↼⁠‶⁠)⁠ᕗ            ⚠️
+
+••Always provide <text> to help your clients with input.••
+
+•• Use <textarea> for longer strings of text.••
+<textarea> is resizable. We can edit, or stop through CSS { resize: none, resize: vertical•••
+
+•• <type=checkbox> or <select> for Options.••
+
+••Wecan use the <accent-color> CSS property to change the color of  each form: including: <input type="range">.•••
+
+•• We can use <input> with <data list> to also display Options••
+
+••Use <input> with type="hidden" to create and hide objects•••
+
+•••To enable your users to upload and submit files: We can use <input> with type="file"
+Example:
+<main>
+  <div class="wrapper">
+    <form>
+       <div>
+        <label for="photo">Photo</label>
+        <input type="file" id="photo" name="photo">
+      </div>
+      <button>Upload</button>
+    </form>
+  </div>
+</main>
+
+CSS Value:
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+button {
+  margin-top: 2rem;
+}
+
+🚨 <input type="file"> can also allow your clients to upload multiple files.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• The <inputmode> attribute only changes the on-screen keyboard, not affecting any other elements.•••
+
+••• Use <inputmode="numeric"> for a Numerical Keyboard.•••
+
+•••Use <type="tel"> for a Mobile Keyboard.•••
+
+•••We can change the "Enter Key" for on-screen keyboards with the <enterkeyhint> tag.•••
+enterkeyhint="next"
+enterkeyhint="done"
+getAttribute('value')
+
+
+••• Use <value> to show your clients what they have already completed:
+
+<label for="name">Name</label>
+<input value="Daily" name="name" id="name" type="text">
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example of a Hint:
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="url">URL</label>
+        <input type="text" id="url" name="url" aria-describedby="name-hint">
+        <span id="name-hint" class="hint">For example, https://example.com</span>
+      </div>
+      <button>Save</button>
+    </form>
+  </div>
+</main>
+
+
+••CSS Value:
+button {
+  margin-top: 1rem;
+}
+
+.hint {
+  display: block;
+  padding-top: 0.4em;
+}
+
+label {
+  font-size: 1.5em;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+👋
