@@ -1,0 +1,129 @@
+••• JavaScript Intro •••
+🕸️
+🕷️ 
+••References: Gemini
+
+"https://web.dev/learn/javascript/appendix#ASI"
+
+"https://web.dev/learn/javascript/data-types/number#operators"
+
+"https://developer.mozilla.org/docs/Glossary/whitespace"
+
+"https://web.dev/"
+
+"https://web.dev/learn/javascript/appendix#ASI"
+
+"https://web.dev/learn/javascript/control-flow"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. JS is responsible for the interactive layer.
+
+2. JS allows us to edit, enhance, manipulate, presentation, adding, removing, 
+
+3. These notes, in tune with my JavaScript cheats on "DailysDailyNews", will help guide you for the Basic Fundamentals of jS.
+
+4. JavaScript is not related to Javac, or Java.
+
+5. JavaScript acts different then everything else, how? When it is processed, it sends a script to the Browser along the side of HTML, CSS.
+
+6. When the java$cript interpreter receives this script. It begins to  perform a  "lexical analysis".
+
+7. After analyzing the script. It is then formated to one of the following: 
+{
+Tokens
+Format control characters
+Line terminators
+Comments
+Whitespace
+} 
+
+8. These results from the script will not "persist" after reloading/refreshing. Unless we include a explicit order to make it Persistent.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9. A Statement is a set of orders or instructions.
+
+••Example Statement:
+
+let myVariable = 3;
+
+myVariable;
+> 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+10. Remember everything with jS must be ended with a ;
+
+11. JavaScript has a function called ASI. This allows a line to break after completing a statement.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Block Statements ••
+•• The <block> statement groups any number of statements && <declarations> inside a brace "{}"••
+
+••Example of a "it" statement:
+
+if ( x === 3 ) {
+  //some behavior;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Expressions••
+•• A <expression> is a code that results with a value.•••
+
+3 + 3;
+> 6
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Grouping Operator••
+•• Basically a way to group an expression, or to override.•••
+••Example of Grouping Operator:
+
+2 + 2 * 4;
+> 10
+
+( 2 + 2 ) * 4;
+> 16
+
+let myVariable = ( 2 + 2 );
+
+myVariable;
+> 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••type coercion••
+••Type coercion refers to the automatic or implicit conversion of values from one data type to another. This often happens in programming languages when an operation involves operands of different data types, and the language attempts to make them compatible.••
+
+••In this example, if we add a # to a string value in a  Python, the result is an error. But JavaScript can help fix/bypass this with coercion:
+
+>>> "1" + 1
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: cannot concatenate 'str' and 'int' objects
+
+••Instead of jS returning this error. It uses coercion:
+
+"1" + 1;
+> "11"
+
+
+•• We can also do this with <data types>:
+
+let myVariable = 333;
+
+typeof myVariable;
+> "number"
+
+myVariable = myVariable.toString();
+> "333"
+
+typeof myVariable;
+> "string"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+14. We have to always Remember jS is case-sensitive.
+
+15. JS ignores all whitespace. The term is called insensitive.
+
+16. With the presence of an whitespace. This can be significant for a separator between lexical tokens:
+tokens: [let] [x] ]
+tokens: [letx] ]
+[tokens: [let] [x] [=] [2] ]
+tokens: [let] [x] [=] [2] ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Once again we thank you for any and all Donations to help fuel and continue our Research.
+
+Thank You,
+Daily
