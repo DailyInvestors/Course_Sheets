@@ -1,0 +1,279 @@
+•••Identity••👾
+
+🪱 References🦅 
+                Perplexity 
+                DeepSeek
+
+"https://web.dev/explore/payments"
+
+"https://web.dev/"
+
+"https://web.dev/learn/forms/javascript#ensure_users_can_see_the_password_they_entered"
+
+"https://web.dev/learn/forms/javascript#ensure_users_are_notified_about_errors_in_real_time"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Example Sign-In Form•••
+
+•••HTML Value: 🤖
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="email">Email</label>
+        <input required type="email" id="email" name="email" autocomplete="email">
+      </div>
+     <div>
+        <label for="password">Password</label>
+       <input required minlength="8" type="password" id="password"  class="password-field" name="password" aria-describedby="password-minlength" autocomplete="new-password">
+       <button type="button" hidden data-pressed="false" class="reveal-password" aria-controls="password" data-text-show="Show password" data-text-hide="Hide password">Show password</button>
+        <span data-text-shown="Your password is shown" data-text-hidden="Your password is hidden" class="visually-hidden password-announce" aria-live="polite"></span>
+<div id="password-minlength">Eight or more characters</div>
+      </div>  <button class="submit">Sign up</button>
+    </form>
+  </div>
+</main>
+
+
+••CSS Value: 👾
+
+.visually-hidden {
+  position: absolute !important;
+width: 1px !important;
+height: 1px !important;
+margin: 0 !important;
+padding: 0 !important;
+overflow: hidden !important;
+clip: rect(0 0 0 0) !important;
+-webkit-clip-path: inset(50%) !important;
+clip-path: inset(50%) !important;
+border: 0 !important;
+white-space: nowrap !important;
+}
+
+button {
+  margin-top: 1rem;
+}
+
+.has-js::-ms-reveal {
+    display: none;
+}
+
+.has-js::reveal {
+    display: none;
+}
+
+.reveal-password {
+  padding: 0.2em 1em;
+  text-transform: capitalize;
+
+
+
+••JS Value: 
+
+const revealPassword = document.querySelector('.reveal-password');
+const passwordField = document.querySelector('.password-field');
+const passwordAnnounce = document.querySelector('.password-announce');
+if (revealPassword && passwordField && passwordAnnounce) {
+  revealPassword.hidden = false;
+  passwordField.classList.add('has-js');
+  
+  revealPassword.addEventListener('click', (event) => {
+    let isPressed = revealPassword.getAttribute('data-pressed') === 'true';
+    if (isPressed) {
+    passwordField.type = 'password';
+      revealPassword.innerText = revealPassword.dataset.textShow;
+      passwordAnnounce.innerText = passwordAnnounce.dataset.textHidden;
+    } else {
+    passwordField.type = 'text';
+    revealPassword.innerText = revealPassword.dataset.textHide;
+      passwordAnnounce.innerText = passwordAnnounce.dataset.textShown;
+    }
+    revealPassword.setAttribute('data-pressed', String(!isPressed));
+  });
+   
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Payment Forms•••
+
+••HTML Value:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name on card</label>
+        <input required type="text" id="name" name="name" autocomplete="cc-name">
+      </div>
+     <div class="card-number">
+        <label>Card number</label>
+       <input required type="text" id="card-number" name="card-number" inputmode="numeric" autcomplete="cc-number" pattern="[0-9]+">
+      </div>
+      <div class="date-code"><div>
+        <label for="expiry-date">Expiry date</label>
+       <input required type="text" id="expiry-date" name="expiry-date" class="expiry-date" autocomplete="cc-exp" placeholder="MM/YY" minlength="4" pattern="[0-9/]+">
+        </div>
+        <div>
+        <label for="security-code">Security code</label>
+          <input required type="text" id="security-code" name="security-code" inputmode="numeric" minlength="3" maxlength="4" pattern="[0-9]+"></div>
+      </div>
+      <button>Pay $300.00</button>
+    </form>
+  </div>
+</main>
+
+
+••CSS Value:
+
+form {
+  width: 90vw;
+  max-width: 20em;
+}
+
+button {
+  margin-top: 2rem;
+}
+
+input {
+  border: 1px solid;
+  padding: 0.3em;
+  width: 100%;
+}
+
+label {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.date-code {
+  display: flex;
+  margin: 0 -1em;
+}
+
+.date-code div {
+  margin: 0 1em;
+}
+
+
+••Indicate Payment Amounts:
+
+<button>Pay $333.00</button>  
+
+••• autocomplete="cc-name" for the <name>.•••
+
+••• autocomplete="cc-number" for the <card number>. •••
+
+••• autocomplete="cc-exp" for the <exp-date>.•••
+
+•••Payment Security <codes> can be 3 to 4 digits. Use <minlength="3"> and <maxlength="4">•••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Address Forms••• 🦗🕸️
+
+••HTML Value:
+
+<main>
+  <div class="wrapper">
+    <form>
+      <div>
+        <label for="name">Name</label>
+        <input required type="text" id="name" name="name" autocomplete="name" enterkeyhint="next">
+      </div>
+      <div>
+        <label for="street-address">Street address</label>
+        <input type="text" id="street-address" name="street-address" autocomplete="street-address" required enterkeyhint="next"></input>
+      
+      </div>
+      <div>
+        <label for="postal-code">ZIP or postal code (optional)</label>
+        <input class="postal-code" id="postal-code" name="postal-code" autocomplete="postal-code" enterkeyhint="next">
+      </div>
+      <div>
+        <label for="city">City</label>
+        <input required type="text" id="city" name="city" autocomplete="address-level2" enterkeyhint="next">
+      </div>
+      <div>
+        <label for="country">Country or region</label>
+        <select id="country" name="country" autocomplete="country" enterkeyhint="done" required>
+            <option></option>
+            <option value="AF">Afghanistan</option>
+            <option value="AX">Åland Islands</option>
+            <option value="AL">Albania</option>
+            <option value="DZ">Algeria</option>
+
+••CSS Value:
+form {
+  width: 90vw;
+  max-width: 20em;
+}
+
+button {
+  margin-top: 2rem;
+}
+
+input {
+  border: 1px solid;
+  padding: 0.3em;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  min-height: 6em;
+}
+
+label {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+select {
+  font-size: 16px;
+}
+
+.postal-code {
+  width: 50%;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• For Zip and Postal we can use
+<label for="zip">ZIP && or postal code <optional></label>•••
+
+••• Autocomplete {
+autocomplete="name"
+autocomplete="street-address"
+autocomplete="postal-code"
+autocomplete="country"
+autocomplete="billing postal-code"
+autocomplete="shipping"
+}•••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Future Studies••
+  If you wish to research further into everything in our HTML Forms. Here are some valuable resources that you may one day wish to use:
+
+"https://developer.mozilla.org/docs/Learn/Forms"
+
+"https://web.dev/learn/css"
+
+"https://webaim.org/techniques/forms"
+
+"https://web.dev/articles/payment-and-address-form-best-practices"
+
+"https://web.dev/articles/sign-up-form-best-practices"
+
+"https://www.smashingmagazine.com/2018/08/best-practices-for-mobile-form-design/"
+
+"https://owasp.org/www-project-cheat-sheets/"
+
+"https://pages.nist.gov/800-63-3/sp800-63-3.html"
+
+"https://cloud.google.com/blog/products/gcp/12-best-practices-for-user-account"
+
+"https://www.troyhunt.com/passwords-evolved-authentication-guidance-for-the-modern-era/"
+
+"https://www.troyhunt.com/we-didnt-encrypt-your-password-we-hashed-it-heres-what-that-means/"
+
+
+As always we appreciate any and all donations for our Work. These were designed for a Quick Reference educational resource. This is not for use for any type of Publication, Training, etc. This is for individual resources only.
