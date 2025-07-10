@@ -1,0 +1,314 @@
+••• Bash Notes from Google Style Guide 📚👾•••
+
+References: Gemini 
+            Google Style Guide
+            GitHub
+
+"https://www.shellcheck.net/"
+
+"https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html"
+
+"https://google.github.io/styleguide/shellguide.html#quoting"
+
+"https://google.github.io/styleguide/shellguide.html#arrays"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Omit Forloop:
+
+for arg in "$@"; do
+  echo "argument: ${arg}"
+done
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••• Case Statements •••
+
+••Example1:
+
+case "${expression}" in
+  a)
+    variable="…"
+    some_command "${variable}" "${other_expr}" …
+    ;;
+  absolute)
+    actions="relative"
+    another_command "${actions}" "${other_expr}" …
+    ;;
+  *)
+    error "Unexpected expression '${expression}'"
+    ;;
+esac
+
+
+••Example2: "Single Commands"
+
+verbose='false'
+aflag=''
+bflag=''
+files=''
+while getopts 'abf:v' flag; do
+  case "${flag}" in
+    a) aflag='true' ;;
+    b) bflag='true' ;;
+    f) files="${OPTARG}" ;;
+    v) verbose='true' ;;
+    *) error "Unexpected option ${flag}" ;;
+  esac
+done
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Variable Expansion••
+
+•••It is best to be consistent with what you find. Quote your variables: Prefer "${var}" over "$var". This is the Google Best Practice.•••
+
+•• Try brace-delimiting over all  variables.
+
+••Example1:
+# Section of *recommended* cases.
+
+# Preferred style for 'special' variables:
+echo "Positional: $1" "$5" "$3"
+echo "Specials: !=$!, -=$-, _=$_. ?=$?, #=$# *=$* @=$@ \$=$$ …"
+
+# Braces necessary:
+echo "many parameters: ${10}"
+
+# Braces avoiding confusion:
+# Output is "a0b0c0"
+set -- a b c
+echo "${1}0${2}0${3}0"
+
+# Preferred style for other variables:
+echo "PATH=${PATH}, PWD=${PWD}, mine=${some_var}"
+while read -r f; do
+  echo "file=${f}"
+done < <(find /tmp)
+
+
+••Example2:
+
+# Section of *discouraged* cases
+
+# Unquoted vars, unbraced vars, brace-delimited single letter
+# shell specials.
+echo a=$avar "b=$bvar" "PID=${$}" "${1}"
+
+# Confusing use: this is expanded as "${1}0${2}0${3}0",
+# not "${10}${20}${30}
+set -- a b c
+echo "$10$20$30"
+
+🚨 We have to remember that using braces in ${var} is not a form of quoting. "": “Double quotes” must be used at the same time.•••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Quoting••
+
+••Always "quote strings" containing variables, command substitutions, spaces && shell meta characters••
+
+••We can use "arrays" for quoting of (lists of elements), && (command-line flags)••
+
+•• It is a optional practice to quote special characters.••
+
+••Example1: "Quotes"
+
+# 'Single' quotes indicate that no substitution is desired.
+# "Double" quotes indicate that substitution is required/tolerated.
+
+# Simple examples
+
+# "quote command substitutions"
+# Note that quotes nested inside "$()" don't need escaping.
+flag="$(some_command and its args "$@" 'quoted separately')"
+
+# "quote variables"
+echo "${flag}"
+
+# Use arrays with quoted expansion for lists.
+declare -a FLAGS
+FLAGS=( --foo --bar='baz' )
+readonly FLAGS
+mybinary "${FLAGS[@]}"
+
+# It's ok to not quote internal integer variables.
+if (( $# > 3 )); then
+  echo "ppid=${PPID}"
+fi
+
+# "never quote literal integers"
+value=32
+# "quote command substitutions", even when you expect integers
+number="$(generate_number)"
+
+# "prefer quoting words", not compulsory
+readonly USE_INTEGER='true'
+
+# "quote shell meta characters"
+echo 'Hello stranger, and well met. Earn lots of $$$'
+echo "Process $$: Done making \$\$\$."
+
+# "command options or path names"
+# ($1 is assumed to contain a value here)
+grep -li Hugo /dev/null "$1"
+
+# Less simple examples
+# "quote variables, unless proven false": ccs might be empty
+git send-email --to "${reviewers}" ${ccs:+"--cc" "${ccs}"}
+
+# Positional parameter precautions: $1 might be unset
+# Single quotes leave regex as-is.
+grep -cP '([Ss]pecial|\|?characters*)$' ${1:+"$1"}
+
+# For passing on arguments,
+# "$@" is right almost every time, and
+# $* is wrong almost every time:
+#
+# * $* and $@ will split on spaces, clobbering up arguments
+#   that contain spaces and dropping empty strings;
+# * "$@" will retain arguments as-is, so no args
+#   provided will result in no args being passed on;
+#   This is in most cases what you want to use for passing
+#   on arguments.
+# * "$*" expands to one argument, with all args joined
+#   by (usually) spaces,
+#   so no args provided will result in one empty string
+#   being passed on.
+#
+# Consult
+# https://www.gnu.org/software/bash/manual/html_node/Special-Parameters.html and
+# https://mywiki.wooledge.org/BashGuide/Arrays for more
+
+(set -- 1 "2 two" "3 three tres"; echo $#; set -- "$*"; echo "$#, $@")
+(set -- 1 "2 two" "3 three tres"; echo $#; set -- "$@"; echo "$#, $@")
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Command Substitutions••
+
+•• We should use $(command) instead of a backtick.••
+
+••Nested backticks require escaping the inner ones with \ 
+The $(command) format will not change.••
+
+••Example:
+# This is preferred:
+var="$(command "$(command1)")"
+
+# This is not:
+var="`command \`command1\``"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••[[ … ]] is preferred over [ … ], test, && /usr/bin.•••
+
+••[[ … ]] will also reduce the errors as no path expansion or word splitting will take place between [[ and ]].•••
+
+••[[ … ]] also allows for pattern and regular expression matching, while [ … ] does not.•••
+
+••Example1:
+
+# This is the correct example.
+if [[ "filename" =~ ^[[:alnum:]]+name ]]; then
+  echo "Match"
+fi
+
+# This matches the exact pattern "f*" (Does not match in this case)
+if [[ "filename" == "f*" ]]; then
+  echo "Match"
+fi
+
+
+••Example2: "Bad Example"
+
+# This gives a "too many arguments" error as f* is expanded to the
+# contents of the current directory. It might also trigger the
+# "unexpected operator" error because `[` does not support `==`, only `=`.
+
+if [ "filename" == f* ]; then
+  echo "Match"
+fi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Testing Strings•••
+
+••• We can use these tests for empty/non-empty strings.•••
+
+••Example 1: "Correct Way"
+
+# Do this:
+if [[ "${my_var}" == "some_string" ]]; then
+  do_something
+fi
+
+# -z (string length is zero) and -n (string length is not zero) are
+# preferred over testing for an empty string
+
+if [[ -z "${my_var}" ]]; then
+  do_something
+fi
+
+# This is OK (ensure quotes on the empty side), but not preferred:
+
+if [[ "${my_var}" == "" ]]; then
+  do_something
+fi
+
+
+
+•• Example2: "Bad Way"
+
+# This is the incorrect way:
+
+if [[ "${my_var}X" == "some_stringX" ]]; then
+  do_something
+fi
+
+
+•• To help us avoid errors && confusion explicitly use -z or -n.••
+
+••Example1: "Correct Way"
+
+# Try this
+if [[ -n "${my_var}" ]]; then
+  do_something
+fi
+
+••Example2: "Incorrect"
+# Don't use this
+if [[ "${my_var}" ]]; then
+  do_something
+fi
+
+••We should use "==" for equality instead of =. Although both will work.••
+
+••< and > in [[ … ]] performs a lexicographical comparison.••
+
+•• (( … )) or -lt and -gt for numerical comparison.•••
+
+••Example1: "Correct"
+# Correct way
+if [[ "${my_var}" == "val" ]]; then
+  do_something
+fi
+
+if (( my_var > 3 )); then
+  do_something
+fi
+
+if [[ "${my_var}" -gt 3 ]]; then
+  do_something
+fi
+
+
+••Example2: "Incorrect Way"
+# Don't Use
+
+if [[ "${my_var}" = "val" ]]; then
+  do_something
+fi
+
+# Probably unintended lexicographical comparison.
+if [[ "${my_var}" > 3 ]]; then
+  # True for 4, false for 22.
+  do_something
+fi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• Wild-Card Expansions ••
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Will Continue this at a later time and date. With any education,bWe have to remember to never get sidetracked. Next in my opinion, I have already read several books on this Language. To become fluent with this, it takes more then one day, takes more then one lesson or Book. But going through everything and taking baby steps. Studies will show it takes around a Year to Two to become fully fluent, doing it the way that I am. 
+
+🚨Note: This book was discovered on the Wikipedia Page, and the book is created and Published by Google and GitHub. These are just my Self-Help guide for general education, and to keep forcing it into my mind.
+
+We appreciate any and all Donations, to help us with our Research. If you wish to have Custom repoabbuilt just for you, just ask. If you wish to have your Business name in our Projects, Licenses, just ask. Thank You
