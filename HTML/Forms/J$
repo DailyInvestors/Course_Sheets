@@ -1,0 +1,248 @@
+•••JavaScript && Forms•••
+
+👾 References: Perplexity 
+               DeepSeek
+
+"https://docs.microsoft.com/en-us/microsoft-edge/web-platform/password-reveal"
+
+"https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Constraint_validation#validation-related_attributes"
+
+"https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Website_security"
+
+"https://developer.mozilla.org/docs/Web/Accessibility/ARIA/ARIA_Live_Regions"
+
+"https://developer.mozilla.org/docs/Web/API/Fetch_API"
+
+"https://web.dev/"
+
+"https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS"
+
+"https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch"
+
+"https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
+
+"https://developer.mozilla.org/en-US/docs/Web/HTTP"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Example 1: Say this is a Normal Checkbox/Question field:
+
+const additionalFields = document.querySelectorAll('.additional');
+const radioFields = document.querySelectorAll('.radioField');
+
+if (additionalFields && additionalFields.length > 0) {
+  [...additionalFields].forEach((additionalField) => {
+     additionalField.hidden = true;
+  });
+}
+
+if (radioFields && radioFields.length > 0) {
+  [...radioFields].forEach((radioField) => {
+    radioField.setAttribute('aria-expanded', false);
+    radioField.setAttribute('aria-controls', radioField.dataset.controls);
+    
+    radioField.addEventListener('click', (event) => {
+      const additionalField = document.getElementById(event.target.getAttribute('aria-controls'));                         
+      let isChecked = event.target.checked;
+      
+      [...additionalFields].forEach((additionalField) => {
+        additionalField.hidden = true;
+      });
+      
+      if (isChecked) {
+        event.target.setAttribute('aria-expanded', true); 
+        additionalField.hidden = false;
+      } else {
+        event.target.setAttribute('aria-expanded', false);     
+        additionalField.hidden = true;
+      }
+    });
+  });
+}
+
+
+••Now with our JS example above, to define only one <input> with the checkbox, we use:
+
+if (event.target.checked) {
+    // show additional field
+} else {
+   // hide additional field
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Form Submissions••
+•••Imagine we have a form control <checkbox>. We want our clients to be able to see their submission before submitting. Basically for error checking and syntax.
+
+To accomplish this, we must listen to the <onsubmit event> then use <event.preventDefault()> to prevent the default behavior, and send the FormData using the Fetch API.
+
+To use the Fetch API, we always start with the basic method fetch(). This is global for <window> and <worker> objects/nodes. Next  fetch() returns a <Promise> that responds to the Response for that <request> — Instantly the server responds with every header. We can also pass in the <init> option objects as a second argument.
+
+Now we can create a <request> && a <response> by directly using the Request() and Response().
+
+ ••Example: We can use FetchEvent.respondWith() to work with <service workers>••
+
+
+•••Example Tags && Methods:
+Window.fetch()  WorkerGlobalScope.fetch()
+fetch()
+FetchEvent.respondWith
+Request()
+Response()
+<init>
+<Promise>
+<checkbox>
+Headers()
+ReadableStream()
+init.attributionReporting()
+init.browsingTopics()
+init.duplex((
+init.keepalive()
+init.priority()
+init.referrerPolicy()
+init.signal()
+formdata()
+setCustomValidity()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Form Data••
+•••Form Data is basically a set of key values pairs.
+
+••Example for title and content box:
+
+const formElement = document.querySelector('form');
+
+if (formElement) {
+    formElement.addEventListener('submit', (event) => {
+        const formData = new FormData();
+
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Success:', result);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        
+        event.preventDefault();
+    })
+}
+
+
+••The backend script can be tested by a form element, where the  <method="post"> or using the  fetch() method for request••
+
+••Example:
+if (req.xhr || req.headers.accept.indexOf('json') !== -1) {
+    // return JSON
+} else {
+    // return HTML
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•• To ensure updates for our clients we can always use:
+the <aria-live="polite"> tag.••
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Validation••
+•• We can use the setCustomValidity() method to define <error> messages.
+
+•••Validation Attributes:
+required 
+minlength
+maxlength
+min
+max
+step
+type
+pattern
+regular 
+expression 
+
+•••Example:
+
+const usernameInput = document.querySelector('[name="name"]'); 
+
+usernameInput.addEventListener('invalid', () => {  
+  usernameInput.setCustomValidity('Please enter your name.');
+});
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+•••Example of CSS and Validation:
+••• This causes the input to become red for error, and black for valid:
+
+input:invalid {
+  border: 2px dashed red;
+}
+
+input:invalid:required {
+  background-image: linear-gradient(to right, pink, lightgreen);
+}
+
+input:valid {
+  border: 2px solid black;
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+•••Constraint Validation API Methods:
+HTMLButtonElement (<button>)
+HTMLFieldSetElement (<fieldset>)
+HTMLInputElement (<input>)
+HTMLOutputElement (<output>)
+HTMLSelectElement (<select>)
+HTMLTextAreaElement (<textarea>)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+°°°Blur and Validatity State•••
+•••The <blue> event 🔥 fires when a error is created.•••
+•••Validtiystate detectsbif the form is Valid.••••
+
+document.addEventListener('blur', function (event) {
+    // Validate the field
+    const isValid = event.target.validity.valid;
+    const message = event.target.validationMessage;
+    const connectedValidationId = event.target.getAttribute('aria-describedby');
+    const connectedValidation = connectedValidationId ? document.getElementById(connectedValidationId) : false;
+  
+    if (connectedValidation && message && !isValid) {
+      connectedValidation.innerText = message;
+    } else {
+      connectedValidation.innerText = '';
+    }
+}, true);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Passwords•🦅
+           🪱
+•••Connect <button> with <input type="password"> while using the aria-controls attribute to show the Password.•••
+
+const revealPassword = document.querySelector('.reveal-password');
+const passwordField = document.querySelector('.password-field');
+const passwordAnnounce = document.querySelector('.password-announce');
+
+if (revealPassword && passwordField && passwordAnnounce) {
+  revealPassword.hidden = false;
+  passwordField.classList.add('has-js');
+  
+  revealPassword.addEventListener('click', (event) => {
+    let isPressed = revealPassword.getAttribute('data-pressed') === 'true';
+    if (isPressed) {
+    passwordField.type = 'password';
+      revealPassword.innerText = revealPassword.dataset.textShow;
+      passwordAnnounce.innerText = passwordAnnounce.dataset.textHidden;
+    } else {
+    passwordField.type = 'text';
+    revealPassword.innerText = revealPassword.dataset.textHide;
+      passwordAnnounce.innerText = passwordAnnounce.dataset.textShown;
+    }
+    revealPassword.setAttribute('data-pressed', String(!isPressed));
+  });
+   
+}
+
+
+•• Ensure we use to the correct tags for the Password Visibility:
+
+<span class="visually-hidden" aria-live="polite">
+    <!-- Now change this with JavaScript. -->
+</span>
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+
+Note: This is just a general reference cheat sheet. This is not for Publication, or Professional Usage. This is a educational resource. We appreciate any and all donations for our educational literature. Thank you 
+
