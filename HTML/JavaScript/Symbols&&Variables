@@ -1,0 +1,249 @@
+    •••Symbols && Vars•••
+
+🚨 References: Gemini
+
+"https://web.dev/"
+
+"https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#keywords"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••Symbols•••
+
+🚨: Symbols are not enumerable: The getOwnPropertySymbols() method is what gives access to the objects symbol property.
+
+1. In JavaScript, a Symbol is a unique and immutable primitive value introduced in ES6. Each Symbol() call creates a new, distinct value, making them ideal for creating unique object property keys that are guaranteed not to clash with other keys, especially for internal or "private" object properties.
+
+2. Example1:
+String() === String()
+> true
+
+String( "My string." ) === String( "My string." );
+> true
+
+
+
+3. We can use these "Symbols" to help create unique property keys:
+
+const mySymbol = Symbol( "Desc" );
+
+const myObject = {};
+myObject[mySymbol] = "propSymbol";
+
+myObject
+> Object { Symbol("Desc"): "propSymbol" }
+
+
+
+4. Symbol() accepts a description (or "symbol name") as an optional argument. Any call to a Symbol will return a unique symbol primitive. Even if there are multiple calls that have these same identical descriptions.
+
+Example:
+Symbol( "My symbol." ) === Symbol( "My symbol." );
+> false
+
+
+
+
+5. Symbols can also inherit methods and properties/objects from their prototype.
+
+Example:
+let mySymbol = Symbol( "My symbol." );
+
+mySymbol.description
+> "My symbol."
+
+
+6. We can not create a Symbol using the "new" word.
+Example:
+let mySymbol = new Symbol();
+
+> Uncaught TypeError: Symbol is not a constructor
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Share Symbols•••
+
+1. The Symbol.for() method tries to look up any existing symbols in a runtime-wide global symbol registry.
+
+2. If it cannot find a existing symbol, it will then create a symbol with the specified key && adds it to the global registry.
+
+Example:
+let sharedSymbol = Symbol.for( "My key." );
+
+sharedSymbol === Symbol.for( "My key." )
+> true
+
+
+
+3. for() allows us to create our Symbol for the symbol Registry.
+
+Example:
+Symbol( "String" ) === Symbol( "String" );
+> false
+
+Symbol( "String" ) === Symbol.for( "String" );
+> false
+
+Symbol.for( "String" ) === Symbol.for( "String" );
+> true
+
+
+
+4. Symbol.keyFor() allows us to retrieve the key for any symbol in the Registry.
+
+Example:
+let mySymbol = Symbol.for( "Key." );
+
+Symbol.keyFor( mySymbol ) ;
+> "Key."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Well-Known Symbols•••
+
+1. Well-known symbols are defined as static properties of the Symbol object. Each of these, which is a symbol all in itself.
+
+
+2. Well-known symbols help provide {unique property keys} for accessing and modifying Registries.
+
+Example:
+Symbol;
+> function Symbol()
+    asyncIterator: Symbol(Symbol.asyncIterator)
+    for: function for()
+    hasInstance: Symbol("Symbol.hasInstance")
+    isConcatSpreadable: Symbol("Symbol.isConcatSpreadable")
+    iterator: Symbol(Symbol.iterator)
+    keyFor: function keyFor()
+    length: 0
+    match: Symbol("Symbol.match")
+    matchAll: Symbol("Symbol.matchAll")
+    name: "Symbol"
+    prototype: Object { … }
+    replace: Symbol("Symbol.replace")
+    search: Symbol("Symbol.search")
+    species: Symbol("Symbol.species")
+    split: Symbol("Symbol.split")
+    toPrimitive: Symbol("Symbol.toPrimitive")
+    toStringTag: Symbol("Symbol.toStringTag")
+    unscopables: Symbol("Symbol.unscopables")
+    <prototype>: function () 
+
+
+
+3. Here is a list of the well-known global symbols:
+
+ • Symbol.asyncIterator: Specifies the method that returns the default AsyncIterator for an object. Used by for-await-of loops.
+
+ • Symbol.hasInstance: Specifies the method that determines if a constructor object recognizes an object as its instance. Used by the instanceof operator.
+
+ • Symbol.isConcatSpreadable: A Boolean value indicating if an object should be flattened to its array elements when using Array.prototype.concat().
+
+ • Symbol.iterator: Specifies the default iterator for an object. Used by for-of loops and other iterable consumers.
+
+ • Symbol.match: Specifies the method that matches against a string, used by String.prototype.match().
+
+ • Symbol.matchAll: Specifies the method that returns an iterator for matching regular expressions against a string, used by String.prototype.matchAll().
+
+ • Symbol.replace: Specifies the method that replaces matched substrings in a string, used by String.prototype.replace().
+
+ • Symbol.search: Specifies the method that returns the index within a string that matches a regular expression, used by String.prototype.search().
+
+ • Symbol.species: Specifies the constructor function that is used to create derived objects. This allows subclasses to return instances of the parent class (or another class) from methods like map(), filter(), etc.
+
+ • Symbol.split: Specifies the method that splits a string at the indices that match a regular expression, used by String.prototype.split().
+
+ • Symbol.toPrimitive: Specifies the method that converts an object to a primitive value. Used by type coercion operations (e.g., when an object is converted to a string or number).
+
+ • Symbol.toStringTag: A string value used for the default description of an object. Used by Object.prototype.toString() to determine the value of the [object ...] tag.
+
+ • Symbol.unscopables: Specifies an object whose own and inherited property names are excluded from the with statement's environment bindings. 
+
+
+Here are the common abbreviations (or "@@" notations) for all the global well-known symbols:
+
+ • Symbol.asyncIterator: @@asyncIterator (or %asyncIterator%)
+
+ • Symbol.hasInstance: @@hasInstance (or %hasInstance%)
+
+ • Symbol.isConcatSpreadable: @@isConcatSpreadable (or %isConcatSpreadable%)
+
+ • Symbol.iterator: @@iterator (or %iterator%)
+
+ • Symbol.match: @@match (or %match%)
+
+ • Symbol.matchAll: @@matchAll (or %matchAll%)
+
+ • Symbol.replace: @@replace (or %replace%)
+
+ • Symbol.search: @@search (or %search%)
+
+ • Symbol.species: @@species (or %species%)
+
+ • Symbol.split: @@split (or %split%)
+
+ • Symbol.toPrimitive: @@toPrimitive (or %toPrimitive%)
+
+ • Symbol.toStringTag: @@toStringTag (or %toStringTag%)
+
+ • Symbol.unscopables: @@unscopables (or %unscopables%)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       •••Variables•••
+
+1. A variable is defined as a data structure that assigns a representative name to a value.
+
+2. The final value is then called a  idenitifier.
+
+3. A valid identifier must follow these rules {
+
+•• A identifier CAN contain {✓Unicode letters, dollar signs ($), underscore characters (_), digits (0-9), and even some Unicode characters. }
+
+••A identifiers can not contain a whitespace. For example, if you try to call a variable my Variable instead of myVariable, the parser sees two identifiers, my and Variable, which will produce a error.
+
+••A identifiers MUST start with a letter, underscore (_), or dollar sign ($). 
+
+••Identifiers (can not) contain special characters
+     (! . , / \ + - * =)
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Best Practices•••
+
+1. Camel Case:
+Camel case is the practice of capitalizing the first letter of every word except the first for improved readability without spaces.
+
+Example:
+let camelCasedIdentifier = true;
+
+
+2.Identifiers should concisely describe the nature of the data they contain 
+
+
+4. Global Identifiers Examples:
+
+ • google: This is by far the most common top-level global object. Many Google libraries, like Google Maps, Google Charts, and some aspects of Google Identity>
+   
+ • google.maps: For the Google Maps JavaScript API (e.g., google.maps.Map, google.maps.Marker).
+    
+ • google.charts: For Google Charts (e.g., google.charts.load, google.charts.setOnLoadCallback).
+    
+ • google.accounts: For the newer Google Identity Services (GSI) library (e.g., google.accounts.id, google.accounts.oauth2).
+
+ • gapi: This global object is primarily used by the Google API Client Library for JavaScript. (like Google Drive, Calendar, YouTube, etc.) that require OAuth 2.0 for authentication and authorization.
+   
+     • gapi.client: For making API requests.
+     • gapi.auth2: For the older Google Sign-In (before the shift to GSI/google.accounts).
+     • gapi.load: To load specific API modules.
+
+ • dataLayer: This is a global array (or object, depending on configuration) used by Google Tag Manager (GTM). It serves as a data layer.
+
+ • gtag: This is a global function used by Google Analytics 4 (GA4) and other Google marketing products (like Google Ads, Google Marketing Platform). It's the primary way to send events and configure data for these services when using the Global Site Tag (gtag.js).
+
+ • _gaq: (Legacy) This was the global object for the older Universal Analytics (ga.js). You might still encounter it on older websites, but it's largely superseded by gtag.js and GA4.
+ 
+• _gat: (Legacy) Another global object related to the older Universal Analytics (ga.js), used for creating and retrieving tracker objects.
+
+ • __gtagEditor: (Internal/Dev Tool Related) This is often present when using GTM's preview mode or certain debugging tools.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Will Finish Later:
+
+
+This is designed as a Self-Help reference guide. This is not for Publication, only for personal use. If you wish to truly learn these languages, the above references are your place to start. Thank You
+
+
