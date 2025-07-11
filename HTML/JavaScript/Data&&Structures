@@ -1,0 +1,446 @@
+     ••• JavaScript Data &&       JSStructure•••
+
+🚨 References: Gemini
+
+"https://web.dev/learn/javascript/comparison#truthy-falsy"
+
+"https://web.dev/learn/javascript/appendix#prototyal-inheritance"
+
+"https://web.dev/"
+
+"https://web.dev/learn/javascript/appendix#prototyal-inheritance"
+
+"https://web.dev/learn/javascript/functions"
+
+"https://web.dev/learn/javascript/introduction#weak-typing"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. Primitives are the simplest form of jS data. Is immutable.
+
+2. Primitive literal means a value, {with no wrapper or properties of its own.}
+
+3.There are 7 primitive data types:
+Numbers
+Strings
+Booleans
+null
+undefined
+BigInt
+Symbol
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Numbers•••
+
+1. Contains Global Characters:
+Infinity 
+NaN
+
+2. Example String:
+
+Number( "10" );
+> 10
+
+
+3. Passing a Null:
+
+Number( null );
+> 0
+
+Number( false );
+> 0
+
+Number( true );
+> 1`
+
+
+
+4. If a value can not be submitted. It will return a NaN Error.
+
+Number( undefined );
+> NaN
+
+Number( "The number 3." );
+> NaN
+
+
+
+5. Number Objects:
+
+let numObject = new Number( 15 );
+
+numObject;
+> Number { 15 }
+
+
+
+6. Mathematical Example:
+
+let tenObject = new Number( 10 );
+
+tenObject + 5;
+> 15
+
+tenObject === 10;
+> false
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   •••Floats && Integers ••••
+
+1. JavaScript only uses one number type the ( 64-bit IEEE 754-1985  double precision floating-point numbers ) between -2^1024 and 2^1024. 
+
+2. When jS attempts to store any Number inside the memory, binary floating-point number, it will convert the # into a binary floating-point number.
+
+0.1 + 0.7
+> 0.7999999999999999
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Number Operators•••
++	Addition		2+2	4
+
+-	Subtraction		4-2	2
+
+*	Multiplication		2*5	10
+
+/	Division		10/5	2
+
+++	Increment	Adds one to a number	2++	3
+
+--	Decrement	Subtracts one from a number	3--	2
+
+**	Exponent	Returns the result of raising the first
+operand to the power of the second operand.	2**4	16
+
+%	Remainder	Returns the remainder left over when the
+first operand is divided by the second operand.	
+
+
++=	Addition assignment	myValue += 2
+
+-=	Subtraction assignment	myValue -= 2
+
+*=	Multiplication assignment	myValue *= 2
+
+/=	Division assignment	myValue /= 2
+
+**=	Exponent assignment	myValue **= 2
+
+%=	Remainder assignment	myValue %= 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Infinity Examples•••
+
+1. Is Global
+
+// Positive Infinity
+let positiveInfinity = Infinity;
+console.log(positiveInfinity); // Output: Infinity
+
+// Negative Infinity
+let negativeInfinity = -Infinity;
+console.log(negativeInfinity); // Output: -Infinity
+
+// Operations that result in Infinity
+console.log(1 / 0); // Output: Infinity
+console.log(-1 / 0); // Output: -Infinity
+console.log(Math.pow(10, 1000)); // Output: Infinity (number too large)
+
+// Checking for Infinity
+console.log(positiveInfinity === Infinity);   // Output: true
+console.log(Number.isFinite(positiveInfinity)); // Output: false
+console.log(Number.isInfinite(positiveInfinity)); // Output: true // Note: Number.isInfinite is not a standard JavaScript function. You might be thinking of 'isFinite' or checking against 'Infinity' directly.
+
+// Correct way to check if a number is finite (not Infinity, -Infinity, or NaN)
+let num1 = 100;
+let num2 = Infinity;
+let num3 = NaN;
+
+console.log(Number.isFinite(num1)); // Output: true
+console.log(Number.isFinite(num2)); // Output: false
+console.log(Number.isFinite(num3)); // Output: false
+
+// Comparison with Infinity
+console.log(100 < Infinity);   // Output: true
+console.log(-Infinity < 0);    // Output: true
+console.log(Infinity + 1);     // Output: Infinity
+console.log(Infinity * 10);    // Output: Infinity
+console.log(Infinity / Infinity); // Output: NaN
+console.log(Infinity - Infinity); // Output: NaN
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••🕷️ Strings 🕸️•••
+
+1. A JavaScript string is a sequence of characters used to represent text. They are immutable and can be created using single quotes, double quotes, or backticks.
+
+2. Example1:
+
+console.log( "Hello, World." );
+> Hello, World.
+
+
+3. Example2-Backticks:
+
+console.log( 'Hello, World.' );
+> Hello, World.
+
+console.log(`Hello, World.`);
+> Hello, World.
+
+
+
+4. A JavaScript string literal is a fixed sequence of characters directly defined in your code, enclosed by single quotes ('...'), double quotes ("..."), or backticks (`...`). It represents a fixed textual value used literally in the script.
+
+
+5. Example3-StringLiteral:
+
+console.log( "I'm a string." );
+> I'm a string.
+
+console.log( '"A string," I said.' );
+> "A string," I said.
+
+
+
+6. Example4-Escaping:
+
+console.log( '"I\'m a string," I said.' );
+> "I'm a string," I said.
+
+
+
+7. Example5-StringObject:
+
+let myString = String( 10 );
+
+myString
+> "10"
+
+typeof myString
+> string
+
+
+
+8. Example6-StringObjects:
+
+let stringObj = new String( "My new string." );
+
+typeof stringObj
+> object
+
+stringObj
+> String { "My new string." }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Concatention••• 🤔
+
+1. A JavaScript string concatenation is the process of joining two or more strings together to form a single, longer string. This is most commonly achieved using the + operator or template literals (backticks `).
+
+
+2.Example1-
+console.log( "My" + " string." );
+> My string
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Literal•••
+1. A JavaScript string is a sequence of characters representing text. A template literal is a special type of string literal enclosed by backticks (`) that allows for embedded expressions and multi-line strings, offering a more flexible way to create dynamic text.
+
+2. Example1:
+
+"A 'string literal' is text in quotes; a `template literal` allows ${variables}."
+
+
+3. Template literals offer advanced formatting like multi-line support and tagged templates for custom parsing, enhancing code readability and structured data output for debugging.
+
+
+
+4. For debugging, string literals are invaluable for logging variable states and execution paths, while template literals excel by seamlessly embedding dynamic values and expressions directly into diagnostic messages.
+
+
+5. Example2-Web.Dev-Version:
+
+const myString = "This
+is a string.";
+> Uncaught SyntaxError: "" string literal contains an unescaped line break
+
+const myString = `This
+is a string.`;
+
+console.log( myString );
+
+> This
+is a string.
+
+
+
+6.  With JavaScript template literals (strings enclosed by backticks `), the only type of placeholder expression you can use is the ${expression} syntax.
+Within the curly braces ${ }, you can put any valid JavaScript expression.
+
+Example-What-They-Can-Include:
+ • Variables:
+   const name = "Alice";
+`Hello, ${name}!`;
+
+ • Constants:
+   const PI = 3.14159;
+`The value of PI is ${PI}.`;
+
+ • Function Calls:
+   function add(a, b) { return a + b; }
+`Sum: ${add(5, 3)}`;
+
+ • Arithmetic Operations:
+   const price = 10;
+const quantity = 3;
+`Total: $${price * quantity}`;
+
+ • Conditional (Ternary) Operators:
+   const isRaining = true;
+`It is ${isRaining ? 'raining' : 'not raining'}.`;
+
+ • Object Properties:
+   const user = { firstName: "John", lastName: "Doe" };
+`User: ${user.firstName} ${user.lastName}`;
+
+ • Array Elements:
+   const colors = ["red", "green", "blue"];
+`My favorite color is ${colors[0]}.`;
+
+ • New Object Instantiation (if it returns a string or has a toString() method):
+   class Person {
+  constructor(name) { this.name = name; }
+  toString() { return this.name; }
+}
+const person = new Person("Eve");
+`New person: ${person}`; // Calls person.toString()
+
+ • Any JavaScript expression that evaluates to a primitive value (string, number, boolean, null, undefined) or an object that can be coerced to a string.
+
+
+
+7. Template literals can also contain placeholder expressions marked by a dollar sign and curly braces (${}).
+
+Example:
+
+console.log( "The result is " + ( 2 + 4 ) + "." );
+> The result is 6.
+
+or
+
+console.log( `The result is ${ 2 + 4 }.` );
+> The result is 6.
+
+
+
+
+8. A {`template literal} can also be passed to a custom function to create a tagged template. The function  that uses a single template literal as a set of arguments.
+
+Example1-TagFunctions:
+const myNoun = "template literal";
+
+function myTagFunction( myStrings, myPlaceholder ) {
+    const myInitialString = myStrings[ 0 ];
+    console.log( `${ myInitialString }modified ${ myPlaceholder }.` );
+}
+
+myTagFunction`I'm a ${ myNoun }.`;
+> "I'm a modified template literal."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Booleans•••
+1. True or False 👍 👎 
+
+
+2. Values that are false include { 0, null, undefined, NaN, an empty string (""), an omitted value, and a false boolean.}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••NULL•••
+
+1. In JavaScript, null is a primitive value that represents the intentional absence of any object value. It's a placeholder for "no value" or "nothing" that has been explicitly assigned.
+
+
+2. We can assign the "null value" to an existing reference to clear a previous value.
+
+
+3. Example1-Null:
+let user = null;
+let message = `The user variable currently holds the value: ${user}.`;
+console.log(message); // Output: The user variable currently holds the value: null.
+
+let selectedItem = null;
+if (selectedItem === null) {
+  message = `No item is selected, so it's ${selectedItem}.`;
+} else {
+  message = `An item is selected: ${selectedItem}.`;
+}
+console.log(message); // Output: No item is selected, so it's null.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Undefined•••
+
+1. In JavaScript, (undefined) is a primitive value that signifies a variable has been declared but has not yet been assigned a value. It also represents the value of function parameters for which no argument was provided, and the return value of functions that don't explicitly return anything.
+
+
+•••Example1-Undefined:
+
+let myVariable; // Declared but not assigned, so its value is undefined
+console.log(myVariable); // Output: undefined
+
+function greet(name) {
+  // If 'name' is not provided when calling greet(), it will be undefined
+  console.log(`Hello, ${name}!`);
+}
+
+greet(); // Output: Hello, undefined!
+
+let obj = {};
+console.log(obj.nonExistentProperty); // Accessing a non-existent property returns undefined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Null vs Undefined•••
+
+1. Both are similar, except one is purposely defined "Blank", while the other is left undefined.
+
+Example1:
+
+null == undefined
+> true
+
+null === undefined
+> false
+
+
+
+
+2. Undefined is a property of the global object.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••BigInt••• 👾
+
+1. BigInt() allows mathematical operations on numbers outside the range allowed by Number.
+
+
+2. To initiate BigInt(), we must append "n' to the end of a number literal, or pass an integer or numeric string value to the BigInt() function.
+
+
+3. BigInt() values Do Not inherit  methods and properties from the "Number" object, or what it provides.
+
+4. To do any type of math with BigInt(), you must define both the operands as a BigInt() value:
+
+Example:
+console.log( 9999999999999999 + 10 );  // Off by one
+> 10000000000000010
+
+console.log( 9999999999999999n + 10n );
+> 10000000000000009n
+
+
+
+
+Example1:
+const myNumber = 9999999999999999;
+const myBigInt = 9999999999999999n;
+
+typeof myNumber;
+> "number"
+
+typeof myBigInt;
+> "bigint"
+
+myNumber;
+> 10000000000000000
+
+myBigInt;
+> 9999999999999999n
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 🚨 We appreciate any and all Donations. However this is a Self-Help reference guide per each category. If you wish to learn further, the documenta that we used are provided by the References up above. Thank You
