@@ -1,0 +1,221 @@
+        •••Operators•••
+
+👽 References: Did you know Rumor has it, that Each different Technology language, was created by a Separate Race of Aliens. They taught People to Teach us. But which one is Good and will Keep it's Promise?? Which one is truly a Demon not a Daemon?? If we are building in their Language and know Absolutely Nothing, could they not take everything Over?? Could they not have BackDoors and Hidden Symbolic Links on something we would Never Know??
+
+
+"https://web.dev/"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    •••Comparison Operators•••
+
+1. JavaScript Comparison Operators
+ * == (Loose Equality)
+ * === (Strict Equality)
+ * != (Loose Inequality)
+ * !== (Strict Inequality)
+ * > (Greater than)
+ * >= (Greater than or equal to)
+ * < (Less than)
+ * <= (Less than or equal to)
+
+
+••Example1:
+2 == 2
+> true
+
+2 == "2"
+> true
+
+
+
+••Example2:
+2 != 3
+> true
+
+2 != "2"
+> false
+
+
+••Example3:
+2 === 3
+> false
+
+2 === "2"
+> false
+
+🚨 Note: 
+Prefer === to Avoid Type Coercion Issues
+Always use the strict equality operator (===) instead of the abstract equality operator (==) when comparing values in JavaScript. This helps prevent unexpected behavior that can arise from type coercion, where JavaScript automatically converts data types during comparison with ==. By using ===, you ensure that both the value and the type of the operands must be identical for the comparison to return true, thereby eliminating potential ambiguities.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••True or False••• 🥠
+
+
+1.This set below, all are automatically coerced to false:
+
+0
+null
+undefined
+NaN
+An empty string ("")
+
+2. Everything else by default is True. This includes strings that are not empty 🫗.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Logical Operators••• 🎰
+
+1. We can use both these logical operators to control our flows: (&&), (||)
+
+
+••Example1:
+
+2 === 3 || 5 === 5;
+> true
+
+2 === 2 && 2 === "2"
+> false
+
+2 === 2 && !"My string."
+> false
+
+
+
+2. When we use the logical operator (!) in front of another object, such as a number or a string. This coerces that value to a boolean and reverses the given output.
+
+••Example2:
+"string"
+> "string"
+
+!"string"
+> false
+
+0
+> 0
+
+!0
+> true
+
+
+
+
+3. It is a common Google practice to use two (!) operators to quickly coerce the data to the matching  value.
+
+••Example3:
+
+!!"string"
+> true
+
+!!0
+> false
+
+
+4. && returns the first two operands.
+
+••Example4:
+
+true && false
+> false
+
+false && true
+> false
+
+false && false
+> false
+
+true && true
+> true
+
+
+
+5. (||) returns the first of its two operands only if that operand evaluates to true, while the second remains irrelevant.
+
+••Example5:
+
+true || false
+> true
+
+false || true
+> true
+
+true || true
+> true
+
+false || false
+> false
+
+
+6. (||) with two non-boolean operands, will return the first operand unchanged. Only if it can be coerced to !=true.
+
+••Example6:
+false || "My string"
+> "My string"
+
+null || "My string"
+> "My string"
+
+"My string" || false
+> "My string"
+
+"My string" || "My second string"
+> "My string"
+
+2 === 2 || "My string"
+> true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••Null•••
+1.null (??) returns the first operand. This is if that operand has any other value besides null && undefined. If not, it return the second operand!
+
+••Example1:
+
+null ?? "My string"
+> "My string"
+
+undefined ?? "My string"
+> "My string"
+
+true ?? "My string";
+> true
+
+
+••Example2:
+0 ?? "My string";
+> 0
+
+false ?? "My string";
+> false
+
+undefined ?? "My string";
+> "My string"
+
+
+2. We can use assignment operators to change the value of a second operator to a first operator. 
+
+••Example3:
+
+let myVariable = false;
+myVariable &&= 2 + 2;
+> false
+
+myVariable = true;
+myVariable &&= 2 + 2;
+> 4
+
+
+3. We can use the (||=) operator to evaluate the second operand && to assign the first operand. Only if the first operand evaluates to (false).
+
+•• Example-False:
+
+let myVariable = false;
+myVariable ||= 4 + 4;
+> 8
+
+myVariable = true;
+myVariable ||= 4 + 4;
+> true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 💘  •••Controling the Flow•••
+
+1. Control: To control
+   Flow: movement such as a stream
+Control-Flow: Control the codes down the Stream(HTTP/S, httpd)
+
+2. 
