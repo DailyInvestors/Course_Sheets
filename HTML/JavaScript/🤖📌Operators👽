@@ -1,6 +1,14 @@
         •••Operators•••
 
-👽 References: Did you know Rumor has it, that Each different Technology language, was created by a Separate Race of Aliens. They taught People to Teach us. But which one is Good and will Keep it's Promise?? Which one is truly a Demon not a Daemon?? If we are building in their Language and know Absolutely Nothing, could they not take everything Over?? Could they not have BackDoors and Hidden Symbolic Links on something we would Never Know??
+👽 References: Gemini, Perplexity 
+
+Did you know Rumor has it, that Each different Technology language, was created by a Separate Race of Aliens. They taught People to Teach us. But which one is Good and will Keep it's Promise?? Which one is truly a Demon not a Daemon?? If we are building in their Language and know Absolutely Nothing, could they not take everything Over?? Could they not have BackDoors and Hidden Symbolic Links on something we would Never Know??
+
+"https://web.dev/learn/javascript/control-flow#iterators"
+
+"https://web.dev/learn/javascript/data-types/variable"
+
+"https://web.dev/learn/javascript/appendix#main-thread"
 
 
 "https://web.dev/"
@@ -218,7 +226,171 @@ myVariable ||= 4 + 4;
    Flow: movement such as a stream
 Control-Flow: Control the codes down the Stream(HTTP/S, httpd)
 
+
+••For Loop:
+
+for( let i = 0; i < 3; i++ ) {
+  console.log( "Daily Investors for Every.")
+}
+
+
+🔹🔹Example1:
+
+var myArray = [ true, false, true ];
+for( let i = 0; i < myArray.length; i++ ) {
+  console.log( myArray[ i ] );
+}
+> true
+> false
+> true
+
+
+🔹🔹Example2-Iterator
+
+const myIterable = [ true, false, true ];
+for( const myElement of myIterable ) {
+  console.log( myElement );
+}
+> true
+> false
+> true
+
+
+••Example3-Iterations
+
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+for( const myKey in myObject ) {
+  console.log( myKey );
+}
+> "myProperty"
+> "mySecondProperty"
+
+
+🔹🔹Example4: We will use the key, to catch the Value:
+
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+for( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  console.log( `${ myKey } : ${ myValue }` );
+}
+> "myProperty : true"
+> "mySecondProperty : false"
+
+
+
+
+🔹🔹Example5-IteratePropertyChaim
+
+const myPrototype = { "protoProperty" : true };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: true,
+    enumerable: true
+    }
+});
+for ( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  console.log( `${ myKey } : ${ myValue }` );
+}
+> "myProperty : true"
+> "protoProperty : true"
+
+
+
+
+
+🔹🔹Example6-ProtoType Chain
+
+const myPrototype = { "protoProperty" : true };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: true,
+    enumerable: true
+    }
+});
+for ( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  if ( Object.hasOwn( myObject, myKey ) ) {
+    console.log( `${ myKey } : ${ myValue }` );
+  }
+}
+> "myProperty : true"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Static Methods•••
+
+1. There are several different types of methods we can use with static pages.
+
+🔹🔹Example1:
+
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+Object.keys( myObject );
+> Array [ "myProperty", "mySecondProperty" ]
+
+
+🔹🔹Example2-ObjectKeys:
+
+const myPrototype = { "protoProperty" : "Non-enumerable property value." };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: "Enumerable property value.",
+    enumerable: true
+    }
+});
+
+for ( const propKey of Object.keys( myObject ) ) {
+  console.log( propKey );
+}
+> "myProperty"
+
+for ( const propValue of Object.values( myObject ) ) {
+  console.log( propValue );
+}
+> "Enumerable property value."
+
+for ( const [ propKey, propValue ] of Object.entries( myObject ) ) {
+  console.log( `${ propKey } : ${ propValue }` );
+}
+> "myProperty : Enumerable property value."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••For Each•••
+🔹🔹Example1:
+
+const myArray = [ true, false ];
+myArray.forEach( ( myElement, i, originalArray ) => {
+  console.log( i, myElement, originalArray  );
+});
+> 0 true Array(3) [ true, false ]
+> 1 false Array(3) [ true, false ]
+
+🔹🔹Example2: "CallBack"
+
+const myMap = new Map([
+  ['myKey', true],
+  ['mySecondKey', false ],
+]);
+myMap.forEach( ( myValue, myKey, originalMap ) => {
+    console.log( myValue, myKey, originalMap  );
+});
+> true "myKey" Map { myKey → true, mySecondKey → false }
+> false "mySecondKey" Map { myKey → true, mySecondKey → false }
+
+
+🔹🔹Example3-CallForEach:
+
+const mySet = new Set([ true, false ]);
+mySet.forEach( ( myValue, myKey, originalSet ) => {
+  console.log( myValue, myKey, originalSet  );
+});
+> true true Set [ true, false ]
+> false false Set [ true, false ]
+
+
+
+
+
  ~~~~~~~ Conditional ~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. If && Else
 
@@ -361,3 +533,381 @@ let result = (grade >= 90) ? "A" :
 console.log(result); // Output: B
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         •••Switch Case•••
+
+1. The switch-case statement provides a more efficient and readable way to control complex conditional logic compared to a long chain of if-else if-else statements. It evaluates an expression once and then compares its value against a series of case clauses. When a match is found, the code block associated with that case is executed.
+
+
+
+••Example1-FallingThroughCase:
+
+switch ( 2 + 2 === 7 ) {
+    case false:
+    console.log( "False." );
+  case true:
+    console.log( "True." );
+}
+> "False."
+> "True."
+
+
+••Example1-StopingFallThrough
+
+switch ( 2 + 2 === 7 ) {
+    case false:
+    console.log( "False." );
+    break;
+  case true:
+    console.log( "True." );
+    break;
+}
+> "False."
+
+
+
+••Example2-BreakFallThrough
+
+switch ( 2 + 2 === 7 ) {
+    case false:
+    console.log( "False." );
+    break;
+  case true:
+    console.log( "True." );
+    break;
+}
+> "False."
+
+
+
+
+••Example3-BlockStatements
+
+let myVariable;
+switch ( true ) {
+  case true: {
+    let myVariable = "True.";
+    break;
+  }
+  default: {
+    let myVariable = "False.";
+    break;
+  }
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+➰          F0R L00P§            ➿
+
+                   🔹
+1. A Forloop is a continuous control flow, timed flow, controlled flow. Infinity ♾️ 
+
+Syntax:
+for( let i = 0; i < 3; i++ ) {
+  console.log( "A For Loop.")
+}
+
+
+Example1:
+
+let iterationCount = 0;
+console.log( "Pre-loop." );
+while( iterationCount < 3 ) {
+  iterationCount++;
+  console.log( "Loop iteration." );
+}
+console.log( "Continuing on." );
+> "Pre-loop."
+> "Loop iteration."
+> "Loop iteration."
+> "Loop iteration."
+> "Continuing on."
+
+
+
+
+2. True for True For Loop
+
+Exanple2-T4T4L
+
+console.log( "Pre-loop." );
+while( true ) {
+console.log( "Loop iteration." );
+}
+> "Pre-loop."
+> "Loop iteration."
+> "Loop iteration."
+> "Loop iteration."
+> "Loop iteration."
+> "Loop iteration."
+…
+
+⚠️Caution: Please Remember to always leave a Argument for all Exits. A door of Some Kind. Remember without knowledge in Security, your Service Worker could become the Victim.⚠️
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••While Loops•••
+1. If the (key condition) is initially evaluated 2 be true, the statement that follows those parentheses() is activated.
+
+🔹🔹Example1:
+
+let iterationCount = 0;
+while( iterationCount < 3 ) {
+  iterationCount++;
+  console.log( `Loop ${ iterationCount }.` );
+}
+> "Loop 1."
+> "Loop 2."
+> "Loop 3."
+
+
+
+
+
+2. A continue it will stop the iteration inside a "while loop"". While it stops, the iteration will reevaluate each condition, and continues the while-loop. This is only if a while-loop contains a "continue".
+
+
+🔹🔹Example2-While&Continue:
+
+let iterationCount = 0;
+while( iterationCount <= 5 ) {
+  iterationCount++;
+  if( iterationCount === 3 ) {
+    continue;
+  }
+  console.log( `Loop ${ iterationCount }.` );
+}
+console.log( "Loop ended." );
+> "Loop 1."
+> "Loop 2."
+> "Loop 4."
+> "Loop 5."
+> "Loop ended."
+
+
+
+3. When a while-loop contains a "break" everything else will be stopped from there on out.
+
+🔹🔹Example2-WhileBreaking:
+
+let iterationCount = 1;
+while( iterationCount <= 5 ) {
+  if( iterationCount === 3 ) {
+    console.log(`Iteration skipped.``);`
+    break;
+  }
+  console.log( `Loop ${ iterationCount }.` );
+  iterationCount++;
+}
+console.log( "Loop ended." );
+> "Loop 1."
+> "Loop 2."
+> "Iteration skipped.
+> "Loop ended."
+
+
+
+4. Here is a loop of intermediate length, displaying it's functions in the mathematical 🌎. Do you believe aliens exist?? lmao guess this is a joke page now too
+
+🔹🔹Example4-LengthLoop😱 
+
+let randomize = () => Math.floor( Math.random() * 10 );
+let randomNum = randomize();
+while( randomNum !== 3 ){
+  console.log( `The number is not ${ randomNum }.` );
+  randomNum = randomize();
+}
+console.log( `The correct number, ${ randomNum }, was found.` );
+> "The number is not 0."
+> "The number is not 6."
+> "The number is not 1."
+> "The number is not 8."
+> "The correct number, 3, was found."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••LengthLoop•••
+1. LengthLoop: Several years back when President Trump was President lol, the CIA released tons of classified files. In one of these files, it basically stated that, Yes their are Unknown Ariel Phenomenons that fly over us every day. Don't quote me, but saw it on a News.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Do-While•••   
+
+1. A do-while loop, is basically everything inside the loop is activated or ran once no mater what. Personally, might be similar to a force if you build it correctly.
+
+🔹🔹Example1:
+let iterationCount = 1;
+do {
+  console.log( `Loop ${ iterationCount }.` );
+  iterationCount++;
+} while ( iterationCount < 3 );
+> "Loop 1."
+> "Loop 2."
+> "Loop 3."
+
+
+
+2. Most common used Case: This means it's Predicable for hackers. Be a Leader, Don't follow the Rest.
+
+🔹🔹Example2:
+
+let randomNum;
+do {
+  randomNum = ( () => Math.floor( Math.random() * 10 ) )();
+  console.log( `Is the number ${ randomNum }?` );
+} while ( randomNum !== 3 );
+console.log( `Yes, ${ randomNum } was the correct number.` );
+> "Is the number 9?"
+> "Is the number 2?"
+> "Is the number 8?"
+> "Is the number 2?"
+> "Is the number 3?"
+> "Yes, 3 was the correct number."
+
+
+
+
+
+
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Service Worker•••
+
+// worker.js
+const { parentPort } = require('worker_threads');
+
+let running = true;
+let counter = 0;
+const MAX_ITERATIONS = 100_000_000; // A large number for a "forever" loop simulation
+
+// Listen for messages from the main thread
+parentPort.on('message', (message) => {
+    if (message.type === 'cancel') {
+        console.error(`Worker received cancellation signal from main thread.`);
+        running = false; // Stop the loop
+    }
+});
+
+function runForeverLoop() {
+    console.log('Worker: Starting CPU-intensive loop...');
+    for (let i = 0; i < MAX_ITERATIONS && running; i++) {
+        // Simulate a computation
+        const result = Math.sqrt(i) * Math.log(i + 1);
+
+        // Every 10 million iterations, send a progress update (not too often to avoid IPC overhead)
+        if (i % 10_000_000 === 0 && i !== 0) {
+            parentPort.postMessage({ type: 'progress', data: `Processed ${i} iterations. Current result: ${result.toFixed(2)}` });
+        }
+        counter = i; // Keep track of current iteration
+    }
+
+    if (running) {
+        // Loop finished naturally (reached MAX_ITERATIONS)
+        parentPort.postMessage({ type: 'done', data: `Worker: Loop completed naturally after ${counter} iterations. Final calculation.` });
+    } else {
+        // Loop was cancelled
+        parentPort.postMessage({ type: 'terminated', data: `Worker: Loop terminated by cancellation after ${counter} iterations.` });
+    }
+    console.log('Worker: Loop finished or cancelled.');
+}
+
+// Start the loop
+runForeverLoop();
+
+
+
+
+
+•••Main Worker•••
+
+// main.js
+const { Worker } = require('worker_threads');
+const readline = require('readline');
+
+// Create a new worker thread
+const worker = new Worker('./worker.js', {
+    // Optionally, if you wanted stdin/stdout for the worker itself, but
+    // for this example, the main thread manages primary I/O.
+    // stdio: ['inherit', 'inherit', 'inherit'] // This would pass through main process's stdio
+});
+
+let workerFinished = false;
+let stdinClosed = false;
+
+console.log('Main: Starting application. Type "exit" or press Ctrl+D to stop the loop.');
+
+// --- Handle Worker Messages (Forever Out) ---
+worker.on('message', (message) => {
+    if (message.type === 'progress') {
+        process.stdout.write(`[Worker Progress]: ${message.data}\n`);
+    } else if (message.type === 'done') {
+        process.stdout.write(`\n[Worker Done]: ${message.data}\n`);
+        workerFinished = true;
+        terminateApplication(); // Worker finished, so cancel stdin and exit
+    } else if (message.type === 'terminated') {
+        process.stdout.write(`\n[Worker Terminated]: ${message.data}\n`);
+        workerFinished = true; // Mark as finished due to termination
+        terminateApplication(); // Worker terminated, clean up
+    }
+});
+
+worker.on('error', (err) => {
+    console.error(`Main: Worker error:`, err);
+    workerFinished = true;
+    terminateApplication();
+});
+
+worker.on('exit', (code) => {
+    if (code !== 0) {
+        console.error(`Main: Worker exited with code ${code}`);
+    } else {
+        console.log(`Main: Worker exited cleanly.`);
+    }
+    workerFinished = true;
+    terminateApplication();
+});
+
+// --- Handle stdin (Forever In) ---
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false // Set to true if you need more interactive terminal features
+});
+
+rl.on('line', (line) => {
+    // This simulates continuous input processing
+    if (line.trim().toLowerCase() === 'exit') {
+        console.log('Main: "exit" command received. Signalling worker to terminate.');
+        worker.postMessage({ type: 'cancel' }); // Signal worker to stop
+        rl.close(); // Close stdin interface
+    } else {
+        process.stdout.write(`Main: You typed: "${line}"\n`);
+        // We could send this input to the worker if it was designed to consume stdin
+    }
+});
+
+rl.on('close', () => {
+    // This event fires when stdin is closed (e.g., Ctrl+D or piping an empty file)
+    console.log('Main: stdin closed. Signalling worker to terminate.');
+    stdinClosed = true;
+    worker.postMessage({ type: 'cancel' }); // Signal worker to stop
+    // The 'exit' event on the worker will handle final termination
+});
+
+// --- Termination Logic (Each Cancels the Other) ---
+function terminateApplication() {
+    // If either the worker finished/terminated OR stdin closed, we can exit.
+    // We use a small timeout to ensure messages have a chance to propagate.
+    // In a real app, you might use a more robust promise-based cleanup.
+    setTimeout(() => {
+        if (workerFinished && stdinClosed) {
+            console.log('Main: Both worker and stdin handled. Exiting application gracefully.');
+            process.exit(0);
+        } else if (workerFinished && !stdinClosed) {
+            console.log('Main: Worker finished/terminated. Closing stdin and exiting.');
+            rl.close(); // Ensure stdin is closed if worker finished first
+            process.exit(0);
+        } else if (!workerFinished && stdinClosed) {
+            console.log('Main: stdin closed. Waiting for worker to acknowledge termination and exit.');
+            // The worker.on('exit') listener will handle process.exit(0)
+            // if it terminates in response to the 'cancel' message.
+            // If the worker is stuck, you might add a timeout here to force exit.
+            // For now, we rely on the worker to clean up.
+        }
+    }, 100); // Small delay to allow final messages/cleanup
+}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
