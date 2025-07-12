@@ -189,3 +189,7 @@ Perplexity
 Here is a list of references, at the end of all my Studies, I will ✍️ the Newest Bash Book. I am seeking Publication for creating these Books, if anyone does know someone on this area, I would appreciate any leads. I will one day create a Red Team Manual, A Book for Each Language. Advanced Books for Each Language. Several Linux Books, Several Google && Window Books, and Testing Guides such as the few that I have. However, my Teachings will be different then any other you will ever take. The labs I will design, will be nothing like the few out floating around. No lab attacks your system, no labs teach you how to evade. I will be the one that Takes my Country to the Next Level of Technology. Why because everything almost that everyone Teaches, is already blocked by the Students that went before you. 
 Daily
 
+
+
+Note: The Bash Style Guide is off the Book Google created to train their employees on Bash. But truth be told, really doesn't teach you Bash at all.
+
