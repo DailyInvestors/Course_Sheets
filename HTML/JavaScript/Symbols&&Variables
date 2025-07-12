@@ -2,9 +2,16 @@
 
 🚨 References: Gemini
 
+
+"https://web.dev/learn/javascript/appendix#by-reference-by-value"
+
 "https://web.dev/"
 
+"https://developer.chrome.com/blog/new-in-devtools-80/#redeclarations"
+
 "https://developer.mozilla.org/docs/Web/JavaScript/Reference/Lexical_grammar#keywords"
+
+"https://web.dev/learn/javascript/classes/class-fields#private"
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
           •••Symbols•••
@@ -240,8 +247,105 @@ let camelCasedIdentifier = true;
 
  • __gtagEditor: (Internal/Dev Tool Related) This is often present when using GTM's preview mode or certain debugging tools.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••Variable$•••
 
-Will Finish Later:
+1. A variable is declared by using either { let, const, or var keywords. }
+
+
+2. Use either "let" or "var" for variables that will change.
+
+3. The association between a (identifier with a value) is  called a Binding 🧵.
+
+••Example1-BindingList:
+let firstVariable,
+     secondVariable,
+     thirdVariable;
+}
+
+
+••Example2-BindingList:
+let firstVariable;
+let secondVariable;
+let thirdVariable;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Exanple1-ResigningValues:
+let myVariable = 10;
+
+myVariable
+> 10
+
+myVariable = myVariable * myVariable;
+
+myVariable
+> 100
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••To help preserve the "Legacy Browser Compatibility", "var" allows unnecessary redeclaration without any "error" in your context.
+
+Example1:
+var myVariable = true;
+var myVariable = false;
+
+myVariable\
+> false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••cOnst•••
+
+1. An "const" is a type of var that must be initialized immediately, while being immutable.
+
+Example1-Const1;
+const myConstant = true;
+
+myConstant
+> true
+
+
+
+
+2.When we try to declare a constant without initializing it, you get a syntax error such as the example below 👇 
+
+••Example1:
+const myConstant;
+Uncaught SyntaxError: missing = in const declaration
+
+
+
+3. Now with a const, they can not be changed. However we can bypass this, and instead change or modify the {Object}.
+
+••Example2-ChangingObjects:
+const constantObject = { "firstvalue" : true };
+
+constantObject
+> Object { firstvalue: true }
+
+constantObject.secondvalue = false;
+
+constantObject
+> Object { firstvalue: true, secondvalue: false }
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 This is designed as a Self-Help reference guide. This is not for Publication, only for personal use. If you wish to truly learn these languages, the above references are your place to start. Thank You
