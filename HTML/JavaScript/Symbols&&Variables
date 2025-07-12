@@ -1,7 +1,12 @@
     •••Symbols && Vars•••
 
 🚨 References: Gemini
+               JPQUR-AI
+               Kazam the AI
 
+"https://developer.mozilla.org/docs/Web/JavaScript/Reference/Classes/Static_initialization_blocks"
+
+"https://web.dev/learn/javascript/introduction#block-statements"
 
 "https://web.dev/learn/javascript/appendix#by-reference-by-value"
 
@@ -324,11 +329,336 @@ constantObject
 > Object { firstvalue: true, secondvalue: false }
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Variable Scopes•••
+
+
+1. A javaScript variable scope defines where a variable is accessible within your code. It determines the lifetime and visibility of a variable.
+
+
+2. There are primarily two types of scope:
+ • Global Scope: Variables declared outside any function or block are globally scoped and can be accessed from anywhere in your code.
+ 
+ • Local Scope: Variables declared inside a function or a block (using let or const) are locally scoped and are only accessible within that specific function or block.
+
+Example1-VarScopes:
+// Global Scope
+const globalVar = "I am a global variable";
+
+function myFunction() {
+  // Local Scope (Function Scope)
+  const functionVar = "I am a function-scoped variable";
+  console.log(globalVar);   // Accessible: "I am a global variable"
+  console.log(functionVar); // Accessible: "I am a function-scoped variable"
+
+  if (true) {
+    // Local Scope (Block Scope - with let/const)
+    let blockVar = "I am a block-scoped variable";
+    console.log(functionVar); // Accessible: "I am a function-scoped variable"
+    console.log(blockVar);    // Accessible: "I am a block-scoped variable"
+  }
+
+  // console.log(blockVar); // Error: blockVar is not defined (outside its block scope)
+}
+
+myFunction();
+
+console.log(globalVar);     // Accessible: "I am a global variable"
+// console.log(functionVar); // Error: functionVar is not defined (outside its function scope)
+
+3. Explanation:
+ ✓ globalVar is declared outside any function, so it's accessible everywhere.
+ ✓ functionVar is declared inside myFunction, making it only accessible within myFunction.
+ ✓ blockVar is declared inside the if block using let, making it only accessible within that specific if block. Trying to access it outside that block results in an error.
+
+
+4. Declaring inside a Block:
+{
+  const myConstant = false;
+}
+const myConstant = true;
+
+scopedConstant;
+> true
 
 
 
 
 
+5. When a declared variable can not extend to its parent block. It will still be available to all the different descendant blocks.
+
+••Example-ExtendingBlocks:
+
+{
+    let scopedVariable = true;
+    {
+    console.log( scopedVariable );
+    }
+}
+> true
+
+
+
+6. Example-ChangingDeclaredVars:
+{
+    let scopedVariable = false;
+    {
+    scopedVariable = true;
+    }
+    console.log( scopedVariable );
+}
+> true
+
+
+
+7. We can use both "let" & "const" to declare inside a Block.
+
+••Example-Declaration:
+{
+    let scopedVariable = false;
+    {
+    let scopedVariable = true;
+    }
+    console.log( scopedVariable );
+}
+> false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       🌍 •••Global••• 🌎 
+•••Took 1 hour to get this from Gemini. Each time I placed my prompt. It would get DOS. Go Back, it would Freeze. Truth, for a Year now I have been logging and monitoring all my API endpoints 😂. Truth, haven't been home to check my Systems.
+
+ ° globalThis: The global object itself, regardless of the environment.
+ ° Infinity: Represents positive infinity.
+ ° NaN: Represents "Not-a-Number."
+ ° undefined: Represents the primitive value undefined.
+
+ ° eval(): Evaluates JavaScript code represented as a string. (Generally discouraged due to security and performance concerns.)
+ ° isFinite(): Determines whether a value is a finite number.
+ ° isNaN(): Determines whether a value is NaN.
+ ° parseFloat(): Parses a string argument and returns a floating-point number.
+ ° parseInt(): Parses a string argument and returns an integer of the specified radix (base).
+ ° decodeURI(): Decodes a Uniform Resource Identifier (URI) component.
+ ° decodeURIComponent(): Decodes a Uniform Resource Identifier (URI) component.
+ ° encodeURI(): Encodes a Uniform Resource Identifier (URI).
+ ° encodeURIComponent(): Encodes a Uniform Resource Identifier (URI) component.
+ ° Object: The base object from which all other objects inherit.
+ ° Function: The base object for all functions.
+ ° Boolean: A wrapper object for boolean values.
+ ° Symbol: A primitive data type that represents a unique, immutable value.
+ ° Error: The base object for error objects. Sub-objects include:
+   • EvalError
+   • RangeError
+   • ReferenceError
+   • SyntaxError
+  •TypeError
+  • URIError
+ ° Promise
+ ° Array
+ ° String
+ ° Number
+ ° BigInt
+ ° Math
+ ° Date
+ ° RegExp
+ ° Int8Array 
+ •Uint8Array Uint8ClampedArray 
+ •Int16Array Uint16Array 
+ •Int32Array Uint32Array 
+ •Float32Array      Float64Array 
+ • BigInt64Array
+ • BigUint64Array
+ ° Map
+ ° Set
+ ° WeakMap
+ ° WeakSet
+ ° ArrayBuffer
+ ° SharedArrayBuffer
+ ° DataView
+ ° JSON
+ ° Atomics
+ ° Iterator
+ ° AsyncIterator
+ ° GeneratorFunction
+ ° AsyncGeneratorFunction
+ ° Generator
+ ° AsyncGenerator
+ ° AsyncFunction
+ ° Reflect
+ ° Proxy
+ ° Intl
+   ° Collator
+   ° DateTimeFormat
+   ° DisplayNames
+   ° ListFormat
+   ° Locale
+   ° NumberFormat
+   ° PluralRules
+   ° RelativeTimeFormat
+   ° Segmenter
+ ° Document
+ ° Navigator
+ ° Location
+ ° History
+ ° XMLHttpRequest
+ ° console 
+ ° setTimeout(), setInterval()
+ ° alert(), confirm(), prompt()
+ * Tutorial
+ * Array methods (map, filter, forEach, reduce, etc.)
+ *  Promise (async/await, Promise.all)
+ *  Fetch API
+ *  Closures
+ * (getElementById, querySelector, addEventListener)
+ *  Classes
+ *  Modules (import/export)
+ *  Scope
+ * Hoisting
+ *  Event Listener
+ *  setTimeout / setInterval
+ *  Callbacks
+ *  Data types
+ *  null vs undefined
+ *  try...catch 
+ *  Date object
+ *  Math object
+ *  JSON parse/stringify
+ *  String methods (split, join, substring)
+ *  Number methods
+ *  Prototype (Prototypal inheritance)
+ *  bind, call, apply
+ * Strict Mode
+ *  Webpack (Module bundlers)
+ *  Babel (Transpilers)
+ *  Promises vs Callbacks
+ *  Generators
+ *  Decorators
+ *  Symbols
+ *  Iterators
+ *  Web Workers
+ *  Local Storage
+ * Session Storage
+ *  Cookies
+ *  IndexedDB
+ *  Canvas API
+ *  WebSockets
+ *  Geolocation API
+ *  Drag and Drop
+ *  FormData
+ *  Event Bubbling / Capturing
+ *  Memoization
+ *  Higher-order functions
+ *  Currying
+ *  Debounce / Throttling
+ *  WeakMap / WeakSet
+ *  Map / Set
+ *  ArrayBuffer / Typed Arrays
+ *  DataView
+ *  Intl API (Internationalization)
+ *  Destructuring Arrays
+ *  Optional Chaining (?.)
+ *  Nullish Coalescing (??)
+ *  Proxy
+ *  Reflect
+ *  Object.create()
+ *  Object.assign()
+ *  Object.keys(), values(), entries()
+ *  typeof operator
+ *  instanceof operator
+ *  delete operator
+ *  in operator
+ *  void operator
+ *  eval() 
+ *  isFinite()
+ *  isNaN()
+ *  parseFloat()
+ *  parseInt()
+ *  decodeURI() / encodeURI()
+ *  decodeURIComponent() / encodeURIComponent()
+ *  Strict Equality (===)
+ *  Type Coercion
+ *  Event Loop
+ *  Microtasks / Macrotasks
+ *  WebRTC
+ *  Service Workers
+ *  PWA 
+ *  Web Workers
+ 
+
+Example1-Global:
+var functionGlobal = true; // Global
+let blockGlobal = true; // Global
+
+{
+    console.log( blockGlobal );
+    console.log( functionGlobal );
+}
+> true
+> true
+
+(function() {
+    console.log( blockGlobal );
+    console.log( functionGlobal );
+}());
+> true
+> true
+
+
+
+••Example-Altering:
+const constantObject = { "firstvalue" : true };
+
+constantObject
+> Object { firstvalue: true }
+
+constantObject.secondvalue = false;
+
+constantObject
+> Object { firstvalue: true, secondvalue: false }
+
+
+
+
+••Example-DeclaringOutsideParent:
+var functionGlobal = true; // Global
+let blockGlobal = true; // Global
+
+{
+    console.log( blockGlobal );
+    console.log( functionGlobal );
+}
+> true
+> true
+
+(function() {
+    console.log( blockGlobal );
+    console.log( functionGlobal );
+}());
+> true
+> true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Variable Hoi§ting•••
+1. Variable hoisting is a JavaScript mechanism where variable and function declarations are moved to the top of their containing scope during the compilation phase, before code execution.
+
+••Example-Hoisted:
+
+hoistedVariable
+> undefined
+
+var hoistedVariable;
+
+
+
+
+••Example2-Hoisted:
+
+hoistedVariable
+> undefined
+
+var hoistedVariable = 2 + 2;
+
+hoistedVariable\
+> 4
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  This repo is designed as a Self-Help reference guide for the above Posted References. This was created in Part with Gemini during a Live Attack. We appreciate any and all Donations for our work and ongoing Research. This is for Personal use, and not for any Type of a publication.
+Daily
 
 
 
