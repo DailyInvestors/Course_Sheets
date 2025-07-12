@@ -25,7 +25,7 @@ index.html
 
 4. Copy, Paste, Chmod for permissions.
 
-5. Openthe file, in your Web Browser.
+5. Open the file, in your Web Browser.
 
 6. Go to Dev Tools, Then inspect your contents, to see the Full Output.
 
