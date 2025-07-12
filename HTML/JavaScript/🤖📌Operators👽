@@ -218,4 +218,146 @@ myVariable ||= 4 + 4;
    Flow: movement such as a stream
 Control-Flow: Control the codes down the Stream(HTTP/S, httpd)
 
-2. 
+ ~~~~~~~ Conditional ~~~~~~~~~
+
+1. If && Else
+
+•/•Example1-if:
+
+if ( true ) console.log( "True." );
+> "True."
+
+if ( true ) {
+    const myString = "True.";
+    console.log( myString );
+}
+> "True."
+
+
+
+••Example2-False:
+
+if ( false ) console.log( "True." );
+
+
+2. Else
+
+•*•Example3-elSe:
+
+if ( false ) console.log( "True." )''
+else console.log( "False" );
+> "False."
+
+
+
+••Example3-Chaining⛓️⛓️‍💥 
+
+const myCondition = 2;
+if ( myCondition === 5 ) console.log( "Five." );
+else if ( myCondition === 2 ) console.log( "Two." );
+
+
+
+••Example4-elSe-If:
+
+if ( myCondition === 5 ) {
+    console.log( "Five." );
+} else if ( myCondition === 3 ) {
+    console.log( "Three" );
+} else {
+    console.log( "Neither five nor three." );
+}
+> "Neither five nor three." 👁️ 👁️
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ••• Ternary Operator•••
+
+1.The ternary operator is a shortcut for an if-else statement. It's the only JavaScript operator that takes three operands: a condition followed by a question mark (?), an expression to execute if the condition is true, followed by a colon (:), and finally an expression to execute if the condition is false.
+Syntax:
+condition ? expressionIfTrue : expressionIfFalse;
+
+ 
+••Example1-BasicTrue/False:
+
+let age = 18;
+let canVote = (age >= 18) ? "Yes, can vote" : "No, cannot vote";
+console.log(canVote); // Output: Yes, can vote
+
+age = 16;
+canVote = (age >= 18) ? "Yes, can vote" : "No, cannot vote";
+console.log(canVote); // Output: No, cannot vote
+
+ • Equivalent if-else:
+   let age = 18;
+let canVote;
+if (age >= 18) {
+    canVote = "Yes, can vote";
+} else {
+    canVote = "No, cannot vote";
+}
+console.log(canVote);
+
+
+
+
+
+••Example2-Even-Odd:
+
+let number = 7;
+let parity = (number % 2 === 0) ? "Even" : "Odd";
+console.log(parity); // Output: Odd
+
+number = 10;
+parity = (number % 2 === 0) ? "Even" : "Odd";
+console.log(parity); // Output: Even
+
+
+
+
+••Example3-CSS-Class:
+let isActive = true;
+let buttonClass = isActive ? "btn-active" : "btn-inactive";
+console.log(buttonClass); // Output: btn-active
+
+isActive = false;
+buttonClass = isActive ? "btn-active" : "btn-inactive";
+console.log(buttonClass); // Output: btn-inactive
+
+
+
+
+
+••Example4-Different-Messages:
+
+let isLoggedIn = false;
+let welcomeMessage = isLoggedIn ? "Welcome back!" : "Please log in to continue.";
+console.log(welcomeMessage); // Output: Please log in to continue.
+
+isLoggedIn = true;
+welcomeMessage = isLoggedIn ? "Welcome back!" : "Please log in to continue.";
+console.log(welcomeMessage); // Output: Welcome back!
+
+
+
+
+
+
+Example5-Actions
+let score = 85;
+score >= 90 ? console.log("Excellent!") : console.log("Keep practicing."); // Output: Keep practicing.
+
+
+
+
+
+
+••Example6-Nested:
+
+let grade = 88;
+let result = (grade >= 90) ? "A" :
+             (grade >= 80) ? "B" :
+             (grade >= 70) ? "C" : "D";
+console.log(result); // Output: B
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Switch Case•••
