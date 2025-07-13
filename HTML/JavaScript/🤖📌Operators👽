@@ -4,6 +4,8 @@
 
 Did you know Rumor has it, that Each different Technology language, was created by a Separate Race of Aliens. They taught People to Teach us. But which one is Good and will Keep it's Promise?? Which one is truly a Demon not a Daemon?? If we are building in their Language and know Absolutely Nothing, could they not take everything Over?? Could they not have BackDoors and Hidden Symbolic Links on something we would Never Know??
 
+"https://web.dev/learn/javascript/appendix#event-loop"
+
 "https://web.dev/learn/javascript/control-flow#iterators"
 
 "https://web.dev/learn/javascript/data-types/variable"
@@ -755,7 +757,458 @@ console.log( `Yes, ${ randomNum } was the correct number.` );
 > "Is the number 2?"
 > "Is the number 3?"
 > "Yes, 3 was the correct number."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Example-ForOfLoop:
 
+const myIterable = [ true, false, true ];
+for( const myElement of myIterable ) {
+  console.log( myElement );
+}
+> true
+> false
+> true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+••Example-ForInLoop: "Goes over Enumerable"
+
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+for( const myKey in myObject ) {
+  console.log( myKey );
+}
+> "myProperty"
+> "mySecondProperty"
+
+
+
+
+••Example-ForInWithConst:
+
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+for( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  console.log( `${ myKey } : ${ myValue }` );
+}
+> "myProperty : true"
+> "mySecondProperty : false"
+
+
+
+
+••Example-FinalForIn:
+
+const myPrototype = { "protoProperty" : true };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: true,
+    enumerable: true
+    }
+});
+for ( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  console.log( `${ myKey } : ${ myValue }` );
+}
+> "myProperty : true"
+> "protoProperty : true"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Built-In•••
+
+1.Object.hasOwn() &  Object.prototype.hasOwnProperty() methods can determine if a Object is enumerable.
+
+••Example1-HasOwn:
+
+const myPrototype = { "protoProperty" : true };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: true,
+    enumerable: true
+    }
+});
+for ( const myKey in myObject ) {
+  const myValue = myObject[ myKey ];
+  if ( Object.hasOwn( myObject, myKey ) ) {
+    console.log( `${ myKey } : ${ myValue }` );
+  }
+}
+> "myProperty : true"
+~~~~~~~~~~~~~~~~~~~~~~🔹~~~~~~~~~~~~~~~~~🔹~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Enum&Arrays•••
+1. (Object.keys()), values() (Object.values()), or key-value pairs (Object.entries()) are methods to help Enumerate Static Pages & keys.
+
+
+🔹🔹Example1:
+const myObject = { "myProperty" : true, "mySecondProperty" : false };
+Object.keys( myObject );
+> Array [ "myProperty", "mySecondProperty" ]
+
+
+🔹🔹Example2:
+
+const myPrototype = { "protoProperty" : "Non-enumerable property value." };
+const myObject = Object.create( myPrototype, {
+    myProperty: {
+    value: "Enumerable property value.",
+    enumerable: true
+    }
+});
+
+for ( const propKey of Object.keys( myObject ) ) {
+  console.log( propKey );
+}
+> "myProperty"
+
+for ( const propValue of Object.values( myObject ) ) {
+  console.log( propValue );
+}
+> "Enumerable property value."
+
+for ( const [ propKey, propValue ] of Object.entries( myObject ) ) {
+  console.log( `${ propKey } : ${ propValue }` );
+}
+> "myProperty : Enumerable property value."
+
+
+
+🔹🔹Example3-ForEach:
+
+const myArray = [ true, false ];
+myArray.forEach( ( myElement, i, originalArray ) => {
+  console.log( i, myElement, originalArray  );
+});
+> 0 true Array(3) [ true, false ]
+> 1 false Array(3) [ true, false ]
+
+
+
+
+🔹🔹Example4-ForEachCallBack:
+
+const myMap = new Map([
+  ['myKey', true],
+  ['mySecondKey', false ],
+]);
+myMap.forEach( ( myValue, myKey, originalMap ) => {
+    console.log( myValue, myKey, originalMap  );
+});
+> true "myKey" Map { myKey → true, mySecondKey → false }
+> false "mySecondKey" Map { myKey → true, mySecondKey → false }
+
+
+
+
+🔹🔹Example-SetForEach:
+
+const mySet = new Set([ true, false ]);
+mySet.forEach( ( myValue, myKey, originalSet ) => {
+  console.log( myValue, myKey, originalSet  );
+});
+> true true Set [ true, false ]
+> false false Set [ true, false ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    •••Generation Functions•••
+1. A Gen Functions maintains state. It returns a new object, not immediately activating.
+
+••Example1:
+
+function* myGeneratorFunction() { };
+
+
+🔹🔹Example2:
+
+function* myGeneratorFunction() {
+  console.log( "Generator function body ")
+};
+const myGeneratorObject = myGeneratorFunction();
+
+myGeneratorObject;
+> Generator {  }
+
+typeof myGeneratorObject;
+> "object"
+
+
+
+
+🔹🔹Example3-Yield:
+
+function* myGeneratorFunction() {
+  yield "My first yielded value.";
+  yield "My second yielded value.";
+};
+const myGeneratorObject = myGeneratorFunction();
+
+myGeneratorObject.next();
+> Object { value: "My first yielded value.", done: false }
+
+myGeneratorObject.next();
+> Object { value: "My second yielded value.", done: false }
+
+
+
+
+🔹🔹Example4-Next:
+
+
+function* myGeneratorFunction() {
+    console.log( "Start of the generator function." );
+    yield "First";
+    console.log( "Second part of the generator function."  );
+    yield "Second";
+    console.log( "Third part of the generator function." );
+    yield "Third";
+};
+const myGeneratorObject = myGeneratorFunction();
+
+myGeneratorObject.next();
+> "Start of the generator function."
+> Object { value: "First", done: false }
+
+myGeneratorObject.next();
+> "Second part of the generator function."
+> Object { value: "Second", done: false }
+
+myGeneratorObject.next();
+> "Third part of the generator function."
+> Object { value: "Third", done: false }
+
+myGeneratorObject.next();
+> Object { value: undefined, done: true }
+
+
+
+
+••Example5: "Only use next with the Generator Functions"
+
+function* myGeneratorFunction() {
+  yield "First";
+  yield "Second";
+};
+
+myGeneratorFunction().next();
+> Object { value: "First", done: false }
+
+myGeneratorFunction().next();
+> Object { value: "First", done: false }
+
+
+
+
+••Example-Yield&Gen:
+
+function* myGeneratorFunction() {
+    const firstYield = yield;
+    yield firstYield + 10;
+};
+const myGeneratorObject = myGeneratorFunction();
+
+myGeneratorObject.next();
+> Object { value: undefined, done: false }
+
+myGeneratorObject.next( 5 );
+> Object { value: 15, done: false }
+
+
+
+
+
+••Example-PassingYield:
+
+function* myGeneratorFunction() {
+    const firstYield = yield;
+    const secondYield = yield firstYield + 100;
+    yield secondYield + 10;
+};
+const myGeneratorObject = myGeneratorFunction();
+
+myGeneratorObject.next();
+> Object { value: undefined, done: false }
+
+myGeneratorObject.next( 10 ); // Can be thought of as changing the value of the `firstYield` variable to `10
+> Object { value: 110, done: false }
+
+myGeneratorObject.next( 20 ); // Can be thought of as changing the value of the `secondYield` variable to `20`, _not_ `20 + 100;`
+> Object { value: 30, done: false }
+
+
+
+
+••Example-YieldPassing2:
+
+function* mySecondaryGenerator() {
+  yield 2;
+  yield 3;
+}
+
+function* myGenerator() {
+  yield 1;
+  yield* mySecondaryGenerator();
+  yield 4;
+  return 5;
+}
+
+const myIterator = myGenerator();
+
+myIterator.next();
+> Object { value: 1, done: false }
+
+myIterator.next();
+> Object { value: 2, done: false }
+
+myIterator.next();
+> Object { value: 3, done: false }
+
+myIterator.next();
+> Object { value: 4, done: false }
+
+myIterator.next();
+> Object { value: 5, done: true }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     ✨🔹🔹 Promises 🔹🔹✨
+1. A placeholder for a value.
+
+2. Is a container 🫙.
+
+3. We can call a "Promise" by using the new() operator with the built-in Promise() constructor.
+
+
+4. When it accepts a function, this is called the executor!
+
+
+🔹🔹Example1-Calling:
+
+const myPromise = new Promise( () => { });
+
+
+🔹🔹Example2-2Args:
+
+const  myPromise = new Promise( ( fulfill, reject ) => { });
+
+
+
+🔹🔹Example3-FullFill&&Reject:
+
+const myPromise = new Promise( ( fulfill, reject ) => {
+  const myResult = true;
+  setTimeout(() => {
+    if( myResult === true ) {
+        fulfill( "This Promise was successful." );    
+    } else {
+        reject( new Error( "This Promise has been rejected." ) );
+    }
+  }, 10000);
+});
+
+myPromise;
+> Promise { <state>: "pending" }
+
+myPromise;
+> Promise { <state>: "fulfilled", <value>: "This Promise was successful." }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Promise Chaining•••
+1. Methods {
+then()
+catch()
+finally()
+Promise.all()
+Promise.any()
+Promise.allSettled()
+Promise.race()
+
+
+🔹🔹Example-PromiseChain:
+
+const myPromise = new Promise( ( fulfill, reject ) => {
+  const myResult = true;
+  setTimeout(() => {
+    if( myResult === true ) {
+        fulfill( "This Promise was fulfilled." );    
+    } else {
+        reject( new Error( "This Promise has been rejected." ) );
+    }
+  }, 100);
+});
+
+myPromise.then( successfulResult => console.log( successfulResult ), failedResult => console.error( failedResult ) );
+> "This Promise was successful."
+
+
+
+🔹🔹Example-Then&Catch:
+
+const myPromise = new Promise( ( fulfill, reject ) => {
+  const myResult = false;
+  setTimeout(() => {
+    if( myResult === true ) {
+        fulfill( "This Promise was fulfilled." );    
+    } else {
+        reject( new Error( "This Promise has been rejected." ) );
+    }
+  }, 100);
+});
+
+myPromise
+  .then( fulfilledResult => console.log(fulfilledResult ) )
+  .catch( rejectedResult => console.log( rejectedResult ) )
+  .finally( () => console.log( "The Promise has settled." ) );
+> "Error: This Promise has been rejected."
+> "The Promise has settled."
+
+
+
+🔹🔹Example-PromiseAll:
+
+const firstPromise  = new Promise( ( fulfill, reject ) => fulfill( "Successful. ") );
+const secondPromise = new Promise( ( fulfill, reject ) => fulfill( "Successful. ") );
+const thirdPromise  = new Promise( ( fulfill, reject ) => fulfill( "Successful. ") );
+const failedPromise = new Promise( ( fulfill, reject ) => reject( "Failed.") );
+const successfulPromises = [ firstPromise, secondPromise, thirdPromise ];
+const oneFailedPromise = [ failedPromise, ...successfulPromises ];
+
+Promise.all( successfulPromises )
+  .then( ( allValues ) => {
+    console.log( allValues );
+  })
+  .catch( ( failValue ) => {
+    console.error( failValue );
+  });
+> Array(3) [ "Successful. ", "Successful. ", "Successful. " ]
+
+Promise.all( oneFailedPromise  )
+    .then( ( allValues ) => {
+      console.log( allValues );
+    })
+    .catch( ( failValue ) => {
+     console.error( failValue );
+    });
+> "Failed."
+~~~~~~~~~~~~~🔹~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~🔹~~~~~~~~~~
+      •••Async & Await•••
+
+1. When. using async, any value returned is a Promise.
+
+••Exanple1-Async:
+
+async function myFunction() {
+  return "This is my returned value.";
+}
+
+myFunction().then( myReturnedValue => console.log( myReturnedValue ) );
+> "This is my returned value."
+
+
+
+2. Await pauses the expression. After the promise is fulfilled then it will fulfill and or reject.
+
+••Example2-Await:
+
+async function myFunction() {
+  const myPromise  = new Promise( ( fulfill, reject ) => { setTimeout( () => fulfill( "Successful. "), 5000 ); });
+  const myPromisedResult = await myPromise;
+  return myPromisedResult;
+}
+
+myFunction()
+  .then( myResult => console.log( myResult ) )
+  .catch( myFailedResult => console.error( myFailedResult ) );
+> "Successful."
 
 
 
