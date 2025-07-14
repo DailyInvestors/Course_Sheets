@@ -4,6 +4,9 @@
 🚨 References:  ✨Gemini✨
 
 
+"https://web.dev/learn/javascript/appendix#prototypal-inheritance"
+
+
 "https://web.dev/learn/javascript/data-types/variable#function-scope"
 
 "https://web.dev/learn/javascript/introduction#expressions"
@@ -374,4 +377,323 @@ myObject;
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
            •••Return•••
-1.
+1. Return is basically self-explanatory. Return, returns.
+
+🔹🔹Example1-Return:
+
+const myFunction = function() {
+   return 3 === 3;
+}
+
+myFunction();
+> 3
+
+
+
+
+
+2. Anything that is returned, is considered Data.
+
+🔹🔹Example2-Data:
+
+const myFunction = function() {
+   return 4 + 4;
+}
+
+myFunction() + myFunction();
+> 16
+
+
+
+
+
+3. Anything after the "return" is Not Executed!
+
+🔹🔹Example3-Return:
+
+const myFunction = function() {
+   return true;
+   console.log( "This is a string." );
+}
+
+myFunction();
+> true
+
+
+
+
+4. In this example, we are returning strings. If one is not called, it will not return, while the others will.
+
+🔹🔹Example4-ReturnStrings:
+
+function myFunction( myString ) {
+   if( typeof myString !== "string" ) {
+    return false;
+   }
+   if( myString.length >= 5 ) {
+    return true;
+   } else {
+    return false;
+   }
+}
+
+myFunction( 100 );
+> false
+
+myFunction( "St" );
+> false
+
+myFunction( "String." );
+> true
+
+
+
+
+
+
+5. Arrow functions can also be returned.
+
+🔹🔹Example5-Arrows:
+
+const myFunction = () => 2 + 2;
+
+myFunction();
+> 4
+
+
+
+
+
+6. A block syntax will explicitly return.
+
+
+🔹🔹Example6-ExplicitReturn:
+
+const myFunction = () => { 2 + 2 };
+
+myFunction();
+> undefined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          •••This•••
+1. Used to specify the nearest function. The function "this" is binded to. 
+
+
+2. Here is a example of Global Binding. In this, "Window" is the global Object.
+
+🔹🔹Example2-Window:
+
+this;
+> Window {0: Window, window: Window, self: Window, document: document, name: '', location: Location, ...}
+
+
+🔹🔹Example3-NodejS:
+
+$ node
+Welcome to Node.js v20.10.0.
+Type ".help" for more information.
+> this
+<ref *1> Object [global] {
+...
+}
+
+
+
+
+3. Outside of a function, this can also refer to the inside function.
+
+
+🔹🔹Example4-StandAlone:
+
+function myFunction() {
+    console.log( this );
+}
+myFunction();
+> Window {...}
+
+(function() {
+    console.log( this );
+}());
+> Window {...}
+
+
+
+🔹🔹Example5-StrictMode:
+
+(function() {
+    "use strict";
+    console.log( this );
+}());
+> undefined
+
+
+
+4. When using this inside of a method, it will refer to the object that contains this method.
+
+🔹🔹Example6-Object:
+
+let myObject = {
+    myValue: "This is my string.",
+    myMethod() {
+            console.log( this.myValue );
+    }
+};
+
+myObject.myMethod();
+> "This is my string."
+
+
+
+
+
+
+5. In arrow functions "this" will resolve to the binding.
+
+🔹🔹Example7-Arrow&This:
+
+let myObject = {
+    myMethod() { console.log( this ); },
+    myArrowFunction: () => console.log( this ),
+    myEnclosingMethod: function () {
+        this.myArrowFunction = () => { console.log(this) };
+    }
+};
+
+myObject.myMethod();
+> Object { myMethod: myMethod(), myArrowFunction: myArrowFunction() }
+
+myObject.myArrowFunction();
+> Window {...}
+
+
+
+
+
+🔹🔹Example8-EnclosingMethod:
+
+let myObject = {
+    myMethod() { console.log( this ); },
+    myEnclosingMethod: function () {
+        this.myArrowFunction = () => { console.log(this) };
+    }
+};
+
+myObject.myEnclosingMethod();
+myObject.myArrowFunction();
+> Object { myMethod: myMethod(), myArrowFunction: myArrowFunction() }
+
+
+
+
+🔹🔹Example9-TimeOut:
+
+var myObject = {
+  myString: "This is my string.",
+  myMethod() {
+    console.log( this.myString );
+  }
+};
+myObject.myMethod();
+> "This is my string."
+
+setTimeout( myObject.myMethod, 100 );
+> undefined
+
+
+
+
+
+6. call()
+bind()
+apply()
+fetch()
+
+
+
+
+
+7. Explicitly Binding overrides "this".
+
+
+🔹🔹Example-OverRiding:
+
+let myObject = {
+    "myValue" : "This string sits alongside myMethod.",
+    myMethod() {
+        console.log( this.myValue );
+    }
+};
+let myOtherObject = {
+    "myValue" : "This is a string in another object entirely.",
+};
+
+myObject.myMethod.call( myOtherObject );
+> "This is a string in another object entirely."
+
+
+
+
+8. Here is a example of this and class. We will create a New Class.
+
+🔹🔹Example-Class:
+
+class MyClass {
+    myString;
+    constructor() {
+        this.myString = "My string.";
+    }
+    logThis() {
+        console.log( this );
+    }
+}
+const thisClass = new MyClass();
+
+thisClass.logThis();
+> Object { myString: "My string." }
+
+
+
+
+🔹🔹Example-This&&New:
+
+function MyFunction() {
+  this.myString = "My string.";
+  this.logThis = function() {
+    console.log( this );
+  }
+}
+const myObject = new MyFunction();
+
+myObject.logThis();
+> Object { myString: "My string.", logThis: logThis() }
+
+
+
+
+
+9. With event handlers, this refers to the invoking object.
+
+🔹🔹Example-Event:
+
+let button = document.querySelector( "button" );
+
+button.addEventListener( "click", function( event ) { console.log( this ); } );
+
+
+
+
+
+🔹🔹Example-Callback:
+
+let button = document.querySelector( "button" );
+
+button.addEventListener( "click", ( event ) => { console.log( this ); } );
+> undefined
+
+
+10. call()
+bind()
+apply()
+eval()
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 
+👋 First we would like to Thank You for any and all Donations for our Work and Research. This is for general use, designed as a Cheat-Guide for Google Developers. This is Not For Publication. If you wish to learn at a full level, please consult Google && Web.Dev.
