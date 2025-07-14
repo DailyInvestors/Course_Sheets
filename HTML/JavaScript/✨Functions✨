@@ -1,2 +1,377 @@
-Will Continue on a Later Date
-Dsily
+          ✨Functions✨
+       🔹🔹🔹🔹🔹🔹🔹🔹🔹
+
+🚨 References:  ✨Gemini✨
+
+
+"https://web.dev/learn/javascript/data-types/variable#function-scope"
+
+"https://web.dev/learn/javascript/introduction#expressions"
+
+"http://web.dev/" 🪲
+
+"https://web.dev/learn/javascript/objects"
+
+"https://en.wikipedia.org/wiki/First-class_citizen"
+
+
+"https://web.dev/learn/javascript/data-types/variable#global-scope"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Functions•••
+1. Reusable Block of Statements.
+
+🔹🔹Example1-Function:
+
+function myFunction() {
+   console.log( "This is my function." );
+};
+
+
+
+
+2. Here is a example of a strict model function:
+
+🔹🔹Example2-StrictMode:
+
+"use strict";
+{
+    myFunction();
+    function myFunction() {
+        console.log( "This is my function." );
+    };
+}
+> "This is my function."
+
+
+
+
+3. Scooping, or known as the process to which the declaration is  enclosed to the nearest function.
+
+🔹🔹Example3-Scooping:
+
+function myFunction() {
+    function myNestedFunction() {
+        console.log( "This is my nested function." );
+    }
+    myNestedFunction();
+};
+
+myFunction();
+> "This is my nested function."
+
+myNestedFunction();
+>Uncaught ReferenceError: myNestedFunction is not defined
+
+
+
+
+4. Function Calling or known as methods.
+
+🔹🔹Example4-Calling:
+
+function myFunction() {
+   console.log( "This is my function." );
+};
+
+myFunction;
+> myFunction() {
+   console.log( "This is my function." );
+}
+
+
+
+
+5. A Parameter is basically a argument for that function.
+
+🔹🔹Example5-Param:
+
+function myFunction( myParameter ) {
+   console.log( `The value is: ${ myParameter }.` );
+};
+
+myFunction( "this string" );
+> "The value is: this string."
+
+
+
+
+6. Omitted means basically setting the default param.
+
+🔹🔹Example6-Omit:
+
+function myFunction( myParameter = "omitted" ) {
+   console.log( `The value is: ${ myParameter }.` );
+};
+
+myFunction( "this string" );
+> "The value is: this string."
+
+myFunction();
+> "The value is: omitted."
+
+
+
+
+7. In this example this is a non-arrow function. This is similar to an array.
+
+🔹🔹Example7-Non-Arrow:
+
+function myFunction() {
+   console.log( arguments );
+};
+
+myFunction( 3, true, "My string" );
+> Arguments { 0: 3, 1: true, 2: "My string", … }
+
+
+
+
+8. A vardic function, is basically a different way to pass a argument.
+
+🔹🔹Example8-VardicFunction:
+
+function myFunction() {
+    let result = "";
+    for (let i = 0; i < arguments.length; i++) {
+        result += arguments[i] + " - ";
+    }
+    console.log( result );
+};
+
+myFunction( "My first string", "My second string", "my third string" );\
+> "My first string - My second string - my third string - "
+
+
+
+
+
+9. "rest parameter" creates a (named paramete) that is initialized as a array that contains any arguments beyond those that are explicitly specified!
+
+🔹🔹Example9-RestParam:
+
+function myFunction( mySeparator, ...myStrings ) {
+  console.log( myStrings.join( mySeparator ) );
+};
+
+myFunction( " - ", "My first string", "My second string", "my third string" );
+> "My first string - My second string - my third string"
+
+
+
+🔹🔹Example10-Rest&Arrow:
+
+function myOuterFunction() {
+    let myInnerArrowFunction = ( ...myParams ) => {
+        console.log( myParams[ 0 ] );
+    }
+    myInnerArrowFunction( true );
+};
+
+myOuterFunction( false );
+> true
+
+let myArrowFunction = ( ...myParams ) => {
+    console.log( myParams[ 0 ] );
+};
+
+myArrowFunction( true );
+> true`
+``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       •••Expressions•••
+1. A named expression is excellent for Debugging.
+
+
+🔹🔹Example1-Debug:
+
+const myVariable = function myFunction() {
+    console.log( "One second elapsed." );
+    setTimeout( myFunction, 1000 );
+};
+
+setTimeout( myVariable, 1000 );
+> "One second elapsed."
+> "One second elapsed."
+> "One second elapsed."
+…
+
+
+
+2. Arrow functions can also be used with these expressions.
+
+
+🔹🔹Example2-Arrows:
+
+const myFunction = () => {};
+
+
+
+
+
+3. If we are using only One Param, we can leave the () out.
+
+🔹🔹Example3-No()
+
+const myFunction = myParameter => {};
+
+
+
+
+
+4. To declare the function inside a body while receiving a result, both the enclosing curly braces && the return keyword are required.
+
+
+🔹🔹Example4-Return:
+
+const myFunction = () => 2 + 2
+
+myFunction()
+> 4
+
+
+
+
+
+5. Arrow functions provide the nearest enclosing function which provides both values.
+
+
+🔹🔹Example5-Arrow:
+
+function myParentFunction() {
+    this.myProperty = true;
+    let myFunction = () => {
+            console.log( this );
+    }
+    myFunction();
+};
+
+let myInstance = new myParentFunction();
+> Object { myProperty: true }
+
+
+
+
+
+6. Calling the arrow functions.
+
+🔹🔹Example6-Calling:
+
+function myFunction() {
+    let myArrowFunction = () => {
+            console.log( arguments[ 0 ] );
+    }
+    myArrowFunction( true );
+};
+
+myFunction( false );
+> false
+
+
+
+
+7. IIFE is a function expression that is called immediately.
+
+🔹🔹Example7-IIFE:
+
+(function() {
+    console.log( "IIFE.")
+    }
+)();
+> "IIFE."
+
+(function() {
+    console.log( "IIFE.")
+    }
+());
+> "IIFE."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            •••New•••
+1. When we call or create a function with the "new" keyword, this creates a new object.
+
+🔹🔹Example1-New:
+
+function MyFunction() {}
+const myObject = new MyFunction();
+
+typeof myObject;
+> "object"`
+
+
+
+
+
+2. This allows the use of the constructor function.
+
+🔹🔹Example2-Const:
+
+function MyFunction() {
+  this.myProperty = true;
+}
+const myObject = new MyFunction();
+
+myObject.myProperty;
+> true
+
+
+
+3. When using "this" this refers to the nearest function.
+
+🔹🔹Example3-This:
+
+function MyFunction( myArgument ) {
+    this.myValue = myArgument;
+    this.doubleMyValue = () => myArgument * 2;
+}
+const myObject = new MyFunction( 10 );
+
+myObject.myValue;
+> 10
+
+myObject.doubleMyValue();
+> 20
+
+
+
+
+
+4. In this example we will be using both this && a global binding.
+
+🔹🔹Example4-ThisBinding:
+
+function MyFunction() {
+    console.log( this  );
+}
+const myObject = new MyFunction();
+> MyFunction { }
+
+MyFunction(); // Global `this` binding outside of strict mode is `globalThis`
+> Window { … }
+
+(function() {
+    "use strict";
+    function MyFunction() {
+            console.log( this );
+    }
+    MyFunction();  // Global `this` binding inside of strict mode is `undefined`
+}());
+> undefined
+
+
+
+
+
+5. Adding in arguments.
+
+🔹🔹Example5-Args:
+
+function myFunction( myArgument = false ) {
+  return { "myProperty" : myArgument };
+}
+const myObject = myFunction( true );
+
+myObject;
+> Object { myProperty: true }
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           •••Return•••
+1.
