@@ -354,4 +354,251 @@ myObject.__proto__; // The Object prototype inherited by `myObject` is present:
 Object.hasOwn( myObject, '__proto__' ); // The Object prototype inherited by `myObject` is not an "own property:"
 > false
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Descriptors•••
 
+1. There are two types of descriptors {data descriptors and accessor descriptors}
+
+
+2. Accessor Descriptors {
+
+
+[[Value]]	Data	undefined	Contains a property's value.
+
+[[Writable]]	Data	false	Determines whether you can change the property's value.
+
+[[Get]]	Accessor	undefined	The property's getter function, which executes when the property is accessed.
+
+[[Set]]	Accessor	undefined	The property's setter function, which executes when the property is set or changed.
+
+[[Configurable]]	Both	false	If this is false, the property can't be deleted and its attributes can't be changed. If this is false and 
+
+[[Writable]] is true, the property's value can still be changed.
+
+[[Enumerable]]	Both	false	If this is true, you can iterate over the property using for...in loops or the Object.keys() static method.
+}
+
+
+3. We can use the Object.defineProperty() static method to edit the properties of each object.
+
+🔹🔹Example-DefineProp:
+
+const myObj = {};
+
+Object.defineProperty(myObj, 'myProperty', {
+  value: true,
+  writable: false
+});
+
+myObj.myProperty;
+> true
+
+myObj.myProperty = false;
+
+myObj.myProperty;
+> true
+
+
+
+
+4. When we use Object.create(), this allows us, to inherit properties from the built-in functions.
+
+🔹🔹Example-Object.Create():
+
+const myCustomPrototype = {
+  'myInheritedProp': 10
+};
+
+const newObject = Object.create( myCustomPrototype );
+
+newObject;
+> Object {  }
+<prototype>: Object { myInheritedProp: 10 }
+  myInheritedProp: 10
+  <prototype>: Object { … }
+
+
+
+5. When using object.create() we can take on a second argument. By this we will have to use the default object.defineProperty() method.
+
+🔹🔹Example-2ndArgument:
+
+const myCustomPrototype = {
+  'myInheritedProp': 10
+};
+
+const myObj = Object.create( myCustomPrototype, {
+        myProperty: {
+            value: "The new property value.",
+            writable: true,
+            configurable: true
+        }
+  });
+
+myObj;
+> Object { … }
+    myProperty: "The new property value."
+    <prototype>: Object { myInheritedProp: 10 }
+
+
+
+
+6. Here is a example of a Chain Prototype. 
+
+🔹🔹Example-Chain:
+
+const myPrototype = {
+  'protoProp': 10
+};
+
+const newObject = Object.setPrototypeOf( { 'objProp' : true }, myPrototype );
+
+newObject;
+> Object { objProp: true }
+    objProp: true
+    <prototype>: Object { protoProp: 10 }
+        protoProp: 10
+        <prototype>: Object { … }
+
+
+
+
+7. We can call them while being at the Top Level 🎚️.
+
+🔹🔹Example-TopLevel:
+
+const objectLiteral = {
+    "value" : true
+};
+
+objectLiteral;
+> Object { value: true }
+    value: true
+    <prototype>: Object { … }
+
+objectLiteral.toString();
+"[object Object]"
+
+
+
+🔹🔹Example2-TopLevel:
+
+const myCustomPrototype = {
+  'protoProp': "Prototype property value."
+};
+
+const myObj = Object.create( myCustomPrototype, {
+    myProperty: {
+        value: "Top-level property value.",
+        writable: true,
+        configurable: true
+    }
+});
+
+myObj.protoProp;
+> "Prototype property value."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+🔹🔹Example-TopLevelwithDocCook:
+
+// 1. Define a custom prototype that will hold a method to interact with cookies.
+const cookiePrototype = {
+  getCookie: function() {
+    // Access document.cookie directly from the global scope.
+    // This method demonstrates accessing a global property (document)
+    // and then its property (cookie).
+    return document.cookie;
+  },
+  setCookie: function(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  },
+  listGlobalObjects: function() {
+    const globals = [];
+    // This is a simplified way to list some common global objects.
+    // Iterating through all properties of 'window' can be very extensive.
+    if (typeof window !== 'undefined') { // Check if in a browser environment
+      globals.push('window (itself)');
+      if (window.document) globals.push('document');
+      if (window.location) globals.push('location');
+      if (window.navigator) globals.push('navigator');
+      if (window.console) globals.push('console');
+      if (window.Object) globals.push('Object (constructor)');
+      if (window.Array) globals.push('Array (constructor)');
+      if (window.String) globals.push('String (constructor)');
+      if (window.Number) globals.push('Number (constructor)');
+      if (window.Function) globals.push('Function (constructor)');
+      if (window.RegExp) globals.push('RegExp (constructor)');
+      if (window.Date) globals.push('Date (constructor)');
+      if (window.parseInt) globals.push('parseInt (function)');
+      if (window.parseFloat) globals.push('parseFloat (function)');
+    }
+    return globals;
+  }
+};
+
+// 2. Create an object using Object.create with our custom prototype.
+//    We'll also add a direct property.
+const cookieManager = Object.create(cookiePrototype, {
+  managerName: {
+    value: "My Cookie Manager Instance",
+    writable: false,
+    configurable: false
+  },
+  accessGlobalCookie: {
+    value: function() {
+      // This method directly calls the prototype's getCookie method,
+      // which in turn accesses document.cookie.
+      console.log(`Accessing document.cookie via ${this.managerName}:`);
+      return this.getCookie();
+    },
+    writable: false,
+    configurable: false
+  },
+  showAllGlobals: {
+    value: function() {
+      console.log(`\nListing some global objects available to ${this.managerName}:`);
+      return this.listGlobalObjects();
+    },
+    writable: false,
+    configurable: false
+  }
+});
+
+// --- Demonstrate Usage ---
+
+// A. Check if document is available (important for running in different environments)
+if (typeof document !== 'undefined' && document.cookie !== undefined) {
+
+  // 1. Set a cookie using our custom object's prototype method
+  console.log("Setting a cookie...");
+  cookieManager.setCookie("myTestCookie", "HelloFromCookieManager", 1); // Expires in 1 day
+  console.log("Cookie set. Now getting all cookies:");
+
+  // 2. Get all cookies using our custom object's method
+  const currentCookies = cookieManager.accessGlobalCookie();
+  console.log("Current Cookies:", currentCookies);
+
+  // You can also directly call the prototype method:
+  // console.log("Current Cookies (direct proto call):", cookieManager.getCookie());
+
+  // 3. Demonstrate accessing the direct property
+  console.log("\nManager Name:", cookieManager.managerName);
+
+} else {
+  console.log("document.cookie is not available in this environment (e.g., Node.js).");
+  console.log("This code is intended to be run in a web browser environment.");
+}
+
+// 4. List some global objects
+const globals = cookieManager.showAllGlobals();
+console.log(globals);
+
+// 5. Accessing a prototype property directly
+console.log("\nCalling getCookie directly from the prototype property:", cookieManager.getCookie());
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+👋,
+    This project is designed as a cheat sheet/self reference guide for personal use. This is not for any Publication or Teachings. If you wish to learn, LinkedIN Learning offers valuable courses that can aid with the Google Way. All references used for this Project are stated above. Thank You
