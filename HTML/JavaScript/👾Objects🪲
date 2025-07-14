@@ -1,0 +1,357 @@
+         •••Objects•••
+
+🚨 References: 👾Gemini👾
+
+"https://web.dev/"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1. A Object is mutable.
+
+2. A Object is a form of data.
+
+3. All values are Objects.
+
+🔹🔹Example1-ObjectLiteral:
+
+{
+    "myProperty" : true
+}
+
+
+
+
+4. Keys can be both Symbols && Strings:
+
+🔹🔹Example-Keys:
+
+let carAttributes = {
+    "color" : "red"
+};
+
+carAttributes
+> Object { color: "red" }
+
+
+
+
+5. A property value can be any type of data.
+
+🔹🔹Example-Data:
+
+let myObject = {
+    'key' : {
+        'subkey' : true,
+        'othersubkey' : false
+    }
+};
+
+myObject;
+> Object { key: Object { subkey: true, othersubkey: false } }
+
+
+
+6. When the value is also the property, this is called a method().
+
+🔹🔹Example-Method:
+
+const myObject = {
+    "myProperty" : true,
+    myMethod() {
+        console.log( "This is a method." );
+    }
+}
+
+myObject.myProperty;
+> true
+
+myObject.myMethod();
+> "This is a method."
+
+
+
+
+
+7. We can use "new" to create new objects().
+
+🔹🔹Example-New:
+
+let myObject = new Object();
+
+
+
+
+8. The "new" must define a empty object.
+
+🔹🔹Example-NewObject:
+
+let myObject = new Object();
+
+myObject.booleanValue = true;
+myObject.stringValue = "My string.";
+
+
+
+
+
+9.  With a "Object Literal" we can define the Objects/Data.
+
+🔹🔹Example-ObjectLiteral:
+
+let myObject = {
+    'booleanValue' : true,
+    'stringValue' : "My string."
+};
+
+
+
+
+
+10.  When passing a "Object Literal" with "newObject" this passes the Argument without changing anything.
+
+🔹🔹Example-Passing:
+
+let myObject = new Object( { myValue : 10 } );
+
+myObject;
+> Object { myValue: 10 }
+
+
+11. The correct Syntax for getting the value of myProp.
+
+🔹🔹Example-myProp:
+
+myObj["myProp"];
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Accessors•••
+
+1.  A "Dot Notation" is the . or period between Objects.
+
+2. A "Dot Notation" can be used to edit, call, and create.
+
+🔹🔹Example-Dot:
+
+const myObj = {};
+
+myObj.myProp = "String value.";
+
+myObj;
+> Object { myProp: "String value." }
+
+
+
+3. When changing a Object using the "Dot Notation". This allows us to access the Objects properties.
+
+🔹🔹Example-Properties:
+
+const myObj = {
+    "myProp": {
+            "childProp" : true
+    }
+};
+
+myObj.myProp.childProp;
+> true;
+
+
+
+4. Optional Chaining Character (?.)
+
+🔹🔹Example-?.:
+
+const myObj = {
+    "myProp": {
+            "childProp" : true
+    }
+};
+
+myObj.myMissingProp?.childProp;
+> undefined
+
+
+
+
+🔹🔹Example-BracketNotation:
+
+const myObj = {
+    "myProp": "String value."
+};
+
+myObj["myProp"];
+> "String value."
+
+
+
+
+🔹🔹Example-FalseFetching:
+
+const myObj = {
+    "false": 25,
+    "10" : true,
+    "key with spaces": true
+};
+
+myObj[false];
+> 25
+
+myObj[10];
+> true
+
+myObj["key with spaces"];
+> true
+
+
+
+🔹🔹Example-RandomNumber:
+
+const colors = {
+    "color1" : "red",
+    "color2" : "blue",
+    "color3" : "green"
+};
+const randomNumber = Math.ceil( Math.random() * 3 );
+
+colors[ "color" + randomNumber ];
+> "blue"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Inheritance•••
+1. When a Object inherits, this value comes from the built-in Object.
+
+🔹🔹Example-Inherit:
+
+let myObject = {
+    'booleanValue' : true
+};
+
+myObject;
+> Object { booleanValue: true }
+    booleanValue: true
+    [[prototype]]: Object { … }
+            __defineGetter__: function __defineGetter__()
+            __defineSetter__: function __defineSetter__()
+            __lookupGetter__: function __lookupGetter__()
+            __lookupSetter__: function __lookupSetter__()
+            __proto__: …
+                constructor: function Object()
+                hasOwnProperty: function hasOwnProperty()
+                isPrototypeOf: function isPrototypeOf()
+                propertyIsEnumerable: function propertyIsEnumerable()
+                toLocaleString: function toLocaleString()
+                toString: function toString()
+                valueOf: function valueOf()
+                <get __proto__()>: function __proto__()
+                <set __proto__()>: function __proto__()
+
+
+
+2. Here is a example for Chrome newObject().
+
+🔹🔹Example-Chrome:
+
+// Chrome:
+let emptyObject = {};
+
+emptyObject;
+> {}
+  [[prototype]]: Object
+
+
+
+3. Here is a example for Firefox to create a newObject().
+
+🔹🔹Example-Firfox:
+
+// Firefox:
+let emptyObject = {};
+
+emptyObject;
+> Object {  }
+  <prototype>: Object { … }
+
+
+
+
+4. Most Browsers allow __proto__, but this is not a Standard.
+
+🔹🔹Example-__proto__:
+
+let emptyObject = {};
+
+emptyObject.__proto__;
+> Object { … }
+    __defineGetter__: function __defineGetter__()
+    __defineSetter__: function __defineSetter__()
+    __lookupGetter__: function __lookupGetter__()
+    __lookupSetter__: function __lookupSetter__()
+    __proto__:
+        constructor: function Object()
+        hasOwnProperty: function hasOwnProperty()
+        isPrototypeOf: function isPrototypeOf()
+        propertyIsEnumerable: function propertyIsEnumerable()
+        toLocaleString: function toLocaleString()
+        toString: function toString()
+        valueOf: function valueOf()
+        <get __proto__()>: function __proto__()
+        <set __proto__()>: function __proto__()
+
+
+
+
+5. However these methods are a better choice: the [[Prototype]] of an object using the built-in methods.
+Object.getPrototypeOf(
+Object.setPrototypeOf()
+
+
+🔹🔹Example-Methods:
+
+let myObj = { "value" : 5 };
+let protoParent = { "protoValue" : true };
+
+myObj;
+Object { value: 5 }
+    value: 5
+    <prototype>: Object { … }
+
+Object.getPrototypeOf( myObj );
+> Object { … }
+    __defineGetter__: function __defineGetter__()
+    __defineSetter__: function __defineSetter__()
+    __lookupGetter__: function __lookupGetter__()
+    __lookupSetter__: function __lookupSetter__()
+    __proto__:
+    constructor: function Object()
+    hasOwnProperty: function hasOwnProperty()
+    isPrototypeOf: function isPrototypeOf()
+    propertyIsEnumerable: function propertyIsEnumerable()
+    toLocaleString: function toLocaleString()
+    toString: function toString()
+    valueOf: function valueOf()
+    <get __proto__()>: function __proto__()
+    <set __proto__()>: function __proto__()
+
+Object.setPrototypeOf( myObj, protoParent );
+> Object { value: 5 }
+    value: 5
+    <prototype>: Object { protoValue: true }
+
+
+
+
+6. Here we are using the built-in method called hasOwn(). The value returns True, while holding built-in calling methods.
+
+🔹🔹Example-HasOwn:
+
+let myObject = {
+    'myValue' : 100
+};
+
+Object.hasOwn( myObject, 'myValue' );
+> true
+
+myObject.__proto__; // The Object prototype inherited by `myObject` is present:
+> Object { … }
+
+Object.hasOwn( myObject, '__proto__' ); // The Object prototype inherited by `myObject` is not an "own property:"
+> false
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
