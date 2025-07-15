@@ -137,6 +137,9 @@ for (const item of mixedData) {
 
 1. "Binding Pattern Destruction" occurs when each value is unpacked from the array or object. Then is  assigned to the corresponding variable. 
 
+
+2. We can use both curly braces ({}) to destructure an object. Then we can use square brackets ([]) to destructure the arrays.
+
 🔹🔹Example1:
 
 const myArray = [ "A string", "A second string" ];
@@ -242,3 +245,6 @@ console.log(nestedCoord1); // Output: 20
 console.log(nestedCoord2); // Output: 30
 console.log(coord3);      // Output: 40
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1. In this example we demonstrate the difference in using [] for objects && {} for arrays.
+
+🔹🔹Example2 
