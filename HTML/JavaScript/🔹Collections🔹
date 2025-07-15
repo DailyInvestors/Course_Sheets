@@ -1,6 +1,59 @@
-References:
+References:   "Gemini"
 
 "https://web.dev"
 
-🚨 that is if the page is their for you to learn. Someone tried to make it vanish, and all Google courses disappeared. All the badges I've earned, disappeared. Open-Source right 👍
+🚨 All of these teachings are based off the Google Web.Dev Page. However, I am being constantly attacked on this Page, seeing DOS attacks. My suggestion LinkedIn Learning over anything Google. Why?? For your Protection.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           •••Arrays•••
+1. To create a Array in jS, remember we must use [].
+
+🔹🔹Example1-Create:
+const myArray = [];
+
+
+🔹🔹Example2-New:
+const myArray = new Array();
+
+
+🔹🔹Example3-String:
+const myArray = [ true, null, "String", false ];
+
+myArray;
+> [ true, null, "String", false ]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Sparse Arrays•••
+
+1. A sparse array is an array in which most of the elements have the same value (typically zero), meaning that only a small number of elements hold meaningful data.
+
+🔹🔹Example1-SparseArray:
+Consider a 10x10 array representing a game board, where most cells are empty (represented by 0) and only a few contain game pieces (represented by other numbers).
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 2
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+
+In this example, only two elements (the '1' and the '2') are non-zero, while the rest are zero. Storing all 100 elements would be inefficient if most are empty. Sparse array data structures (like hash maps or linked lists of non-zero elements) are used to store only the non-zero values and their positions, saving memory and processing time.
+
+
+🔹🔹Example2-EmptySlot:
+const myArray = [ 1,, 3, 4 ];
+
+myArray.length;
+> 4
+
+for( const myValue of myArray ) {
+  console.log( myValue + 10 );
+}
+> 11
+> NaN
+> 13
+> 14
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
