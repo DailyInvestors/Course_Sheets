@@ -1,5 +1,9 @@
 References:   "Gemini"
 
+"https://web.dev/learn/javascript/control-flow#iterators"
+
+"https://web.dev/learn/javascript/appendix#memory-allocation"
+
 "https://web.dev/learn/javascript/appendix#by-reference-by-value"
 
 "https://web.dev"
@@ -684,5 +688,98 @@ myWeakMap;
 
 
 
-3.
+3. WeakMaps() are NOT enumeratable.
+If no references are met, it is then thrown in the garbage zone. Link above in references.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            •••Set•••
 
+1. Similar to a Array, Set is a unique collection of Values.
+
+2. For creation of this, we must use Set()
+
+🔹🔹Example1-Creation:
+const mySet = new Set();
+
+mySet;
+> Set []
+
+
+🔹🔹Example3-Set-Array: "This demo is on how we can create a set array."
+const mySet = new Set([ 1, 2, 3 ]);
+
+mySet;
+> Set(3) [ 1, 2, 3 ]
+
+
+
+3. We can also create a set(), from a literal. Set can only retain the first Value!
+
+🔹🔹Example3-Array-Literal:
+const mySet = new Set([ 1, 2, 3 ]);
+
+mySet;
+> Set(3) [ 1, 2, 3 ]
+
+
+
+
+🔹🔹Example4-Retaining:
+const mySet = new Set([ 1, 2, 3, 2 ]);
+
+mySet;
+> Set(3) [ 1, 2, 3 ]
+
+
+
+
+🔹🔹Example5-Add&Remove:
+
+const mySet = new Set();
+
+mySet.add( "My value." );
+
+mySet;
+> Set [ "My value." ]
+
+mySet.has( "My value." );
+> true
+
+mySet.delete( "My value." );
+
+mySet;
+> Set []
+
+
+
+
+
+
+4. In set(), the Objects are iterated over. Thus, meaning it goes in order of injection. It attempts to add in a duplicate value, when skipped.
+
+🔹🔹Example6-Iteration:
+const mySet = new Set([ 1, 2, 3 ]);
+
+mySet;
+> Set(3) [ 1, 2, 3 ]
+
+mySet.add( 2 );
+> Set(3) [ 1, 2, 3 ]
+
+
+
+
+
+5. We must use Array.From() to create an Array with set().
+
+🔹🔹Example7-CreateArrays:
+const mySet = new Set([ 1, 2, 3 ]);
+const myArray = Array.from( mySet );
+
+myArray;
+> Array(3) [ 1, 2, 3 ]
+
+[ ...mySet ];
+> Array(3) [ 1, 2, 3 ]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Despite Google or someone trying to sabotage my education, this is still a Self-Help reference guide to Google Web.Dev Teachings. This is not for Full Teachings. The links provided in Resources will take you to the Full Teachings of this Language.
