@@ -339,3 +339,258 @@ const myMergedObj = { ...myFirstObj, ...mySecondObj };
 
 myMergedObj;
 > Object { myProperty: true, additionalProperty: true }
+
+
+
+
+🔹🔹Example6-ShadowCopies:
+
+const myCustomPrototype = { protoProp: "My prototype." };
+const myObj = Object.create( myCustomPrototype, {
+    myEnumerableProp: {
+        value: true,
+        enumerable: true
+    },
+    myNonEnumerableProp: {
+        value: false,
+        enumerable: false
+    }
+});
+const myNewObj = { ...myObj };
+
+myObj;
+> Object { myEnumerableProp: true, … }
+    myEnumerableProp: true
+    myNonEnumerableProp: false
+    <prototype>: Object { protoProp: "My prototype." }
+
+myNewObj;
+> Object { myEnumerableProp: true }
+    myEnumerableProp: true
+    <prototype>: Object { … }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       •••Rest Operator•••
+1. The rest is basically just the format of the output. How it is designed.
+
+🔹🔹Example1-Syntax:
+const myArray = [ "First", "Second", "Third", "Fourth", "Fifth" ];
+
+[ myFirstElement, mySecondElement, ...remainingElements ] = myArray;
+
+myFirstElement;
+> "First"
+
+mySecondElement;
+> "Second"
+
+remainingElements;
+> Array(3) [ "Third", "Fourth", "Fifth"]
+
+
+
+2. When there are a indefinite amount of arguments it is called a Rest Parameter. We can also use Bash to convert anything into this or out.
+
+🔹🔹Example2-Param:
+function myFunction( ...myParameters ) {
+    let result = 0;
+    myParameters.forEach( ( myParam ) => {
+        result += myParam;
+    });
+    return result;
+};
+
+myFunction( 2, 2 );
+> 4
+
+myFunction( 1, 1, 1, 10, 5 );
+> 18
+
+myFunction( 10, 11, 25 );
+> 46
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••%TypedArray%•••
+1. Designed for Binary Data.
+
+2. Typed Arrays in JavaScript are a powerful feature for working with binary data. Unlike regular JavaScript arrays, which can hold elements of any data type and resize dynamically.
+
+3. Typed Arrays are designed for efficiency when dealing with fixed-size, numerical data. They offer a "view" into an underlying raw binary data buffer.
+
+
+The Core Concepts:
+ •• ArrayBuffer: This is the lowest-level component. It represents a raw, generic fixed-length binary data buffer. You can't directly manipulate its contents. Think of it as a block of memory.
+ 
+•• TypedArray Views: These are "views" into an ArrayBuffer. They provide methods to read and write data to the ArrayBuffer in a specific format (e.g., as 8-bit integers, 32-bit floating-point numbers, etc.).
+  
+ •• Int8Array, Uint8Array, Int16Array, Uint16Array, Int32Array, Uint32Array: For signed and unsigned integers of various bit sizes.
+ 
+  •• Float32Array, Float64Array: For single and double-precision floating-point numbers.
+ 
+  •• BigInt64Array, BigUint64Array: For 64-bit integers.
+ 
+  •• Uint8ClampedArray: Similar to Uint8Array, but values are "clamped" (rounded) to the nearest 0-255 range, often used for image data.
+
+ •• DataView: While Typed Arrays provide a view of uniformly typed data, DataView allows you to read and write different types of data at arbitrary byte offsets within an ArrayBuffer. It's useful when you have mixed data types in your binary buffer.
+
+Why Use Typed Arrays?
+ •• Performance: More efficient for numerical computations and binary data manipulation compared to regular arrays.
+ 
+•• Memory Efficiency: They use a fixed amount of memory per element, without the overhead of storing type information for each element.
+
+ •• Interoperability: Crucial for working with APIs that deal with raw binary data, such as:
+   • WebSockets (for sending/receiving binary messages)
+   • Web Audio API
+   • WebGL (for graphics)
+   • File API (reading binary files)
+   • WebAssembly (Wasm)
+
+
+🔹🔹Exanple1-TypedArrays:
+
+// --- Section 1: Understanding ArrayBuffer ---
+
+console.log("--- Section 1: Understanding ArrayBuffer ---");
+
+// 1. Create an ArrayBuffer: This is a raw, fixed-size binary data buffer.
+//    It allocates 16 bytes of memory. Initially, all bytes are 0.
+const buffer = new ArrayBuffer(16);
+console.log(`Buffer byteLength: ${buffer.byteLength} bytes`); // Output: Buffer byteLength: 16 bytes
+
+// You cannot directly interact with the ArrayBuffer's contents.
+// console.log(buffer[0]); // This would be undefined, as buffer is not an array.
+
+
+// --- Section 2: Creating Typed Array Views ---
+
+console.log("\n--- Section 2: Creating Typed Array Views ---");
+
+// 2. Create Typed Array Views to interpret the buffer's data.
+
+// a) Uint8Array: A view that interprets the buffer as a sequence of 8-bit unsigned integers (0-255)
+//    Each element takes 1 byte. Since the buffer is 16 bytes, this array will have 16 elements.
+const uint8View = new Uint8Array(buffer);
+console.log(`Uint8Array length: ${uint8View.length}`); // Output: Uint8Array length: 16
+console.log(`Uint8Array initial values:`, uint8View); // Output: Uint8Array initial values: Uint8Array(16) [0, 0, 0, 0, ..., 0]
+
+// Assign values to the Uint8Array
+uint8View[0] = 255;
+uint8View[1] = 128;
+uint8View[2] = 10;
+// Values outside the range (0-255) will wrap around or clamp.
+uint8View[3] = 256; // 256 becomes 0 (256 % 256 = 0)
+uint8View[4] = -1;  // -1 becomes 255 (wraps around)
+
+console.log(`Uint8Array after assignments:`, uint8View);
+// Output: Uint8Array after assignments: Uint8Array(16) [255, 128, 10, 0, 255, 0, 0, 0, ..., 0]
+
+
+// b) Int16Array: A view that interprets the buffer as a sequence of 16-bit signed integers (-32768 to 32767)
+//    Each element takes 2 bytes. Since the buffer is 16 bytes, this array will have 8 elements (16 / 2).
+const int16View = new Int16Array(buffer);
+console.log(`Int16Array length: ${int16View.length}`); // Output: Int16Array length: 8
+console.log(`Int16Array initial values (reflecting changes from uint8View):`, int16View);
+// Notice how changes in uint8View affect int16View because they share the same underlying buffer.
+// int16View[0] will be a 16-bit interpretation of uint8View[0] and uint8View[1]
+// (255 (0xFF) + 128 (0x80) * 256 = 0x80FF = 33023 if little-endian)
+// The exact value depends on the system's endianness.
+
+// Assign values to the Int16Array
+int16View[0] = -100;
+int16View[1] = 5000;
+int16View[2] = 32767; // Max for Int16
+int16View[3] = 32768; // Will overflow and become -32768
+
+console.log(`Int16Array after assignments:`, int16View);
+// Output will show how values are interpreted as 16-bit signed integers.
+// E.g., Int16Array(8) [-100, 5000, 32767, -32768, 0, 0, 0, 0]
+
+// See how the original Uint8Array is affected by Int16Array changes
+console.log(`Uint8Array after Int16Array assignments:`, uint8View);
+// Values in uint8View will reflect the byte-level changes made by int16View.
+// E.g., if int16View[0] is -100 (0xFF9C), then uint8View[0] might be 156 (0x9C) and uint8View[1] might be 255 (0xFF).
+
+
+// c) Float32Array: A view for 32-bit floating-point numbers.
+//    Each element takes 4 bytes. 16 bytes buffer / 4 bytes/element = 4 elements.
+const float32View = new Float32Array(buffer);
+console.log(`Float32Array length: ${float32View.length}`); // Output: Float32Array length: 4
+float32View[0] = 3.14;
+float32View[1] = -0.5;
+console.log(`Float32Array:`, float32View);
+
+
+// --- Section 3: Creating Typed Arrays Directly (with implicit ArrayBuffer) ---
+
+console.log("\n--- Section 3: Creating Typed Arrays Directly ---");
+
+// You can create a typed array directly, and it will implicitly create its own ArrayBuffer.
+const dataScores = new Uint8Array(5); // Creates a buffer of 5 bytes
+dataScores[0] = 90;
+dataScores[1] = 85;
+dataScores[2] = 92;
+console.log(`dataScores:`, dataScores); // Output: Uint8Array(5) [90, 85, 92, 0, 0]
+console.log(`dataScores' underlying buffer byteLength: ${dataScores.buffer.byteLength}`); // Output: 5 bytes
+
+const temperatures = new Float64Array([25.5, 28.1, 22.0]); // Creates a buffer sufficient for 3 Float64s
+console.log(`temperatures:`, temperatures); // Output: Float64Array(3) [25.5, 28.1, 22]
+console.log(`temperatures' underlying buffer byteLength: ${temperatures.buffer.byteLength}`); // Output: 24 bytes (3 * 8 bytes/Float64)
+
+
+// --- Section 4: DataView for Mixed Data Types ---
+
+console.log("\n--- Section 4: DataView for Mixed Data Types ---");
+
+// DataView allows fine-grained control over byte offsets and different data types.
+// Useful when you have a structured binary message/file format.
+
+const dataBuffer = new ArrayBuffer(8); // 8 bytes for various data
+const dataView = new DataView(dataBuffer);
+
+// Write an 8-bit unsigned integer at byte offset 0
+dataView.setUint8(0, 123);
+
+// Write a 16-bit signed integer at byte offset 1 (skipping 1 byte)
+// The `true` argument indicates little-endian byte order (optional, default is big-endian)
+dataView.setInt16(1, -500, true);
+
+// Write a 32-bit floating-point number at byte offset 4
+dataView.setFloat32(4, 99.9);
+
+console.log("DataView after writing values:");
+console.log(`Byte at offset 0 (Uint8): ${dataView.getUint8(0)}`);     // Output: 123
+console.log(`Bytes at offset 1 (Int16, little-endian): ${dataView.getInt16(1, true)}`); // Output: -500
+console.log(`Bytes at offset 4 (Float32): ${dataView.getFloat32(4)}`); // Output: 99.9
+
+// You can also create a typed array view from a DataView's buffer to see its raw bytes:
+const rawBytes = new Uint8Array(dataBuffer);
+console.log(`Raw bytes in dataBuffer:`, rawBytes);
+// Output will be something like: Uint8Array(8) [123, 164, 254, 0, 205, 204, 172, 65]
+// (The exact values depend on how -500 and 99.9 are represented in binary)
+
+// --- Section 5: Practical Use Case (Simulated Network Packet) ---
+
+console.log("\n--- Section 5: Practical Use Case (Simulated Network Packet) ---");
+
+// Imagine receiving a binary network packet:
+// Byte 0: Packet Type (Uint8)
+// Bytes 1-2: Data Length (Uint16)
+// Bytes 3-6: Checksum (Uint32)
+
+const packetBuffer = new ArrayBuffer(7); // Total 7 bytes
+const packetView = new DataView(packetBuffer);
+
+// Simulate writing a packet
+packetView.setUint8(0, 1); // Packet Type: 1 (e.g., 'data')
+packetView.setUint16(1, 1024, true); // Data Length: 1024 bytes (little-endian)
+packetView.setUint32(3, 0xABCDEF01); // Checksum (big-endian by default)
+
+console.log("Simulated Network Packet:");
+console.log(`Packet Type: ${packetView.getUint8(0)}`);
+console.log(`Data Length: ${packetView.getUint16(1, true)}`); // Read with little-endian
+console.log(`Checksum: 0x${packetView.getUint32(3).toString(16).toUpperCase()}`);
+
+const packetRawBytes = new Uint8Array(packetBuffer);
+console.log("Packet Raw Bytes:", packetRawBytes);
+// Output will show the byte representation of the packet.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
