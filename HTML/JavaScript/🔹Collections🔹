@@ -1,5 +1,7 @@
 References:   "Gemini"
 
+"https://web.dev/learn/javascript/appendix#by-reference-by-value"
+
 "https://web.dev"
 
 🚨 All of these teachings are based off the Google Web.Dev Page. However, I am being constantly attacked on this Page, seeing DOS attacks. My suggestion LinkedIn Learning over anything Google. Why?? For your Protection.
@@ -592,5 +594,95 @@ const packetRawBytes = new Uint8Array(packetBuffer);
 console.log("Packet Raw Bytes:", packetRawBytes);
 // Output will show the byte representation of the packet.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           •••Maps•••
+1. A map is basically a set of stored items, such as key-valied pairs🔐.
 
+••Example1-CreateMap:
+const myMap = new Map();
+
+myMap;
+> Map(0)
+
+
+2. We can prefill our Maps. In this structure, the first element becomes the key. The second is your value.
+
+••Example-PrefillMap:
+const myMap = new Map([
+    [ "myKey", "A string value" ],
+    [ "mySecondKey", 500 ],
+    [ "myThirdKey", true ]
+]);
+
+myMap;
+
+> Map(3) {'myKey' => 'A string value', 'mySecondKey' => 500, 'myThirdKey' => true}
+
+
+
+3. We have to remember a Map, can take any type of data or any type of value.
+
+••Example3-Variety:
+const notAFunction = () => console.log( "function" );
+const myMap = new Map([
+  [ null, 0 ],
+  [ false, "This is false" ],
+  [ undefined, "No defined value" ],
+  [ NaN, "Not a number" ]
+]);
+
+myMap;
+> Map(4) {null => 0, false => 'This is false', undefined => 'No defined value', NaN => 'Not a number'}
+
+
+4. In this example we will GET, SET, && Delete.
+
+🔹🔹Example-G-S-D;
+const myMap = new Map();
+
+myMap;
+> Map(0)
+
+myMap.set( "myKey", "My value." );
+
+myMap.has( "myKey" );
+> true
+
+myMap.get( "myKey" );
+"My value."
+
+myMap.delete( "myKey" );
+
+myMap;
+> Map(0)
+
+
+
+
+5. We can assigned a map() through a const.
+
+🔹🔹Example-Assigning:
+const myMap = new Map();
+myMap.set( "myKey", "A string value" );
+
+myMap;
+> Map(1) {'myKey' => 500}
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••WeakMap()•••
+
+1. A weak map is used when there are no solid references. Meaning, no solid references towards other objects and nodes.
+
+
+2. To create, we first must use WeakMap().
+ 
+🔹🔹Example-Creation:
+const myWeakMap = new WeakMap();
+
+myWeakMap;
+> WeakMap(0)
+
+
+
+
+3.
 
