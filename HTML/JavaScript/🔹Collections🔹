@@ -247,4 +247,95 @@ console.log(coord3);      // Output: 40
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. In this example we demonstrate the difference in using [] for objects && {} for arrays.
 
-🔹🔹Example2 
+2. When we destruct an array, the format consists of a sequential order. Which is left to right.
+
+🔹🔹Example2-[}
+const myArray = [ false, true ];
+const myObject = { firstValue: false, secondValue: true };
+
+const [ myProp, mySecondProp ] = myObject;
+> Uncaught TypeError: myObject is not iterable
+
+const { myElement, mySecondElement } = myArray;
+
+myElement
+> undefined
+
+mySecondElement;
+> undefined
+
+
+
+
+🔹🔹Example3-Order:
+
+const myArray = [ 1, 2, 3 ];
+const [ myElement, mySecondElement, myThirdElement ] = myArray;
+
+myElement;
+> 1
+
+mySecondElement;
+> 2
+
+myThirdElement;
+> 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       •••Spread Array•••
+1. The Spread Syntax was designed to copy and combine arrays.
+
+🔹🔹Example1-Spread:
+
+const myArray = [ 1, 2, 3 ];
+const spreadArray = [ ...myArray ];
+
+spreadArray;
+> Array(3) [ 1, 2, 3 ]
+
+
+
+
+2. In this example we will be merging an array.
+
+🔹🔹Example2-Merge:
+const myArray = [ 1, 2, 3 ];
+const mySecondArray = [ 4, 5, 6 ];
+const myNewArray = [ ...myArray, ...mySecondArray ];
+
+myNewArray;
+> Array(6) [ 1, 2, 3, 4, 5, 6 ]
+
+
+
+
+3. In this example we will be passing the elements.
+
+🔹🔹Example3-Passing:
+
+const myArray = [ true, false ];
+const myFunction = ( myArgument, mySecondArgument ) => {
+    console.log( myArgument, mySecondArgument );
+};
+
+myFunction( ...myArray );
+> true false
+
+
+
+4. The Spread array also will work with a "Object Literal".
+
+🔹🔹Example4-Duplicate:
+const myObj = { myProperty : true };
+const mySecondObj = { ...myObj };
+
+mySecondObj;
+> Object { myProperty: true }
+
+
+🔹🔹Example5-Merge:
+const myFirstObj = { myProperty : true };
+const mySecondObj = { additionalProperty : true };
+const myMergedObj = { ...myFirstObj, ...mySecondObj };
+
+myMergedObj;
+> Object { myProperty: true, additionalProperty: true }
