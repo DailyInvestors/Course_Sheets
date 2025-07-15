@@ -1,0 +1,129 @@
+Hello World,
+    As I am growing into my career, everything that worked for everyone else, doesn't work for me. And since half of these companies won't honor what they say or do. Here is my 12 Step Testing Framework. I figure their are tons of them out their. This is the one I'll go off of.
+
+🥇  The Advanced 12-Step Penetration Testing Guide 🥇
+
+Phase 1: Strategic Alignment & Preparation
+
+ * Step 1: Scoping & Engagement Formalization (Strategic Planning)
+   * Objective: Define the precise boundaries, objectives, and legal framework of the penetration test. This is the most critical initial step.
+   * Activities:
+     * Formal Agreements: Signed Non-Disclosure Agreements (NDAs), Statements of Work (SOWs), and Rules of Engagement (RoE). Which these are normally taken care of once you sign up with a Bounty Program.
+     * Objective Definition: Clearly state what success looks like (e.g., gain domain admin, exfiltrate specific data, test a new application feature, assess cloud misconfigurations).
+     * Scope Definition: Identify all target assets (IP ranges, URLs, applications, cloud tenants, physical locations, personnel for social engineering), technologies, and user roles. Explicitly define what is out of scope.
+     * Test Type & Constraints: Determine the type (Black Box, White Box, Gray Box), testing windows (times/dates), traffic volume limits, and any "red lines" (e.g., no denial-of-service, no critical production system disruption unless authorized).
+     * Communication Protocol: Establish primary contacts, emergency contacts, notification procedures for critical findings, and regular reporting cadences.
+     * Credentials & Access (if applicable): For Gray/White Box, provision necessary credentials, VPN access, documentation, and source code securely.
+ 
+* Step 2: Threat Modeling & Intelligence Integration (Contextual Analysis)
+   * Objective: Understand the client's threat landscape, critical assets, and potential attack paths from a threat actor's perspective.
+   * Activities:
+     * Client Interviews: Understand business processes, critical data flows, and previous security incidents.
+     * Threat Actor Profiling: Identify relevant threat actors (e.g., nation-states, organized crime, insider threats) and their typical Tactics, Techniques, and Procedures (TTPs). (This is especially strong in Threat-Led PT / Red Teaming).
+     * Asset Criticality Assessment: Prioritize systems and data based on business impact.
+     * Architectural Review: Analyze network diagrams, application architectures, and cloud configurations to identify logical weaknesses.
+     * Security Control Review: Understand existing security controls and how they might be circumvented or targeted.
+     * Attack Surface Mapping: Build a comprehensive map of all external and internal entry points.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Phase 2: Information Gathering & 
+Discovery
+
+ * Step 3: Passive Reconnaissance 
+   * Objective: Gather publicly available information about the target without directly interacting with their systems.
+   * Activities:
+     * Domain & DNS Footprinting: WHOIS lookups, DNS enumeration, sub-domain discovery.
+     * Web & Social Media Analysis: Company website review, LinkedIn, GitHub, dark web forums, employee profiling.
+     * Public Data Leaks: Checking Pastebin, credential stuffing databases, public code repositories.
+     * Cloud Recon: Identifying public cloud resources (S3 buckets, Azure blobs, exposed APIs).
+     * Job Postings: Often reveal technologies used, internal naming conventions, etc.
+
+ * Step 4: Active Reconnaissance (Network & Host Discovery)
+   * Objective: Interact with the target's network to identify live hosts, open ports, and active services.
+   * Activities:
+     * Host Discovery: Ping sweeps, ARP scans, ICMP enumeration.
+     * Port Scanning: Identifying open TCP/UDP ports (e.g., Nmap scans).
+     * Service Enumeration: Banner grabbing, identifying service versions (e.g., HTTP servers, SSH, FTP, SMB).
+     * Vulnerability Scanning (Non-Intrusive): Using automated scanners (e.g., Nessus, Qualys, OpenVAS) to identify potential vulnerabilities based on service versions and configurations. This is a discovery step, not yet exploitation.
+     * Web Application Crawling/Spidering: Mapping out application structure, parameters, and entry points.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Phase 3: Vulnerability Identification & Analysis
+ * Step 5: Deep Dive Vulnerability Analysis (Manual & Automated). Remember automating may cause false flags.
+   * Objective: Meticulously identify exploitable vulnerabilities, misconfigurations, and logical flaws.
+   * Activities:
+     * Manual Vulnerability Assessment: In-depth review of identified services, web application features (input validation, authentication, authorization, session management), network configurations, and source code (if provided).
+     * Configuration Review: Review of server, network device, and application configurations against best practices (e.g., CIS benchmarks, vendor hardening guides).
+     * Security Misconfiguration Identification: Detecting default credentials, unnecessary services, weak access controls.
+     * Known Vulnerability Research: Cross-referencing identified software/hardware versions with public vulnerability databases (CVEs, Exploit-DB).
+     * Custom Vulnerability Research: For complex systems or proprietary applications, this may involve reverse engineering or fuzzing.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Phase 4: Exploitation & Post-Exploitation
+ * Step 6: Initial Access & Exploitation
+   * Objective: Actively attempt to exploit identified vulnerabilities to gain initial unauthorized access.
+   * Activities:
+     * Exploit Development/Adaptation: Crafting or adapting existing exploits for discovered vulnerabilities (e.g., SQL injection payloads, XSS attacks, buffer overflows, exploiting deserialization flaws).
+     * Password Attacks: Brute-forcing, dictionary attacks, credential stuffing (using leaked credentials).
+     * Social Engineering: Phishing, pretexting, or vishing to obtain credentials or access.
+     * Misconfiguration Exploitation: Leveraging weak default configurations or unnecessary services.
+     * Bypassing Controls: Attempting to circumvent firewalls, WAFs, IDS/IPS, or other security defenses.
+
+
+ * Step 7: Privilege Escalation
+   * Objective: Once initial access is gained, attempt to escalate privileges to gain higher levels of control within the compromised system (e.g., from a standard user to administrator, root, or SYSTEM).
+   * Activities:
+     * Kernel Exploits: Utilizing unpatched operating system vulnerabilities.
+     * Service Misconfigurations: Exploiting services running with excessive privileges.
+     * Weak File Permissions: Modifying system files or executables.
+     * Credential Theft: Harvesting credentials from memory, configuration files, or registry.
+     * Unquoted Service Paths, DLL Hijacking, etc.
+
+
+
+ * Step 8: Lateral Movement
+   * Objective: Move from a compromised system to other systems within the network to expand the scope of control and reach target assets.
+   * Activities:
+     * Network Mapping from Inside: Discovering internal network segments, hosts, and services.
+     * Credential Reuse: Using stolen credentials to log into other systems (Pass-the-Hash, Pass-the-Ticket).
+     * Exploiting Internal Services: Leveraging vulnerabilities in internal-facing services.
+     * Tunnelling/Pivoting: Establishing communication channels through compromised hosts to reach otherwise inaccessible network segments.
+ 
+
+* Step 9: Data Exfiltration & Impact Assessment
+   * Objective: Simulate the extraction of sensitive data or demonstrate the business impact of a successful attack.
+   * Activities:
+     * Identifying Sensitive Data: Locating intellectual property, customer data, financial records, PII.
+     * Simulating Data Transfer: Copying or encrypting dummy data to demonstrate exfiltration capabilities (without actually removing sensitive client data).
+     * Impact Demonstration: For example, demonstrating unauthorized modification of data, system disruption, or access to critical business functions.
+     * Persistence Mechanisms: (Often done in conjunction with lateral movement/escalation) Establishing backdoors, creating new user accounts, or modifying startup scripts to maintain access even if initial exploit is patched.
+
+
+
+ * Step 10: Cover Tracks (Ethical Cleanup)
+   * Objective: Document steps to clean up artifacts left behind during the test, ensuring the environment is restored to its pre-test state.
+   * Activities:
+     * Removing Tools: Deleting any implants, scripts, or custom tools deployed.
+     * Reverting Changes: Undoing any configuration modifications or account creations.
+     * Clearing Logs (Selectively): Identifying and documenting how an attacker would clear logs, but not actually doing it on the client's systems unless explicitly agreed upon (as forensic evidence is crucial for the client). The focus here is on demonstrating the capability and advising on detection.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Phase 5: Reporting & Remediation
+ * Step 11: Comprehensive Reporting & Debrief
+   * Objective: Deliver a clear, concise, and actionable report outlining all findings, their impact, and prioritized recommendations.
+   * Activities:
+     * Executive Summary: Non-technical overview of key findings and overall risk posture for management.
+     * Technical Report: Detailed description of each vulnerability, including:
+       * Vulnerability ID and description.
+       * Steps to reproduce.
+       * Tools used.
+       * Evidence (screenshots, command outputs).
+       * Impact assessment (CVSS score, business impact).
+       * Prioritized remediation recommendations (short-term, long-term).
+     * Debrief Presentation: A walkthrough of the report with relevant stakeholders (technical teams, management).
+     * Knowledge Transfer: Sharing insights and context that might not be fully captured in the report.
+ * Step 12: Remediation Support & Re-testing
+   * Objective: Support the client in fixing identified vulnerabilities and verify the effectiveness of their remediation efforts.
+   * Activities:
+     * Consultation: Providing clarification and guidance on remediation strategies.
+     * Re-testing: Conducting targeted follow-up tests on remediated vulnerabilities to confirm they are effectively closed. This ensures that the fixes haven't introduced new issues or been incomplete.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+This basically will be the Team Daily Testing Guide Framework, with the help from Gemini 💎 
+     
