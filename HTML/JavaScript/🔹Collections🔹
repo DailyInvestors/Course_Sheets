@@ -21,6 +21,27 @@ const myArray = [ true, null, "String", false ];
 myArray;
 > [ true, null, "String", false ]
 
+2. Array literals inherit their properties && methods from the corresponding constructor.
+
+🔹🔹Example2-ArrayLiteral:
+const arrayLiteral = [];
+const arrayConstructor = new Array();
+
+typeof arrayLiteral;
+> "object"
+
+arrayLiteral;
+> Array []
+    length: 0
+    <prototype>: Array []
+
+typeof arrayConstructor;
+> "object"
+
+arrayConstructor;
+> Array []
+    length: 0
+    <prototype>: Array []
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         •••Sparse Arrays•••
 
@@ -56,4 +77,168 @@ for( const myValue of myArray ) {
 > 13
 > 14
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Accessing Arrays•••
 
+🔹🔹Example1:
+// 1. Declaring an array
+const fruits = ["Apple", "Banana", "Cherry", "Date", "Elderberry"];
+const numbers = [10, 20, 30, 40, 50];
+const mixedData = ["Hello", 123, true, null, { key: "value" }];
+
+console.log("--- Accessing elements from the 'fruits' array ---");
+
+// 2. Accessing elements using index (0-based)
+console.log("First fruit:", fruits[0]);    // Output: Apple
+console.log("Second fruit:", fruits[1]);   // Output: Banana
+console.log("Third fruit:", fruits[2]);    // Output: Cherry
+
+// 3. Accessing the last element
+console.log("Last fruit:", fruits[fruits.length - 1]); // Output: Elderberry
+
+console.log("\n--- Accessing elements from the 'numbers' array ---");
+
+// 4. Accessing elements from 'numbers' array
+console.log("First number:", numbers[0]);  // Output: 10
+console.log("Fourth number:", numbers[3]); // Output: 40
+
+console.log("\n--- Accessing elements from the 'mixedData' array ---");
+
+// 5. Accessing elements from 'mixedData' array
+console.log("First element (string):", mixedData[0]);      // Output: Hello
+console.log("Second element (number):", mixedData[1]);     // Output: 123
+console.log("Third element (boolean):", mixedData[2]);     // Output: true
+console.log("Fifth element (object):", mixedData[4]);      // Output: { key: 'value' }
+console.log("Accessing a property of the object in the array:", mixedData[4].key); // Output: value
+
+// 6. What happens if you try to access an index out of bounds?
+console.log("\n--- Out of Bounds Access ---");
+console.log("Trying to access index 10 in 'fruits':", fruits[10]); // Output: undefined
+console.log("Trying to access negative index:", fruits[-1]); // Output: undefined (JavaScript doesn't support negative indexing directly for arrays)
+
+// 7. Using a loop to access all elements
+console.log("\n--- Using a loop to access all fruits ---");
+for (let i = 0; i < fruits.length; i++) {
+  console.log(`Fruit at index ${i}: ${fruits[i]}`);
+}
+
+console.log("\n--- Using forEach to access all numbers ---");
+numbers.forEach(function(number, index) {
+  console.log(`Number at index ${index}: ${number}`);
+});
+
+console.log("\n--- Using for...of loop to access all mixedData elements ---");
+let index = 0;
+for (const item of mixedData) {
+  console.log(`Element at index ${index}: ${item}`);
+  index++;
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  •••Destructing Assignments•••
+
+1. "Binding Pattern Destruction" occurs when each value is unpacked from the array or object. Then is  assigned to the corresponding variable. 
+
+🔹🔹Example1:
+
+const myArray = [ "A string", "A second string" ];
+const [ myFirstElement, mySecondElement ] = myArray;
+
+const myObject = { firstValue: false, secondValue: true };
+const { myProp, mySecondProp } = myObject;
+
+myFirstElement;
+> "My string"
+
+mySecondElement;
+> "Second string"
+
+myProp;
+> false
+
+mySecondProp;
+> true
+
+
+
+🔹🔹Example2-DestructingArrays:
+// 1. Basic Array Destructuring
+console.log("--- Basic Array Destructuring ---");
+const colors = ["red", "green", "blue", "yellow"];
+
+// Destructure the first three elements into distinct variables
+const [firstColor, secondColor, thirdColor] = colors;
+
+console.log(firstColor);  // Output: red
+console.log(secondColor); // Output: green
+console.log(thirdColor);  // Output: blue
+
+// 2. Skipping Elements
+console.log("\n--- Skipping Elements ---");
+const fruits = ["apple", "banana", "cherry", "date"];
+
+// Skip the second element by leaving an empty space
+const [fruit1, , fruit3] = fruits;
+
+console.log(fruit1); // Output: apple
+console.log(fruit3); // Output: cherry
+
+// 3. Rest Parameter (Gathering Remaining Elements)
+console.log("\n--- Rest Parameter ---");
+const numbers = [10, 20, 30, 40, 50, 60];
+
+// Get the first two numbers and put the rest into a new array
+const [num1, num2, ...remainingNumbers] = numbers;
+
+console.log(num1);            // Output: 10
+console.log(num2);            // Output: 20
+console.log(remainingNumbers); // Output: [30, 40, 50, 60]
+
+// 4. Default Values
+console.log("\n--- Default Values ---");
+const developers = ["Alice", "Bob"];
+
+// If an element is undefined in the array, a default value can be used
+const [dev1, dev2, dev3 = "Charlie"] = developers;
+
+console.log(dev1); // Output: Alice
+console.log(dev2); // Output: Bob
+console.log(dev3); // Output: Charlie (because developers[2] is undefined)
+
+const emptyArray = [];
+const [a = 1, b = 2] = emptyArray;
+console.log(a); // Output: 1
+console.log(b); // Output: 2
+
+// 5. Swapping Variables (without a temporary variable)
+console.log("\n--- Swapping Variables ---");
+let x = 5;
+let y = 10;
+
+console.log(`Before swap: x = ${x}, y = ${y}`); // Output: Before swap: x = 5, y = 10
+
+[x, y] = [y, x]; // Swap them!
+
+console.log(`After swap: x = ${x}, y = ${y}`);  // Output: After swap: x = 10, y = 5
+
+// 6. Destructuring with Functions (returning an array)
+console.log("\n--- Destructuring with Functions ---");
+
+function getUserInfo() {
+  return ["John Doe", 30, "Software Engineer"];
+}
+
+const [name, age, occupation] = getUserInfo();
+
+console.log(`Name: ${name}, Age: ${age}, Occupation: ${occupation}`);
+// Output: Name: John Doe, Age: 30, Occupation: Software Engineer
+
+// 7. Nested Array Destructuring (less common but possible)
+console.log("\n--- Nested Array Destructuring ---");
+const coordinates = [10, [20, 30], 40];
+
+const [coord1, [nestedCoord1, nestedCoord2], coord3] = coordinates;
+
+console.log(coord1);      // Output: 10
+console.log(nestedCoord1); // Output: 20
+console.log(nestedCoord2); // Output: 30
+console.log(coord3);      // Output: 40
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
