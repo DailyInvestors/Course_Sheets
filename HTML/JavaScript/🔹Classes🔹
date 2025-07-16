@@ -2,12 +2,340 @@
 
 🚨 References: "Gemini"
 
+"https://web.dev/learn/javascript/data-types/variable#hoisting"
+
 "https://web.dev/"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 1. "Classes" are a special function that serves as a template for creating objects that (already contain) <data>.
+
+2. Everything inside of the class is called a "member".
+
+🔹🔹Example1-Class: "We must define with the "class" keyword."
+
+class MyClass {}
+
+typeof MyClass;
+> "function"
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+3. To create a new instance of a "class", we must use "new".
+ 
+🔹🔹Example2-New:
+
+class MyClass {}
+
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> Object { }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+🔹🔹Example3-Functions:
+
+class MyClass {
+    classMethod() {
+        console.log( "My class method." );
+    }
+}
+
+const myClassInstance = new MyClass();
+
+myClassInstance.classMethod();
+> "My class method."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+4. Once a function is defined inside a Class. We then can call these methods directly on or from that object.
+
+🔹🔹Example4-Method:
+
+class MyClass {
+  classMethod() {
+    console.log( "My class method." );
+  }
+}
+
+const myClassInstance = new MyClass( "A string." );
+
+myClassInstance;
+> Object { }
+    <prototype>: Object { … }
+        classMethod: function classMethod()
+        constructor: class MyClass { constructor(myPassedValue) }
+        <prototype>: Object { … }
+
+myClassInstance.classMethod();
+> "My class method."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+5. When we create a new instance inside of a class, we must use a constructor() method.
+
+🔹🔹Example-Const:
+
+class MyClass {
+  constructor( myPassedValue ) {
+    console.log( myPassedValue );
+  }
+}
+
+const myClassInstance = new MyClass( "A string." );
+> "A string."
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+6. This refers to the class/object. We use this to describe that object.
+
+🔹🔹 Example-This:
+
+class MyClass {
+  constructor( myPassedValue ) {
+    this.instanceProperty = myPassedValue;
+  }
+}
+
+const myClassInstance = new MyClass( "A string." );
+
+myClassInstance;
+> Object { instanceProperty: "A string." }
 
 
 
-This will be updated at a Later Date. DailysDailyNews has/had teaching the define a Parent Class.
+
+🔹🔹Example-This2: "When using this, the properties are available for all methods."
+
+class MyClass {
+  constructor( myPassedValue ) {
+    this.instanceProp = myPassedValue;
+  }
+  myMethod() {
+    console.log( this.instanceProp );
+  }
+}
+
+const myClassInstance = new MyClass( "A string." );
+
+myClassInstance.myMethod();
+> "A string."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+7. Class expressions can be named or left unnamed to create an "anonymous" class.
+
+🔹🔹Example-ClasExpression:
+
+let ClassExpression = class {
+    constructor() {}
+};
+
+ClassExpression;
+> class  {}
+
+
+
+
+8. We can use the anonymous to create a instant function into our class:
+
+🔹🔹Example-Anonymous:
+
+class DataProcessor {
+  constructor(data) {
+    this.data = data;
+  }
+
+  processData() {
+    // Using an anonymous arrow function with map()
+    const processed = this.data.map((item) => {
+      return item * 2;
+    });
+    console.log("Processed data:", processed);
+
+    // Using an anonymous function as a callback for setTimeout
+    setTimeout(() => {
+      console.log("Data processing complete after 2 seconds.");
+      // 'this' still refers to the DataProcessor instance here
+      console.log("Original data:", this.data);
+    }, 2000);
+  }
+
+  addClickListener(element) {
+    // Using an anonymous arrow function as an event listener
+    element.addEventListener('click', () => {
+      console.log("Button clicked!");
+      // 'this' refers to the DataProcessor instance, not the button element
+      // because of the arrow function's lexical 'this' binding.
+      console.log("Class data when button clicked:", this.data);
+    });
+  }
+}
+
+const myData = [1, 2, 3];
+const processor = new DataProcessor(myData);
+processor.processData();
+
+// Example of adding a click listener
+// const myButton = document.createElement('button');
+// myButton.textContent = "Click Me";
+// document.body.appendChild(myButton);
+// processor.addClickListener(myButton);
+
+
+
+🔹🔹Example-Anounymous2:
+
+function classMaker() {
+  return class {
+    constructor() {}
+  };
+}
+
+let MyVariable = classMaker();
+
+MyVariable;
+> class  {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+🔹🔹Example-Redefining:
+
+let ClassExpression = class MyClass { };
+
+ClassExpression = class MyOtherClass {
+    constructor( myString ) {
+        this.myProp = myString;
+    }
+};
+
+new ClassExpression( "String." );
+> MyOtherClass {myProp: 'String.'}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     •••Extending Classes•••
+
+1. To extend a class, we must use the <extends> keyword.
+
+🔹🔹Example-Extends:
+
+class ParentClass {}
+class ChildClass extends ParentClass {}
+
+Object.getPrototypeOf( ChildClass );
+> class ParentClass {}
+
+
+
+2. A "Child Class" can implement its own methods. Meaning you can define its own value and functions for the extended class.
+
+🔹🔹Example-Implementing:
+
+class MyClass {
+  constructor( myPassedValue ) {
+    this.instanceProp = myPassedValue;
+  }
+  classMethod() {
+    console.log( `The value was '${ this.instanceProp }.'`)
+  }
+}
+class ChildClass extends MyClass {
+  classMethod() {
+    console.log( `The value was '${ this.instanceProp },' and its type was '${ typeof this.instanceProp }.'`)
+  }
+}
+
+const myParentClassInstance = new MyClass( "My string." );
+const mySubclassInstance = new ChildClass( 100 );
+
+myParentClassInstance.classMethod();
+> "The value type was 'string.'"
+
+mySubclassInstance.classMethod();
+> "The value was '100,' and its type was 'number.'"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            •••Super 🦸‍♂️•••
+1. We can use "Super" to call the parent class or objects.
+
+🔹🔹Example-Super:
+
+class MyClass {
+  constructor( myPassedValue ) {
+    this.instanceProp = myPassedValue;
+  }
+  classMethod() {
+    console.log( `The value was '${ this.instanceProp }.'`)
+  }
+}
+
+class ChildClass extends MyClass {
+  subclassMethod() {
+    super.classMethod();
+    console.log( `The value type was '${ typeof this.instanceProp }.'`)
+  }
+}
+const mySubclassInstance = new ChildClass( 100 );
+
+mySubclassInstance.subclassMethod();
+> The value was '100.'
+> The value type was 'number.'
+
+
+
+2. When working with a "subclass" at times we may still have to call upon Super to extend any class, or function.
+
+🔹🔹Example-SubClass:
+
+class MyClass {
+  constructor( myPassedValue ) {
+    this.instanceProp = myPassedValue;
+  }
+  classMethod() {
+    console.log( `The value was '${ this.instanceProp }.'`)
+  }
+}
+
+class ChildClass extends MyClass {
+    constructor( myPassedValue ) {
+        super( myPassedValue );
+        this.modifiedProp = myPassedValue + 50;
+    }\
+    subclassMethod() {
+        super.classMethod();
+        console.log( `The value type was '${ typeof this.instanceProp }.'`)
+    }
+}
+const mySubclassInstance = new ChildClass( 100 );
+
+mySubclassInstance;
+> MyClass { instanceProp: 100, modifiedProp: 150 }
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   •••Getters && Setters•••
+
+1. Both are special methods designed to fetch and retrieve.
+
+
+2. (Get & set) are keywords that let you create methods that "can be" interacted with as if they were static properties.
+
+🔹🔹Example-G-S:
+
+class MyClass {
+    constructor( originalValue ) {
+        this.totalValue = 0;
+    }
+    set doubleThisValue( newValue ) {
+        this.totalValue = newValue * 2;
+    }
+    get currentValue() {
+        console.log( `The current value is: ${ this.totalValue }` );
+    }
+}
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> MyClass { totalValue: 0 }
+
+myClassInstance.doubleThisValue = 20;
+
+myClassInstance.currentValue;
+> The current value is: 40
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        This is just a Self-Help Reference Guide. We appreciate any and All Donations for our work. If you wish to learn further please consult with Google or LinkedIn.
