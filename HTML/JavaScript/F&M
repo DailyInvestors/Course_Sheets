@@ -1,0 +1,573 @@
+     •••Fields & Methods•••
+     ~~~~~~~~~~~~~~~~~~~~~~
+
+🚨 References: "Gemini"
+
+"https://developer.chrome.com/blog/new-in-devtools-111"
+
+"https://web.dev/"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+           •••Fields•••
+
+1. In JavaScript, the term "fields" most commonly refers to properties of an object or members of a class.
+{ Object Properties, Class Fields }
+
+
+🔹🔹Example-PublicClass:
+
+class Person {
+  name = "John Doe"; // Public class field
+  age; // Another public class field, undefined by default
+}
+
+
+
+🔹🔹Example-Private:
+
+class BankAccount {
+  #balance = 0; // Private class field
+  // ... methods to interact with #balance
+}
+
+
+
+🔹🔹Example-Creating-field:
+
+class MyClass {
+    myField;
+}
+
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> MyClass { myField: undefined }
+
+
+
+
+🔹🔹Example-InitilizingField:
+
+class MyClass {
+    myResult = false;
+    set setValue( myValue ) {
+        this.myResult = myValue;
+    }
+}
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> Object { myResult: false }
+
+myClassInstance.setValue = true;
+
+myClassInstance;\
+> Object { myResult: true }
+
+
+
+
+
+2. Class Fields are basically identical to the "this" keyword.
+
+🔹🔹Example-Field:
+
+qclass MyClass {
+    myField = true;
+}
+
+const myClassInstance = new MyClass();
+
+myClassInstance.myField;
+> true
+
+myClassInstance.myField = false;
+
+myClassInstance.myField;
+> false;
+
+
+4. To make a property #private add a # to the beginning of the identifier when you declare it. We can also edit or alter the value with this.
+
+🔹🔹Example-#Private:
+
+class MyClass {
+    #myPrivateField = true;
+    #myPrivateMethod() {}
+}
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> MyClass { #myPrivateField: true }
+    #myPrivateField: true
+    <prototype>: Object { … }
+        constructor: class MyClass {}
+        <prototype>: Object { … }
+
+
+
+5. #Private normally can't be altered or called upon. However most Browsers give us access through their inconsistentcies.
+
+ 🔹🔹Example-Inconsistent:
+
+class MyClass {
+    #myPrivateField = true;
+    #myPrivateMethod() {
+        console.log( "This is inside a private method." );
+    }
+}
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> MyClass {#myPrivateField: true}
+
+myClassInstance.#myPrivateField;
+> true
+
+myClassInstance.#myPrivateMethod();
+> "This is inside a private method."
+
+
+
+
+🔹🔹Example-Inconsistent2:
+
+class MyClass {
+    #myPrivateField = true;
+    #myPrivateMethod() {
+        console.log( "This is inside a private method." );
+    }
+}
+const myClassInstance = new MyClass();
+
+myClassInstance;
+> MyClass {#myPrivateField: true}
+
+myClassInstance.#myPrivateField;
+> Uncaught SyntaxError: reference to undeclared private field or method #myPrivateField
+
+myClassInstance.#myPrivateMethod();
+> Uncaught SyntaxError: reference to undeclared private field or method #myPrivateMethod
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      •••Static Fields•••
+
+1. Static Fields are a member of their own "Class".
+
+2. Static Fields are a central point for "Data".
+
+3. We must use the "static" keyword to define this method/class.
+
+🔹🔹Example-Static:
+class MyClass {
+    static myStaticField;
+    static myStaticMethod() {}
+}
+const myClassInstance = new MyClass();
+
+
+
+4. We can also create a Static by using a "Dot Notation".
+
+🔹🔹Example-StaticDot:
+
+class MyClass {
+    constructor() {}
+}
+MyClass.myStaticMethod = function() {}
+
+
+
+
+5. We can not access these static classes. However, they are "available" through the constructor() methods.
+
+🔹🔹Example-ConstStaticMethod:
+
+class MyClass {
+    static myStaticField = true;
+    static myStaticMethod() {
+        console.log( "A static method." );
+    }
+}
+const myClassInstance = new MyClass();
+
+myClassInstance.myStaticField;
+> undefined
+
+myClassInstance.myStaticMethod();
+> Uncaught TypeError: myClassInstance.myStaticMethod is not a function
+
+MyClass.myStaticField;
+> true
+
+MyClass.myStaticMethod();
+> "A static method."
+
+
+
+
+6. Static is best for creating utilities to work with instances of a class.
+
+🔹🔹Example-Utilities:
+
+class User {
+    constructor( name, email ) {
+        this.name = name;
+        this.email = email;
+    }
+    static fromObject( myObject ) {
+        return new User( myObject.name, myObject.email ?? "Omitted" );
+    }
+}
+const userObject = {
+    "name" : "My Name",
+    "email" : "my@email.address"
+};
+const secondUserObject = {
+    "name" : "My Name"
+};
+
+const firstUser = User.fromObject( userObject );
+const secondUser = User.fromObject( secondUserObject );
+
+firstUser;
+> Object { name: "My Name", email: "my@email.address" }
+
+secondUser;
+> Object { name: "My Name", email: "Omitted" }
+
+
+
+
+7. This method called "Singleton Pattern with a Utility NameSpace.
+
+🔹🔹Example-GoogleBotUtility.js:
+
+const GoogleBotRepairUtility = {
+  VERSION: '1.0.0',
+
+  checkNetworkConnectivity(botConfig) {
+    console.log(`[Repair Utility] Checking network connectivity for bot...`);
+    const isConnected = Math.random() > 0.1;
+    if (isConnected) {
+      console.log(`[Repair Utility] Network connectivity is good.`);
+    } else {
+      console.warn(`[Repair Utility] Network connectivity issues detected. Attempting to re-establish...`);
+    }
+    return isConnected;
+  },
+
+  diagnoseCrawlingErrors(errorLog) {
+    console.log(`[Repair Utility] Diagnosing crawling errors...`);
+    const issues = [];
+    const commonErrorPatterns = {
+      'DNS_RESOLUTION_FAILED': 'DNS resolution failed. Check DNS settings or try alternative DNS servers.',
+      'TIMEOUT_ERROR': 'Page timeout. Server might be slow or unresponsive. Consider increasing timeout settings or retrying.',
+      'ROBOTS_TXT_BLOCKED': 'Access denied by robots.txt. Verify correct robots.txt configuration.',
+      'SSL_HANDSHAKE_FAILED': 'SSL handshake failed. Check certificate validity or server SSL configuration.',
+      'LOW_DISK_SPACE': 'Low disk space. Clear temporary files or allocate more storage.',
+      'MEMORY_EXCEEDED': 'Memory usage exceeded. Optimize processing or increase available memory.',
+      'UNKNOWN_ERROR': 'An unknown error occurred. Consult detailed logs for more information.'
+    };
+
+    errorLog.forEach(error => {
+      let foundMatch = false;
+      for (const pattern in commonErrorPatterns) {
+        if (error.includes(pattern)) {
+          issues.push(`Issue: ${pattern} - Solution: ${commonErrorPatterns[pattern]}`);
+          foundMatch = true;
+          break;
+        }
+      }
+      if (!foundMatch) {
+        issues.push(`Unrecognized Error: "${error}". Further investigation needed.`);
+      }
+    });
+
+    if (issues.length === 0) {
+      issues.push("No critical crawling errors detected.");
+    }
+    return issues;
+  },
+
+  clearCache(cacheService) {
+    console.log(`[Repair Utility] Attempting to clear bot cache...`);
+    try {
+      if (cacheService && typeof cacheService.clear === 'function') {
+        cacheService.clear();
+        console.log(`[Repair Utility] Cache cleared successfully.`);
+        return true;
+      } else {
+        console.warn(`[Repair Utility] Cache service not provided or does not have a 'clear' method.`);
+        return false;
+      }
+    } catch (error) {
+      console.error(`[Repair Utility] Error clearing cache:`, error);
+      return false;
+    }
+  },
+
+  resetConfiguration(botInstance) {
+    console.warn(`[Repair Utility] Initiating configuration reset for bot...`);
+    if (botInstance && typeof botInstance.resetToDefaults === 'function') {
+      try {
+        botInstance.resetToDefaults();
+        console.log(`[Repair Utility] Bot configuration reset to defaults.`);
+        return true;
+      } catch (error) {
+        console.error(`[Repair Utility] Error resetting configuration:`, error);
+        return false;
+      }
+    } else {
+      console.error(`[Repair Utility] Bot instance or resetToDefaults method not found.`);
+      return false;
+    }
+  },
+
+  reportCriticalIssue(issueDescription, botDetails) {
+    console.error(`[Repair Utility] CRITICAL ISSUE REPORTED: ${issueDescription}`);
+    console.error(`[Repair Utility] Bot Details:`, botDetails);
+  }
+};
+
+
+
+
+🔹🔹Example-GoogleBot.js:
+/🔹🔹
+ 🔹 @file GoogleBotMain.js
+ 🔹 @description Simulates the main operational loop for a GoogleBot.
+ 🔹/
+
+// In a real-world scenario, you'd import the utility:
+// import GoogleBotRepairUtility from './GoogleBotRepairUtility.js';
+// For this example, we'll assume GoogleBotRepairUtility is globally available or defined above.
+
+class GoogleBot {
+  constructor(id, initialConfig = {}) {
+    this.id = id;
+    this.config = {
+      networkTimeout: 5000,
+      maxRetries: 3,
+      userAgent: `GoogleBot/2.1 (+http://www.google.com/bot.html)`,
+      ...initialConfig
+    };
+    this.currentUrl = null;
+    this.errorLog = [];
+    this.isOperational = true;
+    this.crawlQueue = [];
+    this.cacheService = {
+      data: {},
+      get(key) { return this.data[key]; },
+      set(key, value) { this.data[key] = value; },
+      clear() { this.data = {}; console.log(`[Bot Cache] Cache cleared.`); }
+    };
+
+    console.log(`[GoogleBot ${this.id}] Initialized with config:`, this.config);
+  }
+
+  /**
+   * Resets the bot's configuration to a set of default values.
+   */
+  resetToDefaults() {
+    this.config = {
+      networkTimeout: 5000,
+      maxRetries: 3,
+      userAgent: `GoogleBot/2.1 (+http://www.google.com/bot.html)`
+    };
+    this.errorLog = [];
+    this.isOperational = true;
+    console.log(`[GoogleBot ${this.id}] Configuration reset to defaults.`);
+  }
+
+  /**
+   * Simulates fetching content from a URL.
+   * Includes random error generation for demonstration.
+   * @param {string} url - The URL to fetch.
+   * @returns {Promise<string>} The fetched content or an error.
+   */
+  async fetchContent(url) {
+    this.currentUrl = url;
+    console.log(`[GoogleBot ${this.id}] Fetching: ${url}`);
+
+    // Simulate network delay and potential errors
+    await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500)); // 0.5s to 1.5s delay
+
+    const randomError = Math.random();
+    if (randomError < 0.05) { // 5% chance of DNS failure
+      this.errorLog.push(`DNS_RESOLUTION_FAILED: Failed to resolve host for ${url}`);
+      throw new Error(`DNS_RESOLUTION_FAILED`);
+    } else if (randomError < 0.1) { // 5% chance of timeout
+      this.errorLog.push(`TIMEOUT_ERROR: Connection timed out for ${url}`);
+      throw new Error(`TIMEOUT_ERROR`);
+    } else if (randomError < 0.12) { // 2% chance of robots.txt block
+      this.errorLog.push(`ROBOTS_TXT_BLOCKED: Access denied by robots.txt for ${url}`);
+      throw new Error(`ROBOTS_TXT_BLOCKED`);
+    } else if (randomError < 0.13) { // 1% chance of memory error
+      this.errorLog.push(`MEMORY_EXCEEDED: High memory usage during processing ${url}`);
+      throw new Error(`MEMORY_EXCEEDED`);
+    }
+
+    // Simulate content parsing and link extraction
+    const content = `<html><body><h1>Welcome to ${url}</h1><a href="${url}/page1">Page 1</a><a href="${url}/page2">Page 2</a></body></html>`;
+    console.log(`[GoogleBot ${this.id}] Successfully fetched content from ${url}`);
+
+    // Simulate caching
+    this.cacheService.set(url, content.substring(0, 50) + '...'); // Store first 50 chars as example
+    return content;
+  }
+
+  /**
+   * Simulates parsing content and extracting links.
+   * @param {string} content - The HTML content to parse.
+   * @param {string} baseUrl - The base URL for resolving relative links.
+   * @returns {Array<string>} An array of extracted URLs.
+   */
+  parseContent(content, baseUrl) {
+    console.log(`[GoogleBot ${this.id}] Parsing content for links...`);
+    const links = [];
+    // Basic regex for demonstration. A real bot uses a robust HTML parser.
+    const linkRegex = /href=["'](.*?)["']/g;
+    let match;
+    while ((match = linkRegex.exec(content)) !== null) {
+      let extractedUrl = match[1];
+      // Resolve relative URLs (simplified)
+      if (extractedUrl.startsWith('/')) {
+        extractedUrl = new URL(extractedUrl, baseUrl).href;
+      }
+      if (extractedUrl.startsWith('http')) { // Only add absolute http(s) links
+        links.push(extractedUrl);
+      }
+    }
+    console.log(`[GoogleBot ${this.id}] Found ${links.length} links.`);
+    return links;
+  }
+
+  /**
+   * The main operational loop for the GoogleBot.
+   * @param {Array<string>} seedUrls - Initial URLs to start crawling.
+   */
+  async startCrawl(seedUrls) {
+    if (!this.isOperational) {
+      console.warn(`[GoogleBot ${this.id}] Bot is not operational. Cannot start crawl.`);
+      return;
+    }
+
+    this.crawlQueue = [...seedUrls];
+    let pagesCrawled = 0;
+    const maxPagesToCrawl = 10; // For demonstration, limit the crawl
+
+    while (this.crawlQueue.length > 0 && pagesCrawled < maxPagesToCrawl && this.isOperational) {
+      const urlToCrawl = this.crawlQueue.shift();
+
+      console.log(`\n--- [GoogleBot ${this.id}] Processing URL: ${urlToCrawl} ---`);
+
+      // 1. Connectivity Check (using the repair utility)
+      if (!GoogleBotRepairUtility.checkNetworkConnectivity(this.config)) {
+        console.error(`[GoogleBot ${this.id}] Network issue detected. Pausing crawl and attempting repair.`);
+        this.errorLog.push('NETWORK_CONNECTIVITY_LOST');
+        const issues = GoogleBotRepairUtility.diagnoseCrawlingErrors(this.errorLog);
+        console.log(`[GoogleBot ${this.id}] Repair Utility Diagnosis:`, issues);
+
+        // Attempt to clear cache as a repair step
+        if (GoogleBotRepairUtility.clearCache(this.cacheService)) {
+          console.log(`[GoogleBot ${this.id}] Cache cleared. Retrying network check...`);
+        }
+
+        // If still not connected, report critical issue and pause
+        if (!GoogleBotRepairUtility.checkNetworkConnectivity(this.config)) {
+          GoogleBotRepairUtility.reportCriticalIssue(
+            `Persistent network connectivity loss for bot ${this.id}`,
+            { id: this.id, currentUrl: urlToCrawl, config: this.config }
+          );
+          this.isOperational = false; // Mark bot as non-operational
+          console.error(`[GoogleBot ${this.id}] Critical network failure. Halting crawl.`);
+          break; // Exit the loop
+        }
+      }
+
+      try {
+        const content = await this.fetchContent(urlToCrawl);
+        pagesCrawled++;
+
+        // 2. Error Diagnosis (using the repair utility after a fetch attempt)
+        if (this.errorLog.length > 0) {
+          console.warn(`[GoogleBot ${this.id}] Fetch completed with previous errors. Diagnosing...`);
+          const issues = GoogleBotRepairUtility.diagnoseCrawlingErrors(this.errorLog);
+          console.log(`[GoogleBot ${this.id}] Repair Utility Diagnosis:`, issues);
+          this.errorLog = []; // Clear errors after diagnosis
+        }
+
+        const newLinks = this.parseContent(content, urlToCrawl);
+        newLinks.forEach(link => {
+          if (!this.crawlQueue.includes(link) && pagesCrawled < maxPagesToCrawl) {
+            this.crawlQueue.push(link);
+          }
+        });
+
+      } catch (error) {
+        console.error(`[GoogleBot ${this.id}] Error crawling ${urlToCrawl}: ${error.message}`);
+        this.errorLog.push(error.message);
+
+        // Use repair utility for specific error handling
+        if (error.message.includes('ROBOTS_TXT_BLOCKED')) {
+          console.warn(`[GoogleBot ${this.id}] Encountered robots.txt block. Skipping this path.`);
+          // Do not retry this URL
+        } else if (error.message.includes('TIMEOUT_ERROR')) {
+          console.warn(`[GoogleBot ${this.id}] Timeout error. Retrying later for ${urlToCrawl}.`);
+          this.crawlQueue.push(urlToCrawl); // Re-add to queue for retry
+        } else {
+          // For unhandled errors, diagnose and potentially report
+          const issues = GoogleBotRepairUtility.diagnoseCrawlingErrors(this.errorLog);
+          console.log(`[GoogleBot ${this.id}] Repair Utility Diagnosis for unhandled error:`, issues);
+          if (issues.some(issue => issue.includes('CRITICAL'))) {
+            GoogleBotRepairUtility.reportCriticalIssue(
+              `Unhandled critical error during crawl of ${urlToCrawl}: ${error.message}`,
+              { id: this.id, currentUrl: urlToCrawl, config: this.config }
+            );
+            this.isOperational = false; // Mark bot as non-operational
+            break; // Stop crawl on critical unhandled error
+          }
+        }
+      }
+
+      await new Promise(resolve => setTimeout(resolve, 200)); // Small delay between crawls
+    }
+
+    console.log(`\n--- [GoogleBot ${this.id}] Crawl finished. Total pages crawled: ${pagesCrawled} ---`);
+    if (!this.isOperational) {
+      console.error(`[GoogleBot ${this.id}] Crawl terminated due to operational issues.`);
+    }
+    console.log(`[GoogleBot ${this.id}] Remaining queue size: ${this.crawlQueue.length}`);
+  }
+}
+
+// --- Main Execution Block ---
+(async () => {
+  console.log("Starting GoogleBot simulation...");
+
+  const myGoogleBot = new GoogleBot("GB-789", { networkTimeout: 7000 });
+
+  // Example of directly calling the repair utility
+  console.log("\n--- Direct Repair Utility Usage ---");
+  const connectivityStatus = GoogleBotRepairUtility.checkNetworkConnectivity(myGoogleBot.config);
+  console.log(`Initial Connectivity Check: ${connectivityStatus}`);
+
+  const sampleErrors = [
+    "DNS_RESOLUTION_FAILED: example.com",
+    "TIMEOUT_ERROR: api.example.com/data",
+    "Some_Other_Random_Error: unknown cause",
+    "ROBOTS_TXT_BLOCKED: /admin/"
+  ];
+  const diagnoses = GoogleBotRepairUtility.diagnoseCrawlingErrors(sampleErrors);
+  console.log("Sample Error Diagnoses:", diagnoses);
+
+  GoogleBotRepairUtility.clearCache(myGoogleBot.cacheService);
+  GoogleBotRepairUtility.resetConfiguration(myGoogleBot);
+
+  console.log("\n--- Starting GoogleBot Crawl ---");
+  await myGoogleBot.startCrawl(["http://example.com", "http://anothersite.org"]);
+
+  console.log("\n--- Simulation End ---");
+})();
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
