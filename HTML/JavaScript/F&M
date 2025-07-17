@@ -3,6 +3,8 @@
 
 🚨 References: "Gemini"
 
+"https://web.dev/learn/javascript/introduction#block-statements"
+
 "https://developer.chrome.com/blog/new-in-devtools-111"
 
 "https://web.dev/"
@@ -573,6 +575,81 @@ class GoogleBot {
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       •••Static Int() Blocks•••
 
-Will Continue @Later-Date
+1. A "static initialization block" (also known as a class static initialization block) is a feature in JavaScript that allows you to execute statements when a class is first initialized by the JavaScript engine. 
+
+
+2. To create a static initialization block, use the "static" keyword followed by block statements with {}.
+
+🔹🔹Example-Start:
+
+class MyClass {
+  static {}
+}
+
+
+
+
+🔹🔹Example-Init/Alter
+
+class MyClass {
+  static firstProperty = 'First property.';
+  static secondProperty;
+  static {
+    this.secondProperty = 'Second property.';
+  }
+}
+
+MyClass.secondProperty;
+"Second property."
+
+
+
+
+🔹🔹Example-Const:
+
+class MyClass {
+    static {
+        console.log( "Static initialization block." );
+    }
+    constructor() {
+        console.log( "Constructor." );
+    }
+}
+> "Static initialization block."
+
+const myClassInstance = new MyClass();
+> "Constructor."
+
+
+
+
+
+🔹🔹Example-MultiStatic:
+
+class MyClass {
+  static myNewField;
+  static {
+    this.myNewField = this.myField;
+  }
+  static myField = "My value.";
+};
+
+MyClass.myNewField;
+> undefined
+
+class MyCorrectedClass {
+  static myNewField;
+  static myField = "My value.";
+  static {
+    this.myNewField = this.myField;
+  }
+};
+
+MyCorrectedClass.myNewField;
+> "My value."
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    We Appreciate any & all donations for our work. This is not designed for any type of Publication. This is a basic Self-Help reference guide. Thank You
+
 
 👾
