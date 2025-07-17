@@ -1,0 +1,529 @@
+          •••Index•••
+
+
+🚨 References: "Gemini"
+
+
+"https://web.dev/articles/off-main-thread"
+
+"https://262.ecma-international.org/7.0/#sec-rules-of-automatic-semicolon-insertion"
+
+"https://web.dev/"
+
+"https://web.dev/learn/javascript/functions"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••ProtoType•••
+
+1. In JavaScript, prototypal inheritance is a mechanism where objects inherit properties and methods directly from other objects through a prototype chain.
+
+
+2. Allows Code reuse. Comes basically in a chain ⛓️. Every part has a link to a prototype. This is most often called with __proto__, or Objects.getPrototypeOf().
+
+
+3. In this example, a string literal has no methods. But this does have a Prototype.
+
+🔹🔹Example-String:
+
+"this is a string literal".toUpperCase();
+
+> THIS IS A STRING LITERAL
+
+
+
+
+4. Here we will talk about prototype inheritance. This inherits from the corresponding constructor().
+
+🔹🔹Example-Const:
+
+Number.prototype
+> Number { 0 }
+>  constructor: function Number()
+>  toExponential: function toExponential()
+>  toFixed: function toFixed()
+>  toLocaleString: function toLocaleString()
+>  toPrecision: function toPrecision()
+>  toString: function toString()
+>  valueOf: function valueOf()
+>  <prototype>: Object { … }
+
+
+
+
+
+🔹🔹Example-String:
+
+let stringLiteral = "String literal."
+
+typeof stringLiteral;
+> "string"
+
+let stringObject = new String( "String object." );
+
+stringObject
+> "object"
+
+
+
+
+
+🔹🔹Example-StringObject:
+const myString = new String( "This is a string." );
+
+myString;
+> String { "This is a string." }
+
+typeof myString;
+> "object"
+
+myString.valueOf();
+> "This is a string."
+
+
+
+
+
+5. When we use "newNumber()" in our strings, this gives us access to everything basically giving us a object that contains all the methods 👌 
+
+🔹🔹Example-NewNumber:
+
+const numberOne = new Number(1);
+const numberTwo = new Number(2);
+
+numberOne;
+> Number { 1 }
+
+typeof numberOne;
+> "object"
+
+numberTwo;
+> Number { 2 }
+
+typeof numberTwo;
+> "object"
+
+numberOne + numberTwo;
+> 3
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+            •••ASI•••
+
+1. This is basically a seni-colin ;.
+
+2. When the Parsing process in jS is going, if it feels their are errors, or something needs fixed it places the seni-colin ; inside the code.
+
+
+3. If we are using more then one statement per line, we must use a ; to separate this.
+
+🔹🔹Example-;:
+
+const myVariable = 2; myVariable + 3;
+
+> 5
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       •••⚡trict Mode•••🫴✨⭐ 🤖 
+
+1. "use strict";
+
+🔹🔹Example-UseStrict:
+
+function myFunction() {
+  "use strict";
+}
+
+
+2. We must write "use strict" as a "String Literal".
+
+🔹🔹Example-UseStrict:
+"use strict";
+
+function exampleStrict() {
+  let x = 10;
+  // y = 20; // This line would cause an error in strict mode
+  console.log(x);
+}
+
+exampleStrict();
+
+
+3. There are other ways to use this, such as in the middle of at the top. Not all functions set in use strict have to be strict.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Ref&&Val•••
+
+1. Basically everything contains both a reference or value. We can use these to fetch() our Objects. Or to call() to inspect, build, patch, debug, link, etc.
+
+
+2. JavaScript automaticaly copies everything. They then assign these references or values  to the variable. ➗ ➖ 
+
+3. This process also creates a self-reference inside the "memory".
+
+
+🔹🔹Example-AddProp:
+
+const myObject = {};
+const myObjectReference = myObject;
+
+myObjectReference.myProperty = true;
+
+myObject;
+> Object { myProperty: true }
+
+
+🔹🔹Example-BuildingOn:
+
+const myObject = {};
+const myReferencedObject = myObject;
+const myNewObject = {};
+
+myObject === myNewObject;
+> false
+
+myObject === myReferencedObject;
+> true
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Memory•••
+
+1. jS users automated memory.
+
+2. Two areas of Memory in jS. The "stack" && "heap". They store "Static Data". Remember the memory is freed by the "garbage collection" process.
+
+🔹🔹Example-StackProgram:
+
+function greet(name) {
+  console.log(`1. Entering greet function. Hello, ${name}!`);
+  sayGoodbye(name);
+  console.log(`4. Exiting greet function.`);
+}
+
+function sayGoodbye(name) {
+  console.log(`2. Entering sayGoodbye function. Goodbye, ${name}!`);
+  wishWell(name);
+  console.log(`3. Exiting sayGoodbye function.`);
+}
+
+function wishWell(name) {
+  console.log(`  3a. Entering wishWell function. Wishing ${name} well!`);
+  console.log(`  3b. Exiting wishWell function.`);
+}
+
+console.log("--- Starting program ---");
+greet("Alice");
+console.log("--- Program finished ---");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Main Thread•••
+
+1. jS is a single-threaded program. This means it only executes 1 task at a time.
+
+
+2. This thread is shared with other processes such as { Parsing HTML, Browser Rendering, CSS Animations, && User Interactions }🤖
+
+
+3. However, there are ways to run processes in the background. One way is done by "Web Workers".
+
+
+4. Web Workers can only work on one script at a time. They have no access to the UI or System Browser. Their communication is a little different too.
+
+✨ Web Worker && Sanitizers ✨
+
+In this scenario, we will be removing special characters, null in the form of a Web Worker. We will have two codes the index.html which will be your Main Thread. The second will be the actual Web Worker on your side.
+
+
+✨ 🔹 index.html (Main)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Worker Memory Sanitizer</title>
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        button { padding: 10px 20px; font-size: 16px; margin-top: 10px; }
+        #status { margin-top: 20px; font-weight: bold; }
+        #results { margin-top: 20px; white-space: pre-wrap; word-break: break-all; max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Web Worker "Memory Sanitizer" </h1>
+    <p>Click the button to generate and process a large dataset in a Web Worker.</p>
+    <button id="startButton">Start Processing in Worker</button>
+    <button id="clearButton" disabled>Clear Results</button>
+    <div id="status">Status: Idle</div>
+    <div id="results">Processed Data (first 100 items):</div>
+
+    <script>
+        let myWorker;
+        const startButton = document.getElementById('startButton');
+        const clearButton = document.getElementById('clearButton');
+        const statusDiv = document.getElementById('status');
+        const resultsDiv = document.getElementById('results');
+
+        // Check for Web Worker support
+        if (window.Worker) {
+            startButton.addEventListener('click', () => {
+                statusDiv.textContent = 'Status: Starting worker and processing data...';
+                startButton.disabled = true;
+                clearButton.disabled = true;
+                resultsDiv.textContent = 'Processed Data (first 100 items):'; // Clear previous results
+
+                // Create a new worker instance
+                myWorker = new Worker('worker.js');
+
+                // Listen for messages from the worker
+                myWorker.onmessage = function(e) {
+                    if (e.data.type === 'processingComplete') {
+                        const processedData = e.data.payload;
+                        statusDiv.textContent = `Status: Processing complete! Processed ${processedData.length} items.`;
+                        resultsDiv.textContent += '\n' + JSON.stringify(processedData.slice(0, 100), null, 2); // Show first 100
+                        startButton.disabled = false;
+                        clearButton.disabled = false;
+                        myWorker.terminate(); // Terminate the worker after use
+                    } else if (e.data.type === 'error') {
+                        statusDiv.textContent = `Status: Error from worker: ${e.data.payload}`;
+                        startButton.disabled = false;
+                        clearButton.disabled = false;
+                        myWorker.terminate();
+                    }
+                };
+
+                // Handle worker errors
+                myWorker.onerror = function(error) {
+                    statusDiv.textContent = `Status: Worker error: ${error.message}`;
+                    console.error('Worker error:', error);
+                    startButton.disabled = false;
+                    clearButton.disabled = false;
+                };
+
+                // Send a message to the worker to start processing
+                // We'll generate the data within the worker to emphasize offloading
+                myWorker.postMessage({ command: 'startProcessing', dataSize: 500000 }); // Process 500,000 items
+            });
+
+            clearButton.addEventListener('click', () => {
+                resultsDiv.textContent = 'Processed Data (first 100 items):';
+                statusDiv.textContent = 'Status: Results cleared.';
+                clearButton.disabled = true;
+            });
+
+        } else {
+            statusDiv.textContent = 'Status: Your browser does not support Web Workers.';
+            startButton.disabled = true;
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+✨ 🔹 worker.js ("Web Worker")
+
+// Function to simulate a "memory-intensive" data generation
+function generateLargeDataset(size) {
+    const data = [];
+    for (let i = 0; i < size; i++) {
+        // Simulate some varied data, including some "bad" data for sanitization
+        if (i % 100 === 0) {
+            data.push(null); // Simulate nulls
+        } else if (i % 50 === 0) {
+            data.push('abc'); // Simulate non-numeric strings
+        } else {
+            data.push(Math.random() * 1000); // Simulate numbers
+        }
+    }
+    return data;
+}
+
+// Function to "sanitize" the data
+function sanitizeData(data) {
+    const sanitized = [];
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        // Example sanitization:
+        // 1. Remove null or undefined values
+        if (item === null || typeof item === 'undefined') {
+            continue;
+        }
+        // 2. Try to convert to a number, if not a number, skip or default
+        if (typeof item === 'string') {
+            const num = parseFloat(item);
+            if (!isNaN(num)) {
+                sanitized.push(num);
+            }
+            // else, if it's a non-numeric string, we just discard it for this example
+        } else if (typeof item === 'number') {
+            sanitized.push(item);
+        }
+        // Add more complex sanitization logic as needed
+    }
+    return sanitized;
+}
+
+// Listen for messages from the main thread
+self.onmessage = function(e) {
+    if (e.data.command === 'startProcessing') {
+        try {
+            const dataSize = e.data.dataSize || 100000;
+            // Step 1: Generate large dataset (memory intensive)
+            const rawData = generateLargeDataset(dataSize);
+            // console.log('Worker: Generated raw data size:', rawData.length);
+
+            // Step 2: Sanitize the data (processing intensive, reduces potential "junk" memory)
+            const processedData = sanitizeData(rawData);
+            // console.log('Worker: Sanitized data size:', processedData.length);
+
+            // Send the processed data back to the main thread
+            self.postMessage({ type: 'processingComplete', payload: processedData });
+
+        } catch (error) {
+            self.postMessage({ type: 'error', payload: error.message });
+        }
+    }
+};
+
+
+
+🚨 Depending on your system, this is a fully functional Web Worker. We can create or design almost anything with this language that is a Object and or process.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+         •••Call Stack•••
+
+1. The data format/structure that is used for managing the "Execution  Context" is called your "Call Stack".
+
+
+2. When your code is first executed, the jS program interpreter creates the "Global Execution Context" then pushes this to the call stack! This includes statements.
+
+
+🔹🔹Example-CallStack:
+
+function functionC() {
+    console.log("Entering functionC");
+    // Some processing for C
+    console.log("Exiting functionC");
+}
+
+function functionB() {
+    console.log("Entering functionB");
+    functionC(); // Call functionC, pushing it onto the stack
+    console.log("Exiting functionB");
+}
+
+function functionA() {
+    console.log("Entering functionA");
+    functionB(); // Call functionB, pushing it onto the stack
+    console.log("Exiting functionA");
+}
+
+console.log("--- Program Start ---");
+functionA(); // Initial call, pushing functionA onto the stack
+console.log("--- Program End ---");
+
+// Let's add a recursive example to see stack grow (&& potential overflow)
+
+function factorial(n) {
+    console.log(`Calculating factorial(${n})`);
+    if (n === 0) {
+        console.log(`Base case hit: factorial(0) = 1`);
+        return 1;
+    } else {
+        const result = n * factorial(n - 1); // Recursive call
+        console.log(`Returning from factorial(${n}), result: ${result}`);
+        return result;
+    }
+}
+
+console.log("\n--- Factorial Calculation Start ---");
+// factorial(3); // Uncomment to run and observe the stack for a small number
+// To demonstrate stack overflow (WARNING: might crash browser tab if not caught):
+// try {
+//     factorial(50000); // This will likely cause a "Maximum call stack size exceeded" error
+// } catch (e) {
+//     console.error("Caught a stack overflow error:", e.message);
+// }
+console.log("--- Factorial Calculation End ---");
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        •••Event Loop•••
+
+1. These are refered to a sequential execution which allows fetching data, setting timeouts, loop's, etc.
+
+
+2. Two methods that work for this process are setTimeout && setInterval.
+
+
+3. These procedures are called a "concurrency model". Which is made up of the "event loop" && the "callback queue".
+
+4. At times this process pattern may be called a "reactor"
+
+
+
+5. In this example, we will be demonstrating the call back queue. This works off the "Web API", while including the "Promise". You can save this file to see our full demonstration 🪧.
+
+
+🔹🔹Example-event_loop_demo.js:
+
+console.log("1. Script start");
+
+// --- Example 1: setTimeout (goes to the Callback Queue) ---
+setTimeout(() => {
+    console.log("4. setTimeout callback executed (from Callback Queue)");
+}, 0); // 0ms delay, but still asynchronous and goes to the queue
+
+// --- Example 2: Promise (goes to the Microtask Queue) ---
+// Microtask Queue has higher priority than Callback Queue
+Promise.resolve()
+    .then(() => {
+        console.log("3. Promise resolved callback executed (from Microtask Queue)");
+    })
+    .then(() => {
+        console.log("5. Second Promise callback executed (also Microtask Queue)");
+    });
+
+// --- Example 3: DOM Event (would go to the Callback Queue if triggered) ---
+// We'll simulate this conceptually as it requires HTML, but understand its place.
+const button = document.createElement('button');
+button.textContent = "Click Me";
+document.body.appendChild(button);
+
+button.addEventListener('click', () => {
+    console.log("6. Button clicked callback executed (from Callback Queue, after click)");
+    // This callback would only run *after* a user interaction,
+    // demonstrating it waits for its event and then for the call stack to be clear.
+});
+
+// --- Synchronous Code (executes immediately on the Call Stack) ---
+for (let i = 0; i < 1000000; i++) {
+    // Simulate some blocking synchronous work
+}
+console.log("2. Synchronous code finished executing");
+
+
+console.log("7. Script end (main thread done, Event Loop starts processing queues)");
+
+// To actually run this in a browser:
+// 1. Save this as an HTML file (e.g., `event_loop_demo.html`)
+// 2. Open it in a browser.
+// 3. Open your browser's developer console (F12) to see the logs.
+// 4. Click the "Click Me" button to see its callback fire.
+
+
+
+🚨 Instructions:
+1. To run this file, copy and paste. 
+2. Run this in your preferred Browser.
+3. Inspect with your Developer Tools.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We appreciate any and all Donations to help continue our work and Research. We would like to thank you in Advance. This is designed for a Self-Help reference to the Web.Dev Google StarterUp Page. All the references used are stated up above 🔝.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
