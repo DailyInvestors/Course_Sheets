@@ -1,4 +1,4 @@
- 🪄✨🫴🔥 This is a General Educational Resource. We created this HTML educational resource with the help of Gemini, Google, Mozilla, and Web.Dev. This goes over some of the basic to advanced fundamentals to help build in and with HTML.
+ 🪄✨🫴🔥 This is a General Educational Resource. We created this HTML educational resource with the help of Gemini, Perplexity , DeepSeek,Google, Mozilla, and Web.Dev. This goes over some of the basic to advanced fundamentals to help build in and with HTML.
 
 Bugs and Vulnerabilities:
   1. We ourself can not afford to reward, for any new Bugs or Vulnerabilities. 
@@ -10,3 +10,7 @@ Further Resources: Google offers a variety of Public Resources, as well as Web.D
 
 
 Note: We appreciate and and all Donations for our Work. We are also up for Investors and Sponsors. Our other account is setup for this, will eventually make this one all the same. Thank You and God Bless
+
+
+
+If you wish to have your Company Logo here, or your name in Every License pleae Contact US through GitHub. Thank you.
