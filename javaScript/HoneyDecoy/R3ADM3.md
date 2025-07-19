@@ -1,0 +1,1 @@
+Decoy1: This is one of the securest HoneyPot decoys you will find. This script is purposely created to avoid Global Objects. A Global Object to me is basically a Backdoor into every one of your systems. This is designed more to stop Robots then command-line attacks. { You must have your Developer adapt to this new Style, or see a Professional }
